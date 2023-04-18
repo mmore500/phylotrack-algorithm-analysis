@@ -1,4 +1,5 @@
-\documentclass{article}
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
 
 \input{lib/dependencies.tex}
 \input{lib/pragmaonce.tex}
@@ -14,6 +15,9 @@
 
 \input{text/frontmatter.tex}
 
+\clearpage
+\newpage
+
 \begin{bibunit}
 
 \input{text/body.tex}
@@ -26,6 +30,13 @@
 
 \clearpage
 \newpage
+
+\setcounter{section}{0}
+\makeatletter
+\renewcommand \thesection{S\@arabic\c@section}
+\renewcommand\thetable{S\@arabic\c@table}
+\renewcommand \thefigure{S\@arabic\c@figure}
+\makeatother
 
 \begin{bibunit}
 
