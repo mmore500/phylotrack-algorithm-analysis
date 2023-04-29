@@ -5,6 +5,6 @@
 	path = tex/hereditary-stratigraph-concept
 	url = https://github.com/mmore500/hereditary-stratigraph-concept.git
 [submodule "tex/hhstrat-evolutionary-inference"]
-	path = tex/hhstrat-evolutionary-inference
+	path = tex/hstrat-evolutionary-inference
 	url = https://github.com/mmore500/hstrat-evolutionary-inference.git
 	branch = tex
