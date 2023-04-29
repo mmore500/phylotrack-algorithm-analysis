@@ -2,15 +2,14 @@
 \caption{Depth-proportional Resolution Stratum Discard Generator}
 \label{alg:depth-proportional-resolution-algo-gen-drop-ranks}
 \begin{algorithmic}[1]
-\STATE{Define $P:=T:=\{ \{1\},\ldots,\{d\}$\}}
-\WHILE{$\#P > 1$}
-\STATE\label{line3}{Choose $C^\prime\in\mathcal{C}_p(P)$ with $C^\prime :=
-\operatorname{argmin}_{C\in\mathcal{C}_p(P)} \varrho(C)$}
-\STATE{Find an optimal partition tree $T_{C^\prime}$ }
-\STATE{Update $P := (P{\setminus} C^\prime) \cup \{ \bigcup_{t\in C^\prime} t \}$}
-\STATE{Update $T := T \cup \{ \bigcup_{t\in\tau} t : \tau\in T_{C^\prime}{\setminus}
-\mathcal{L}(T_{C^\prime})\}$}
-\ENDWHILE
-\RETURN $T$
+\STATE{ $\text{spec} \gets \text{policy.GetSpec()}$ }
+\STATE{ $\text{uncertainty} \gets \texttt{calc\_provided\_uncertainty(} \text{spec.GetDepthProportionalResolution()}, \texttt{num\_\text{strata}\_\text{deposited}} \texttt{)}$ }
+\FOR{$i = 0$ \textbf{to} $\texttt{num\_\text{strata}\_\text{deposited}} - 1$ \textbf{step} $\text{uncertainty}$}
+    \STATE \textbf{yield} $i$
+\ENDFOR
+\STATE $last\_rank \gets \texttt{num\_\text{strata}\_\text{deposited}} - 1$
+\IF{$last\_rank > 0$ \textbf{and} $last\_rank \mod \text{uncertainty} \neq 0$}
+    \STATE \textbf{yield} $last\_rank$
+\ENDIF
 \end{algorithmic}
 \end{algorithm}
