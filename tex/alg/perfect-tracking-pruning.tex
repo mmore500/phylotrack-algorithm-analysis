@@ -1,0 +1,31 @@
+\begin{algorithm}
+    \caption{Perfect phylogenetic tracking with pruning}
+    \label{alg:perfect-tracking-pruning}
+    \begin{algorithmic}[1]
+    \STATE{Define $T:=$ an empty tree}
+    \STATE{Define $A:=$ the first member of the population (universal common ancestor)}
+    \STATE{Define $P:=$ a population containing $n$ descendants of $A$}
+    \STATE{Add node representing $A$ to $T$}
+
+    \FOR{$i = 0$ to $g$}
+        \FOR{$j = 0$ to $n$}
+            \STATE{Add node representing $P_j$ to $T$}
+            \STATE{Add edge in $T$ from parent of $P_j$ to $P_j$}
+            \STATE{$P^\prime$ $\gets$ $P$}            
+        \ENDFOR
+        \STATE{$P$ $\gets$ new population of size $n$, descended from $P^\prime$}
+        \FOR{$j = 0$ to $n$}
+            \IF{$P^\prime_j$ is not the parent of any member of $P$}
+                \STATE{parent $\gets$ parent of $P^\prime_j$}
+                \STATE{current $\gets$ $P^\prime_j$}
+                \WHILE{out degree of parent = 1}
+                    \STATE{Remove current from $T$}
+                    \STATE{current $\gets$ parent}
+                    \STATE{parent $\gets$ parent of current}
+                \ENDWHILE
+            \ENDIF
+        \ENDFOR        
+    \ENDFOR
+    \RETURN $T$
+    \end{algorithmic}
+\end{algorithm}
