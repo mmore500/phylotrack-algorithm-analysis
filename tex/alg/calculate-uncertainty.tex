@@ -1,0 +1,11 @@
+\begin{algorithm}
+\caption{Calculate provided uncertainty given a maximum uncertainty}
+\label{alg:recency-proportional-resolution-algo-pred-keep-rank}
+\begin{algorithmic}[1]
+\Function{calc\_provided\_uncertainty}{$max\_uncertainty$}
+\Let{$p$}{$bit\_length (int (max\_uncertainty) // 2) $}
+\Let{$provided\_uncertainty$}{$2^{p}$}
+\State \Return{$provided\_uncertainty$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}

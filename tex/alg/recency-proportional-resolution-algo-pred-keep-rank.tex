@@ -2,14 +2,17 @@
 \caption{Recency-proportional Stratum Retention Predicate}
 \label{alg:recency-proportional-resolution-algo-pred-keep-rank}
 \begin{algorithmic}[1]
-    \STATE $\text{resolution} \gets \text{spec.GetRecencyProportionalResolution()}$
+    \REQUIRE{$\texttt{n}$ -- the number of strata deposited}
+    \REQUIRE{$\texttt{r}$ -- the fixed resolution desired}
+
     \STATE $\text{cur\_rank} \gets 0$
-    \STATE $last\_rank \gets \texttt{num\_\text{strata}\_\text{deposited}} - 1$
-    \WHILE{$last\_rank - \text{cur\_rank} > \text{resolution}$}
+    \STATE $last\_rank \gets \texttt{n} - 1$
+
+    \WHILE{$\text{last\_rank} - \text{cur\_rank} > \texttt{r}$}
         \STATE \textbf{yield} $\text{cur\_rank}$
-        \STATE $\text{cur\_rank} \gets \text{cur\_rank} + \texttt{calc\_provided\_uncertainty(} \text{resolution}, \text{last\_rank - cur\_rank} \texttt{)}$
+        \STATE $\texttt{uncertainty} \gets \text{power of 2 less than or equal to } (\text{last\_rank} - \text{cur\_rank}) / (\texttt{r} + 1)$
     \ENDWHILE
-    \FOR{$i = \max(\text{last\_rank} - \text{resolution}, 0)$ \textbf{to} $\texttt{num\_\text{strata}\_\text{deposited}} - 1$}
+    \FOR{$i = \max(\text{last\_rank} - \texttt{r}, 0)$ \textbf{to} $\texttt{n} - 1$}
         \STATE \textbf{yield} $i$
     \ENDFOR
 \end{algorithmic}
