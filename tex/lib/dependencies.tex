@@ -1,6 +1,7 @@
 \usepackage[export]{adjustbox}
 \usepackage{algorithm}
 \usepackage{algorithmic}
+\usepackage{algpseudocode}
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{array}
 \usepackage{bibunits}
@@ -38,3 +39,7 @@
 \usepackage{xfp}
 \usepackage{xparse}
 \usepackage{xstring}
+
+\newcommand*\Let[2]{\State #1 $\gets$ #2}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
