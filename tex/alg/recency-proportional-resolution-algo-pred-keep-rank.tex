@@ -2,15 +2,15 @@
 \caption{Recency-proportional Stratum Retention Predicate}
 \label{alg:recency-proportional-resolution-algo-pred-keep-rank}
 \begin{algorithmic}[1]
-\STATE{Define $P:=T:=\{ \{1\},\ldots,\{d\}$\}}
-\WHILE{$\#P > 1$}
-\STATE\label{line3}{Choose $C^\prime\in\mathcal{C}_p(P)$ with $C^\prime :=
-\operatorname{argmin}_{C\in\mathcal{C}_p(P)} \varrho(C)$}
-\STATE{Find an optimal partition tree $T_{C^\prime}$ }
-\STATE{Update $P := (P{\setminus} C^\prime) \cup \{ \bigcup_{t\in C^\prime} t \}$}
-\STATE{Update $T := T \cup \{ \bigcup_{t\in\tau} t : \tau\in T_{C^\prime}{\setminus}
-\mathcal{L}(T_{C^\prime})\}$}
-\ENDWHILE
-\RETURN $T$
+    \STATE $\text{resolution} \gets \text{spec.GetRecencyProportionalResolution()}$
+    \STATE $\text{cur\_rank} \gets 0$
+    \STATE $last\_rank \gets \texttt{num\_\text{strata}\_\text{deposited}} - 1$
+    \WHILE{$last\_rank - \text{cur\_rank} > \text{resolution}$}
+        \STATE \textbf{yield} $\text{cur\_rank}$
+        \STATE $\text{cur\_rank} \gets \text{cur\_rank} + \texttt{calc\_provided\_uncertainty(} \text{resolution}, \text{last\_rank - cur\_rank} \texttt{)}$
+    \ENDWHILE
+    \FOR{$i = \max(\text{last\_rank} - \text{resolution}, 0)$ \textbf{to} $\texttt{num\_\text{strata}\_\text{deposited}} - 1$}
+        \STATE \textbf{yield} $i$
+    \ENDFOR
 \end{algorithmic}
 \end{algorithm}
