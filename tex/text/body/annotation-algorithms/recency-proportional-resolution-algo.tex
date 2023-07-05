@@ -21,7 +21,9 @@ The fixed and depth-proportional resolution policy algorithms exhibit $O(r)$ and
 We will show residuum order of growth as $O(r\log{n})$ under the recency-proportional resolution retention algorithm.
 
 Algorithm \ref{alg:recency-proportional-resolution-algo-enum-retained-ranks} enumerates deposition times of retained strata under the recency-proportional resolution retention algorithm.
-This set is determined iteratively, beginning at deposition time zero --- which is always retained.
+Figure \ref{fig:retention-policies} shows a time-lapse of the extant record enacted as a result.
+
+The extant record is determined iteratively, beginning at deposition time zero --- which is always retained.
 Per Equation \ref{eqn:rpr-gap}, gap width to the next retained stratum can be at most $\lfloor n/r \rfloor$ sites, where $n$ is diuturnity.
 Although selecting to retain the $\lfloor n/r \rfloor$ deposition time stratum would satisfy policy resolution guarantees, a slight complication is necessary to ensure that retained strata have been consistently retained since deposition.
 A fuller self-consistency rationale will follow, but in short gap width is floored to the next lower power of two,
