@@ -1,4 +1,12 @@
 \begin{abstract}
-This document is a model and instructions for \LaTeX.
-This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.].
+
+We introduce the streaming record downsample problem, which poses the question of how to pare an incoming stream of discrete data records to satisfy guarantees for retained record coverage over history on a rolling basis.
+We explore record retention strategies that distribute record density evenly over history. or in a recency-proportional manner with higher record density at more recent time points.
+Presented strategies accumulate retained records with $O(n)$ or $O(\log n)$ orders of growth, or maintain record count below a constant $O(1)$ threshold.
+We provide algorithms to enact these strategies in constant $O(1)$ time.
+
+The streaming record downsample problem originally stemmed from work to engineer robust linealogical inference over replicating digital entities through heritable annotations, in scenarios without direct observability of replication events.
+This capability benefits distributed agent-based evolutionary simulations, but could also find use in studying digital artifacts that proliferate through replication like digital media and computer viruses.
+In this vein, we provide an efficient algorithm for phylogenetic reconstruction from annotations based on streaming record downsampling and compare annotation-based inference against time and space complexity for alternate perfect-tracking approaches to phylogenetic tracking.
+
 \end{abstract}

@@ -1,2 +1,46 @@
 \section{Preliminaries} \label{sec:methods}
 This section should introduce the necessary definitions, concepts, and notations that will be used throughout the paper.
+
+glossary:
+\begin{itemize}
+  \item \textbf{differentia:} randomly generated information that can be used to differentiate two strata at the same layer (with a probability of spurious collision)
+  \item \textbf{stratum:} differentia container associated with a particular historical stage
+  \item \textbf{deposit:} the act of extending the historical record with a new stratum
+  \item \textbf{deposition:} the stratum appended to the historical record
+  \item \textbf{time point:} refers to the stage where a specific number of depositions have taken place
+  \item \textbf{deposition time:} refers to the time point at which a stratum was deposited, zero indexed
+  \item \textbf{genesis:} the time point associated with the first stratum deposition
+  \item \textbf{time:} number of depositions elapsed between two time points
+  \item \textbf{age:} the number of depositions elapsed since a layer's deposition time
+  % progression? duration?
+  \item \textbf{diuturnity:} the number of depositions elapsed onto the historical record --- the number of layers within a historical record
+  \item \textbf{layer:} position within a historical record associated with a single time point, which may or may be occupied
+  \item \textbf{retained/pruned layer:} a layer within a historical record with present/removed strata, respectively
+  \item \textbf{layer time point:} the deposition time associated with a layer
+  \item \textbf{pruning:} deletion of strata from a historical record (i.e., to reduce space occupied by the record) --- also used to refer to deletion of perfect tracking records for extinct lineages,
+  \item \textbf{retention:} the act of carrying over a stratum into the next time point during the stratum deposition process
+  \item \textbf{gap:} layers associated with contiguous time points that have been pruned ---- introduces inference uncertainty when comparing two columns
+  \item \textbf{gap width:} the number of contiguous time points that have been pruned --- gap with increases inference uncertainty
+  \item \textbf{sparse/dense retention:} refers to relatively wide or relatively tight gap width, respectively
+  \item \textbf{gap width distribution:} how gap widths relate to layer deposition times
+  \item \textbf{resolution:} the width of the gap containing a pruned layer or immediately following a retained layer (may be zero in the case of two successive retained strata)
+  \item \textbf{stratum retention policy algorithm:} the decision-making procedure of which strata to prune at each time point (also referred to simply as ``policy'')
+  \item \textbf{(policy) resolution guarantee:} upper bounds on resolutions across layers of a historical record with respect to layer age and/or diuturnity
+  \item \textbf{residuum:} the quantity of stratum retained within a historical record at a particular time point
+  \item \textbf{residuum order of growth:} the asymptotic scaling relationship between the residuum quantity and diuturnity
+  \item \textbf{pruning enumeration:} calculation of the set of strata to be pruned at a particular time point under a retention policy
+  \item \textbf{policy enactment:} the act of performing pruning enumeration and deleting strata with enumerated deposition times
+  \item \textbf{update:} the process of performing a deposition and applying policy enactment
+  \item \textbf{update time complexity:} the scaling relationship associated with the number of computational operations necessary to perform an update
+  \item \textbf{founding stratum:} the first stratum deposited into the historical record, the oldest stratum
+  \item \textbf{newest stratum:} the most recent stratum deposited into the historical record
+  \item \textbf{extant record:} the set of strata that have been retained through the policy at the present time point
+  \item \textbf{extant record enumeration:} calculation of deposition times present in the extant record at a time point under a retention policy
+  \item \textbf{policy self-consistency:} the requirement for each deposition time within an extant record enumeration to be consistently present in all extant enumerations since that deposition time
+  \item \textbf{historical record:} refers to the set of layers defined up to the current time point, also referred to as a ``record''
+  \item \textbf{hereditary stratigraphic column:} container for a historical record --- in phylogenetic applications, associated with a digital population member, also referred to as a ``column''
+  \item \textbf{annotation:} the one-to-one association of hereditary stratigraphic records with individual digital organisms to facilitate phylogenetic analysis
+  \item \textbf{inheritance:} the act of copying the parent organism's hereditary stratigraphic column annotation and performing an update to create the offspring organism's hereditary stratigraphic column annotation during a reproduction event
+  \item \textbf{inference:} best-effort estimation of historical phylogenetic relationships from extant hereditary stratigraphic columns
+  \item \textbf{perfect tracking:} maintenance of an exact record of phylogenetic events during an evolutionary simulation
+\end{itemize}
