@@ -11,9 +11,9 @@ glossary:
   \item \textbf{deposition time:} refers to the time point at which a stratum was deposited, zero indexed
   \item \textbf{genesis:} the time point associated with the first stratum deposition
   \item \textbf{time:} number of depositions elapsed between two time points
-  \item \textbf{age:} the number of depositions elapsed since a layer's deposition time
+  \item \textbf{layer age:} the number of depositions elapsed since a layer's deposition time
   % progression? duration?
-  \item \textbf{diuturnity:} the number of depositions elapsed onto the historical record --- the number of layers within a historical record
+  \item \textbf{record depth:} the number of depositions elapsed onto the historical record --- the number of layers within a historical record
   \item \textbf{layer:} position within a historical record associated with a single time point, which may or may be occupied
   \item \textbf{retained/pruned layer:} a layer within a historical record with present/removed strata, respectively
   \item \textbf{layer time point:} the deposition time associated with a layer
@@ -25,9 +25,9 @@ glossary:
   \item \textbf{gap width distribution:} how gap widths relate to layer deposition times
   \item \textbf{resolution:} the width of the gap containing a pruned layer or immediately following a retained layer (may be zero in the case of two successive retained strata)
   \item \textbf{stratum retention policy algorithm:} the decision-making procedure of which strata to prune at each time point (also referred to simply as ``policy'')
-  \item \textbf{(policy) resolution guarantee:} upper bounds on resolutions across layers of a historical record with respect to layer age and/or diuturnity
-  \item \textbf{residuum:} the quantity of stratum retained within a historical record at a particular time point
-  \item \textbf{residuum order of growth:} the asymptotic scaling relationship between the residuum quantity and diuturnity
+  \item \textbf{policy resolution guarantee:} upper bounds on resolutions across layers of a historical record with respect to layer age and/or record depth
+  \item \textbf{extant record size:} the quantity of strata retained within a historical record at a particular time point
+  \item \textbf{extant record order of growth:} the asymptotic scaling relationship between the extant record size and record depth; this is equivalent to space complexity of you frame X as Y;
   \item \textbf{pruning enumeration:} calculation of the set of strata to be pruned at a particular time point under a retention policy
   \item \textbf{policy enactment:} the act of performing pruning enumeration and deleting strata with enumerated deposition times
   \item \textbf{update:} the process of performing a deposition and applying policy enactment
