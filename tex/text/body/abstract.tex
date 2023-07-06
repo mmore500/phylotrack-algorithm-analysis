@@ -1,12 +1,25 @@
 \begin{abstract}
 
-We introduce the streaming record downsample problem, which poses the question of how to pare an incoming stream of discrete data records to satisfy guarantees for retained record coverage over history on a rolling basis.
-We explore record retention strategies that distribute record density evenly over history. or in a recency-proportional manner with higher record density at more recent time points.
-Presented strategies accumulate retained records with $O(n)$ or $O(\log n)$ orders of growth, or maintain record count below a constant $O(1)$ threshold.
-We provide algorithms to enact these strategies in constant $O(1)$ time.
+% TODO we should probably use the word near optimal somewhere
 
-The streaming record downsample problem originally stemmed from work to engineer robust linealogical inference over replicating digital entities through heritable annotations, in scenarios without direct observability of replication events.
-This capability benefits distributed agent-based evolutionary simulations, but could also find use in studying digital artifacts that proliferate through replication like digital media and computer viruses.
-In this vein, we provide an efficient algorithm for phylogenetic reconstruction from annotations based on streaming record downsampling and compare annotation-based inference against time and space complexity for alternate perfect-tracking approaches to phylogenetic tracking.
+We introduce the streaming disposal problem, which poses the question of how to satisfactorily maintain a temporally representative collection of stored observations on a rolling basis as new observations stream in.
+This problem arises in scenarios of ongoing data ingress over indefinite or indeterminate periods, such as irregularly-uplinked wireless sensor networks, log-based application monitoring, or more general record management.
+Next, attention turns to a proposed suite of policy algorithms for the streaming disposal problem designed to allow a continuum of trade-offs between collection size and temporal coverage.
+This suite spans $O(n)$, $O(\log n)$, and constant $O(1)$ orders of growth for retained collection size.
+For each order of growth, policy algorithms are further characterized by age prioritization.
+We explore two alternatives: even density distribution across history or recency-proportional distribution with greater density at more recent time points.
+% TODO double check this before submitting
+For each policy algorithm, we define enactment rules calculable in constant $O(1)$ time.
+Further, each policy algorithm is fully pre-deterministic --- meaning that collection state and disposal actions can be directly computed for any point in time without consideration for state and actions at preceding times.
+
+The streaming disposal problem originally stemmed from work to engineer robust post-hoc phylogenetic inference over replicating digital entities under conditions barring direct observation of replication events.
+This application adjoins digital entities with heritable annotations comprised of checkpoint barcodes managed through streaming disposal.
+This so-called ``hereditary stratigraphy'' method facilitates evolutionary research using distributed agent-based simulations, but could also elucidate digital artifacts that proliferate through replication like digital media and computer viruses.
+% TODO double check this makes it into the paper
+In this vein, we provide an efficient approach for phylogenetic reconstruction from these annotations and compare annotation-based inference against time and space complexity perfect phylogenetic tracking under conditions of complete observability.
+
+Although ostensibly targeted at agent-based evolutionary simulation, hereditary stratigraphy generalizes to broader classes of replicating digital artifacts --- and the underlying streaming disposal problem encompasses even broader issues of rolling record management.
+This work develops a framework to reason about and discuss streaming disposal, as well as a suite of efficient algorithms satisfying several combinations of space-usage restrictions and temporal resolution requirements.
+% TODO should efficient be near-optimal?
 
 \end{abstract}
