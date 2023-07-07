@@ -1,9 +1,79 @@
 \section{Introduction} \label{sec:introduction}
 
-Here, you should discuss the importance of your paper within the context of prior work, and describe the key technical and conceptual ideas used to achieve its main claims. This section should be addressed to a broad spectrum of theoretical computer science and discrete mathematics researchers.
+\begin{itemize}
+  \item computation becoming more distributed
+  \item i.e., moore's law plus physics \citep{sutter2005free}
+  \item Modern computing actually involves downgrading in some ways
+  \item mention outline: creation of ubiquitous, irregular, decentralized sensor networks to scientific computing to digital evolution
+  \item justify talking aobut digital evolution as it being of particular relevance to the algorithm at hand and maybe even mention as original motivation
+  \item when zooming in to digital evolution, be sure to note we will zoom back out again
+\end{itemize}
 
 \begin{itemize}
-\item we present these algorithms in the context of distributed phylogenetic tracking, but the presented stratum-retention policy algorithms can be more generally applied in any scenario involving online (in the sense of ongoing) record-keeping with limited space and multiple or unknown reading time points
-\item mention data loss
-\item mention potential fossil-based approach to ancestral state estimation
+  \item also due to computation being more distributed: scientific computing moving to massively parallel HPC and accelerators
+  \item exascale computing, wafer-scale computing \citep{lauterbach2021path}, unconventional/space-available computing (SETI \@ HOME, sentient AI)
+  \item best-effort approaches (plan for failed components, lost data)
+  \begin{itemize}
+    \item traditional hpc exascale \citep{cappello2014toward}
+    \item Ackley indefinite scalability \citep{ackley2011pursue}
+  \end{itemize}
 \end{itemize}
+
+\begin{itemize}
+  \item scaling-up is of particualar interest in digital evolution
+  \item open-ended evolution --- compute-limited? \citep{channon2019maximum, taylor2016open}
+  \item could more compute power create a paradigm shift in the field (cite my dissertation, other stuff???)
+  \item approaches using existing traditional cluster hardware ( \citep{moreno2021conduit}; cite sentient)
+  \item approaches using specialized accelerators (e.g., GPU)
+  \item approaches using bespoke mesh hardware (Illuminato X Machina \citep{schulte2010genetic})
+\end{itemize}
+
+\begin{itemize}
+  \item but it introduces experimental issues
+  \item perfect reproducbility goes away
+  \item throwing data away == losing data (look for times where perfect observability was crucial? richness/different number of phenotypes present? spatial analyses!!! <<-- this is the good one)
+  \item should mention general observability issues (TODO brainstorm)
+  \item ... but also phylogenetics (need cites about why phylogenetics is important)
+  \item move from perfect tracking (centralized) to nature-inspred decentralized inference? (cite that this has been done in DISHTINY using bitstring tags \citep{moreno2021case})
+  \item talk about natural phylogenetics as a distributed system
+  \item tradeoffs: perfect tracking is very efficient for single core (mention proofs)
+  \item hereditary stratigraphy (find cites): using checkpoint fingerprints
+  \item turns out this is the same problem as ``data disposal problem''
+\end{itemize}
+
+\begin{itemize}
+  \item this generalizes to broader question of replicating digital artifacts
+  \item digital media and computer viruses
+  \item existing studies generally employ centralized tracking
+  \begin{itemize}
+    \item image/text snippet sharing on facebook \citep{friggeri2014rumor}
+    \item Experiments studying the propagation of computer viruses with centralized instrumentation \citep{cohen1987computer} (want more cites)
+  \end{itemize}
+  \item interesting instance of reconstruction that shares a lot in common with hereditary stratigraphy: chain email sharing \citep{libennowell2008tracing}
+\end{itemize}
+
+\begin{itemize}
+  \item IoT/wireless sensor networks
+  \item low power/capacity hardware: smart dust \citep{warneke2001smart}
+  \item run out of space:
+  \begin{itemize}
+    \item long-duration solar-powered sensor --- battery is not limiting factor \citep{corke2007long}
+    \item not just limited onboard memory
+    \item high frequency data \citep{luharuka2003design}
+  \end{itemize}
+  \item common theme: irregular connectivity
+  \begin{itemize}
+    \item communicication outages/disruptions (need cite)
+    \item query-based networks (need cite) (note ``security'' applications where desired content is only known long after the fact?)
+    \item mobile sinks \citep{jain2022survey} (for security, power efficiency (fewer hops), reduce bottlenecking)
+    \item at the very extreme are autonomous loggers
+    \item logger: new data discarded once full \citep{saunders1989portable,mahzan2017design}
+    \item logger: new data replaces oldest data (flight data recorder; need cite)
+    \item logger: pplication-specific online compression algorithm that (\citep{hadiatna2016design} increases capacity twofold)
+  \end{itemize}
+  \item more data coming in from everywhere, also need a principled strategy to triage ``record management'' in centralized storage
+  \item end on: need a principled way to weed time series data on the fly that meets coverage requirements at any point in time
+  \item ``data disposal problem''
+\end{itemize}
+
+then outline paper
