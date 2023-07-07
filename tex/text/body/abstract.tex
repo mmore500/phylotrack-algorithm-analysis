@@ -2,10 +2,10 @@
 
 % TODO we should probably use the word near optimal somewhere
 
-We introduce the streaming disposal problem, which poses the question of how to satisfactorily maintain a temporally representative collection of stored observations on a rolling basis as new observations stream in.
-In addition to applications in phylogenetic record keeping that constitute the major focal point herein, the streaming disposal problem arises more generally in reconciling storage limitations with ongoing data feeds of indefinite or indeterminate duration.
+We introduce the streaming curation problem, which poses the question of how to satisfactorily maintain a temporally representative collection of stored observations on a rolling basis as new observations stream in.
+In addition to applications in phylogenetic record keeping that constitute the major focal point herein, the streaming curation problem arises more generally in reconciling storage limitations with ongoing data feeds of indefinite or indeterminate duration.
 Streaming disposal could arise, for example, in scenarios of irregularly-uplinked wireless sensor networks, log-based application monitoring, or more general record management.
-Next, attention turns to a proposed suite of retention policy algorithms designed to allow a continuum of trade-offs between collection size and temporal coverage for the streaming disposal problem.
+Next, attention turns to a proposed suite of retention policy algorithms designed to allow a continuum of trade-offs between collection size and temporal coverage for the streaming curation problem.
 This suite contains a range of policies spanning $O(n)$, $O(\log n)$, and constant $O(1)$ orders of growth in retained collection size.
 Within each order of growth, policy algorithms are further characterized by relative retention prioritizations of newer versus older data.
 We explore two alternatives: even density distribution across history or recency-proportional distribution with greater density at more recent time points.
@@ -13,14 +13,14 @@ We explore two alternatives: even density distribution across history or recency
 For each policy algorithm, we define enactment rules calculable in constant $O(1)$ time.
 Further, each policy algorithm is fully pre-deterministic --- meaning that collection state and disposal actions can be directly computed for any point in time without consideration for state and actions at preceding times.
 
-The streaming disposal problem originally stemmed from work to engineer robust post-hoc phylogenetic inference over replicating digital entities under conditions barring direct observation of replication events.
-This application adjoins digital entities with heritable annotations comprised of checkpoint barcodes managed through streaming disposal.
+The streaming curation problem originally stemmed from work to engineer robust post-hoc phylogenetic inference over replicating digital entities under conditions barring direct observation of replication events.
+This application adjoins digital entities with heritable annotations comprised of checkpoint barcodes managed through streaming curation.
 This so-called ``hereditary stratigraphy'' method facilitates evolutionary research using distributed agent-based simulations, but could also elucidate digital artifacts that proliferate through replication like digital media and computer viruses.
 % TODO double check this makes it into the paper
 In this vein, we provide an efficient approach for phylogenetic reconstruction from these annotations and compare annotation-based inference against time and space complexity perfect phylogenetic tracking under conditions of complete observability.
 
-Although ostensibly targeted at agent-based evolutionary simulation, hereditary stratigraphy generalizes to broader classes of replicating digital artifacts --- and the underlying streaming disposal problem encompasses even broader issues of rolling record management.
-This work develops a framework to reason about and discuss streaming disposal, as well as a suite of efficient algorithms satisfying several combinations of space-usage restrictions and temporal resolution requirements.
+Although ostensibly targeted at agent-based evolutionary simulation, hereditary stratigraphy generalizes to broader classes of replicating digital artifacts --- and the underlying streaming curation problem encompasses even broader issues of rolling record management.
+This work develops a framework to reason about and discuss streaming curation, as well as a suite of efficient algorithms satisfying several combinations of space-usage restrictions and temporal resolution requirements.
 % TODO should efficient be near-optimal?
 
 \end{abstract}
