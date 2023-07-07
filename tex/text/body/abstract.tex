@@ -3,10 +3,11 @@
 % TODO we should probably use the word near optimal somewhere
 
 We introduce the streaming disposal problem, which poses the question of how to satisfactorily maintain a temporally representative collection of stored observations on a rolling basis as new observations stream in.
-This problem arises in scenarios of ongoing data ingress over indefinite or indeterminate periods, such as irregularly-uplinked wireless sensor networks, log-based application monitoring, or more general record management.
-Next, attention turns to a proposed suite of policy algorithms for the streaming disposal problem designed to allow a continuum of trade-offs between collection size and temporal coverage.
-This suite spans $O(n)$, $O(\log n)$, and constant $O(1)$ orders of growth for retained collection size.
-For each order of growth, policy algorithms are further characterized by age prioritization.
+In addition to applications in phylogenetic record keeping that constitute the major focal point herein, the streaming disposal problem arises more generally in reconciling storage limitations with ongoing data feeds of indefinite or indeterminate duration.
+Streaming disposal could arise, for example, in scenarios of irregularly-uplinked wireless sensor networks, log-based application monitoring, or more general record management.
+Next, attention turns to a proposed suite of retention policy algorithms designed to allow a continuum of trade-offs between collection size and temporal coverage for the streaming disposal problem.
+This suite contains a range of policies spanning $O(n)$, $O(\log n)$, and constant $O(1)$ orders of growth in retained collection size.
+Within each order of growth, policy algorithms are further characterized by relative retention prioritizations of newer versus older data.
 We explore two alternatives: even density distribution across history or recency-proportional distribution with greater density at more recent time points.
 % TODO double check this before submitting
 For each policy algorithm, we define enactment rules calculable in constant $O(1)$ time.
