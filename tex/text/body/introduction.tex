@@ -1,22 +1,34 @@
 \section{Introduction} \label{sec:introduction}
 
+Contemporary advances in the engineering and manufacture of compute hardware largely come as a double-edged sword.
+Fundamental physical limitations have essentially curtailed transformative progress in capabilities of individual processing elements \citep{sutter2005free}.
+Instead, the frontier of raw compute power in high-performance computing (HPC) has largely been driven forward by scale-out to multi- and many-core architectures \citep{morgenstern2021unparalleled}.
+On the flip side, economization and miniaturization has driven broad dissemination of computing capability through the Internet of Things (IoT) revolution \citep{rfc7228,ojo2018review}.
+A notable pattern cuts across some facets of both fringes: absolute reduction or tightening or relative tightening in resources and capabilities per processing element, particularly with respect to the capacity, latency, or bandwidth of memory and storage.
+
+Along the march to exascale HPC, processing capacity growth (e.g., FLOPS) has outpaced memory performance and capacity --- particularly with respect to hardware accelerators \citep{kogge2013exascale,khan2021analysis}.
+This ``memory wall'' bottlenecks throughput unless memory access volume is kept sufficiently low in proportion to processing workload (i.e., high ``arithmetic'' or ``operational'' intensity is achieved) \citep{obviousmemorywall,mckee2004reflections,ROOFLINEMODEL2008Berkley}.
+Analogous performance trajectories have played out with respect to data storage \citep{heldens2020landscape,kunkel2014exascale}, imposing an analogous ``storage wall'' bottleneck \citep{hu2016storage}.
+Recent introduction of the Cerebras Wafer-Scale Engine epitomizes the double-edged nature of recent HPC trends: this accelerator packages an astounding 850,000 computing elements onto a single piece of silicon, but restricts endows each with a modest 48kb of memory and provisions an exclusively-local mesh communication model \citep{cerebras2021wafer,lauterbach2021path}.
+
+Low-end hardware, on the other hand, marches toward the downscale and ubiquity of ``smart dust'' \citep{warneke2001smart}.
+The ``Michigan Micro Mote'' constitutes a notable waypoint \citep{lee2012modular}.
+These devices occupy only a cubic millimeter of volume, but provision a mere 3 kb of retentive memory.
+Introduced in 2012, applications have since been explored across imaging, motion detection, pressure measurement, and electrocardiography monitoring \citep{lee2015review}.
+Taking for instance another more recent high-profile project, computational capacity was recently tucked into wireless sensor network devices adopting the form factor of dandelion parachutes \citep{iyer2022wind}.
+The chipset for these devices provisions 2 kilobytes of volatile flash memory --- and a mere 128 bytes of retentive memory \citep{microchip2014atiny20}.
+% Even more striking is the advent of an epidermal physiological sensor equipped with carbon nanotube-based flash memory of a scant 48 bytes \citep{xiang2022epidermal}.
+The ever abiding race to plumb the very lower limits of technical feasibility seems likely to keep bare-bones computing modalities front and center within this engineering domain far into the future.
+
+The intersection of these observations is that despite relentless technological advancement, severely resource-limited computation will persist.
+In fact, in some domains technological progress has actually elevated the relevance of resource-limited computation.
+These trends, and the wider context of surging generation of digital data \citep{bhat2018data}, demand attention to algorithmic strategies to triage memory/storage-capacity gaps.
+
+
 \begin{itemize}
-  \item computation becoming more distributed
-  \item i.e., moore's law plus physics \citep{sutter2005free}
-  \item Modern computing actually involves downgrading in some ways
   \item mention outline: creation of ubiquitous, irregular, decentralized sensor networks to scientific computing to digital evolution
   \item justify talking aobut digital evolution as it being of particular relevance to the algorithm at hand and maybe even mention as original motivation
   \item when zooming in to digital evolution, be sure to note we will zoom back out again
-\end{itemize}
-
-\begin{itemize}
-  \item also due to computation being more distributed: scientific computing moving to massively parallel HPC and accelerators
-  \item exascale computing, wafer-scale computing \citep{lauterbach2021path}, unconventional/space-available computing (SETI \@ HOME, sentient AI)
-  \item best-effort approaches (plan for failed components, lost data)
-  \begin{itemize}
-    \item traditional hpc exascale \citep{cappello2014toward}
-    \item Ackley indefinite scalability \citep{ackley2011pursue}
-  \end{itemize}
 \end{itemize}
 
 \begin{itemize}
@@ -26,6 +38,7 @@
   \item approaches using existing traditional cluster hardware ( \citep{moreno2021conduit}; cite sentient)
   \item approaches using specialized accelerators (e.g., GPU)
   \item approaches using bespoke mesh hardware (Illuminato X Machina \citep{schulte2010genetic})
+  \item despite fledgling , methods for application of parallel computing power to open-ended evolutionary simulation is largely unexplored (infancy, rudimentary, etc).
 \end{itemize}
 
 \begin{itemize}
@@ -77,3 +90,13 @@
 \end{itemize}
 
 then outline paper
+
+intro
+
+preliminaries
+
+perfect Tracking
+
+policies
+
+discussion
