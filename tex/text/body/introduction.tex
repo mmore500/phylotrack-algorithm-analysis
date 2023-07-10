@@ -24,38 +24,43 @@ The intersection of these observations is that despite relentless technological 
 In fact, in some domains technological progress has actually elevated the relevance of resource-limited computation.
 These trends, and the wider context of surging generation of digital data \citep{bhat2018data}, demand attention to algorithmic strategies to triage memory/storage-capacity gaps.
 
+Burgeoning computational power has been broadly envisaged as driving force in advancing the field of digital evolution and, more broadly, artificial life \citep{ackley2014indefinitely}.
+In fact, a central motif in the field --- the problem of open-ended evolution, how and if closed systems can yield indefinitely yield new complexity, novelty, and adaptation --- is inexorably intertwined with computational scale, and has been implicated as meaningfully compute-constrained in at least some systems \citep{taylor2016open,channon2019maximum}.
+It is not an unreasonable possibility that orders-of-magnitude changes in computational power could induce qualitative changes in digital evolution and artificial life systems \citep{moreno2022engineering}, analogously to the renaissance of deep learning with the advent of GPGPU computing \citep{krizhevsky2012imagenet}.
+To accomplish such, however, will require contending with scaling challenges induced by aforementioned hardware trends.
+
+Parallel and distributed computing is, indeed, widely leveraged in digital evolution.
+Applications range from processing entirely independent evolutionary replicates across compute jobs \citep{dolson2017spatial, hornby2006automated}, to data-parallel fitness evaluation of single individuals over independent test cases using hardware accelerators \citep{harding2007fast_springer, langdon2019continuous}, to application of primary-subordinate/controller-responder parallelism to delegate costly fitness evaluations of single individuals \citep{cantu2001master,miikkulainen2019evolving}.
+In recent years, Sentient Technologies spearheaded evolutionary computation projects on an unprecedented computational scale, comprising over a million heterogeneous CPUs from time-available providers capable of a peak performance of 9 petaflops \citep{miikkulainen2019evolving,gilbert2015artificial,blondeau2009distributed}.
+
+Although highlighted as key to the future of the field, fully decentralized, highly-distributed approaches such as island models \citep{bennett1999building,schulte2010genetic} and mesh-computing approaches prioritizing dynamic interactions \citep{ray1995proposal,ackley2018digital,moreno2021conduit} have been less thoroughly developed.
+Observability constitutes a major barrier to effective applications of the fully-distributed paradigm: in the absence of a global population-level view, the course of evolution becomes much more challenging to study --- undercutting the objective of these systems as an experimental tool.
+
+Difficulty scaling typical approaches to phylogenetic analyses of digital evolution systems poses a particularly problematic stumbling block.
+Most existing analyses leverage a direct lineage tracking approach where a centralized data structure collates individual reproduction events to produce a complete, perfect phylogenetic record (TODO cite phylotrackpy)
+%TODO we could probably add some citations/examples about why phylogenetic tracking is important
+% AND how perfect phylogenetic tracking is super powerful at doing otherwise unimaginable analyses
+% probably pilfer phylotrackpy JOSS paper for ideas
+% TODO also tie in the algorithmic analysis of phylogenies here
+However, long distance, potentially many-hop, transmission of reproduction event records to a centralized data store introduces potentially significant amounts of communication overhead and bottlenecking.
+The necessity to propagate extinction notifications at runtime so that records of lineages without extant descendants can be pruned away to prevent runaway memory use imposes additional communication overhead.
+Further, at large enough scales, node failures become inevitablies rather than inconveniences and, at even larger scales, the cost of attempting full recovery from node dropout to prevent data loss could become high enough to conceivably preclude forward simulation progress \citep{cappello2014toward}.
+Within the perfect-tracking paradigm, individual missing relationships could potentially entirely disjoin knowledge of how large portions of phylogenetic history relate.
+This sensitivity to data loss poses a second major challenge in scaling perfect tracking.
+
+Looking to  natural systems, however, fruitful efforts across generations of systematic biologists evidence the viability of robust phylogenetic analyses from data generated through fully-distributed processes.
+An alternate approach to studying phylogenetic dynamics in distributed systems, therefore, can be entertained: post-hoc inference from heritable data rather than centralized tracking.
+Although such analyses can passably be accomplished solely from direct analysis of pre-existing, functional digital genome contents \citep{moreno2021case}, such algorithms do not generalize across diverse digital evolution systems and suffer from many of the complications that plague phylogenetic analyses of biological systems to boot (TODO cite).
+This line of reasoning led to the recent development of hereditary stratigraphy methodology, which associates digital genomes with heritable annotations specially designed to provide universal system-invariant phylogenetic reconstruction with well-defined, tunable expectations for inference accuracy
+\citep{moreno2022hereditary}.
+
+Describe how hstrat works (briefly?)
+mention \texttt{hstrat} software library \citep{moreno2022hstrat}
+
+
 
 \begin{itemize}
-  \item mention outline: creation of ubiquitous, irregular, decentralized sensor networks to scientific computing to digital evolution
-  \item justify talking aobut digital evolution as it being of particular relevance to the algorithm at hand and maybe even mention as original motivation
-  \item when zooming in to digital evolution, be sure to note we will zoom back out again
-\end{itemize}
-
-\begin{itemize}
-  \item scaling-up is of particualar interest in digital evolution
-  \item open-ended evolution --- compute-limited? \citep{channon2019maximum, taylor2016open}
-  \item could more compute power create a paradigm shift in the field (cite my dissertation, other stuff???)
-  \item approaches using existing traditional cluster hardware ( \citep{moreno2021conduit}; cite sentient)
-  \item approaches using specialized accelerators (e.g., GPU)
-  \item approaches using bespoke mesh hardware (Illuminato X Machina \citep{schulte2010genetic})
-  \item despite fledgling , methods for application of parallel computing power to open-ended evolutionary simulation is largely unexplored (infancy, rudimentary, etc).
-\end{itemize}
-
-\begin{itemize}
-  \item but it introduces experimental issues
-  \item perfect reproducbility goes away
-  \item throwing data away == losing data (look for times where perfect observability was crucial? richness/different number of phenotypes present? spatial analyses!!! <<-- this is the good one)
-  \item should mention general observability issues (TODO brainstorm)
-  \item ... but also phylogenetics (need cites about why phylogenetics is important)
-  \item move from perfect tracking (centralized) to nature-inspred decentralized inference? (cite that this has been done in DISHTINY using bitstring tags \citep{moreno2021case})
-  \item talk about natural phylogenetics as a distributed system
-  \item tradeoffs: perfect tracking is very efficient for single core (mention proofs)
-  \item hereditary stratigraphy (find cites): using checkpoint fingerprints
-  \item turns out this is the same problem as ``data disposal problem''
-\end{itemize}
-
-\begin{itemize}
-  \item this generalizes to broader question of replicating digital artifacts
+  \item hereditary stratigraphy generalizes to broader question of replicating digital artifacts
   \item digital media and computer viruses
   \item existing studies generally employ centralized tracking
   \begin{itemize}
@@ -86,17 +91,15 @@ These trends, and the wider context of surging generation of digital data \citep
   \end{itemize}
   \item more data coming in from everywhere, also need a principled strategy to triage ``record management'' in centralized storage
   \item end on: need a principled way to weed time series data on the fly that meets coverage requirements at any point in time
-  \item ``data disposal problem''
 \end{itemize}
 
+
+
 then outline paper
-
-intro
-
-preliminaries
-
-perfect Tracking
-
-policies
-
-discussion
+\begin{itemize}
+\item intro
+\item preliminaries
+\item perfect Tracking
+\item policies
+\item discussion
+\end{itemize}
