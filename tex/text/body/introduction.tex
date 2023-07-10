@@ -54,6 +54,70 @@ Although such analyses can passably be accomplished solely from direct analysis 
 This line of reasoning led to the recent development of hereditary stratigraphy methodology, which associates digital genomes with heritable annotations specially designed to provide universal system-invariant phylogenetic reconstruction with well-defined, tunable expectations for inference accuracy
 \citep{moreno2022hereditary}.
 
+A fuller accounting appears in Section \ref{sec:methods}, but the principal aspects of hereditary stratigraphy can be sketched briefly.
+However, briefly sketching a more obvious alternate approach provides a point of reference more familiar to most readrs' intuiition.
+A simple heritable annotation to enable relatedness estimation would be a fixed--length bitstring under neutral drift by bit flip mutation.
+As lineages diverge from a common ancestor, gradual mutational accumulation probabilistically causes the hamming distance between annotations to diverge.
+Therefore, hamming distance between these annotations can be used as inferential proxy: more mismatching sites imply less relatedness between two annotated digital organisms.
+Unfortunately, this model suffers from several serious drawbacks in application as a tool for relatedness estimation, including difficulty resolving uneven lineage branch lengths and difficulty parameterizing the model for effective inference over greatly varying generational scales.
+
+Hereditary stratigraphy annotations employ a systematic update process at generational turnovers instead of a stochastic mutational process as described above.
+Each generation, a new fixed-length packet of randomly-generated data is appended to inherited annotations.
+These stochastic ``fingerprints,'' typically sized on the order of a few bits or bytes, serve as a sort of checkpoint for lineage identity at a particular generation.
+At future time points, extant annotations will share identical fingerprints for the generations they experienced shared ancestry.
+Estimation of the last common ancestor generation is straightforward: the first mismatching fingerprints denote the end of common ancestry.
+However, note that overestimation of relatedness can occur due to spurious fingerprint collision events (i.e., where strata happen to share the same randomly-generated value by chance); the probability of such events depends on ``fingerprint'' width.
+The nomenclature of ``hereditary stratigraphy'' was chosen through analogy to geological layering processes.
+
+Putting ``hereditary stratigraphy'' techniques into practice requires a point of further consideration.
+Naive application of the approach described above would entail indefinitely lengthening genome annotation size in direct proportion to generations elapsed due to the creation of new ``fingerprint'' data each generation.
+To overcome this obstacle, hereditary stratigraphy prescribes a ``pruning'' process to discard strata on the fly as new strata are deposited.
+Note that pruning reduces annotation size, but at the expense of introducing inferential uncertainty: the last generation of common ancestry between two lineages can be resolved no finer than the time points associated with retained strata.
+Deciding which strata to discard when proves to be the main point of algorithmic interest associated with the technique.
+We refer to this decision-making process as a ``stratum retention'' algorithm.
+
+The obvious core issue of stratum retention is how many strata to discard.
+In many applied cases, it is desirable to keep the count of retained strata at or below a size cap indefinitely as generations elapse.
+However, in some cases discussed later on, it may be desirable to allow a logarithmic growth rate of annotation size to guarantee certain bounds on inferential uncertainty.
+
+Determining stratum retention strategy also obliges a more subtle second consideration: what skew, if any, to induce on the composition of retained strata.
+Strata from evenly-spaced time points may retained in order to provide uniform inferential detail over the entire range of elapsed time points.
+However, coalescent theory suggests fine inferential detail over more recent time points as likely more informative to phylogenetic reconstruction than fine detail over more ancient time points.
+%TODO add citations and lock this down
+Thus, among a fixed-size retained sampling of time points, skewing the composition of retained strata to over-represent more recent time points would be expected to provide better bang for the buck with respect to reconstructive power.
+Indeed, experiments reconstructing known lineages have shown that recency-skewing retention provides better quality reconstructions \citep{moreno2022hereditary}.
+So, in addition to evenly-spaced retention, we consider retention allocations that yield gap widths between successive retained strata (and corresponding estimation uncertainty) scaled proportionately to those strata's depth back in history.
+
+\begin{enumerate}
+\item Column composition across intermediate generations.
+  For many use cases, resolution and column size guarantees will need to hold at all generations because the number of generations elapsed at the end of an experiment is often not known \textit{a priori} and the option of continuing a fixeed-length experiment with evolved genomes is desired.
+\item Prune sequencing.
+  When you discard a stratum now, it won't be available later.
+  If you need a stratum at a particular time point, you must be able to guarantee it hasn't already been discarded at any prior time point.
+\item Tractability of enumerating the deposit generations of retained strata at an arbitrary generation.
+  Efficient computation of the deposit generations retained at each time point provides a tractable reverse mapping from column array index to deposition generation.
+  Such a mapping enables deposition generation to be omitted from strata, potentially yielding several-fold space savings (depending on the differentia bit width used).
+\end{enumerate}
+
+
+Emerging so-called ``hereditary stratigraphy’’ methodology abstracts this problem to a more general one: how to satisfactorily maintain a temporally representative collection of observations that stream in on a rolling basis.
+We term this more general question the ``stream curation problem.’’
+Because ongoing data feeds necessitate continual downsampling when faced with storage and memory limitations, the streaming curation problem occurs also in context of unattended data loggers, irregularly-uplinked wireless sensor network devices, and servers under continuous application monitoring, among other scenarios.
+To meet requirements of diverse streaming curation scenarios, we present a suite of streaming curation policy algorithms that trade off along a continuum of collection size and temporal coverage.
+Policies span $\mathcal{O}(n)$, $\mathcal{O}(\log n)$, and $\mathcal{O}(1)$ orders of growth in curated collection size.
+Within each order of growth, policy algorithms differ in relative prioritization of newer versus older data.
+We explore two alternatives: even density distribution across history or recency-proportional distribution with greater density at more recent time points.
+Policy algorithm designs explicitly pre-determine retained collection composition at each time point, enabling key optimizations to reduce storage overhead and streamline processing of incoming observations.
+
+
+
+% suffers
+% In analogy to geological layering, we refer to ``fingerprints'' as being contained within a ``stratum'' associated with a particular generation, we refer
+% We call the annotation comprised of strata deposited at each generation a hereditary stratigraphic column.
+
+
+
+
 Describe how hstrat works (briefly?)
 mention \texttt{hstrat} software library \citep{moreno2022hstrat}
 
