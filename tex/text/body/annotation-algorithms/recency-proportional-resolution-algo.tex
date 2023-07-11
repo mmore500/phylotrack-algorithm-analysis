@@ -20,12 +20,12 @@ Resolution for any given layer age, however, remains constant for all record age
 The FR and DPR policy algorithms exhibit $O(r)$ and $O(rn)$ extant record orders of growth, respectively.
 We will show extant record order of growth as $O(r\log{n})$ under the recency-proportional resolution retention algorithm.
 
-Algorithm \ref{alg:recency-proportional-resolution-algo-enum-retained-ranks} enumerates observation times of retained strata under the RPR policy algorithm.
+Algorithm \ref{alg:recency-proportional-resolution-algo-enum-retained-ranks} enumerates observation times of retained observations under the RPR policy algorithm.
 Figure \ref{fig:retention-policies} shows a time-lapse of the extant record enacted as a result.
 
 The extant record is determined iteratively, beginning at observation time zero --- which is always retained.
 Per Equation \ref{eqn:rpr-gap}, gap width to the next retained observation can be at most $\lfloor n/r \rfloor$ sites, where $n$ is record depth.
-Although selecting to retain the $\lfloor n/r \rfloor$ observation time observation would satisfy policy resolution guarantees, a slight complication is necessary to ensure that retained strata have been consistently retained since observation.
+Although selecting to retain the $\lfloor n/r \rfloor$ observation time observation would satisfy policy resolution guarantees, a slight complication is necessary to ensure that retained observations have been consistently retained since observation.
 A fuller self-consistency rationale will follow, but in short gap width is floored to the next lower power of two,
 \begin{align*}
   2^{\lfloor \log_{2}\left(\frac{n}{r}\right) \rfloor}.
@@ -33,7 +33,7 @@ A fuller self-consistency rationale will follow, but in short gap width is floor
 The next iteration repeats the procedure from the newly retained observation time instead of observation time zero.
 Iteration continues until reaching the newest observation.
 
-The set of strata to eliminate can be calculated from set subtraction between enumerations of the historical record at time points $t-1$ and $t$.
+The set of observations to eliminate can be calculated from set subtraction between enumerations of the historical record at time points $t-1$ and $t$.
 So, update time complexity follows from extant record enumeration time complexity, which turns out to be $O(\log n)$ as detailed in Theorem \ref{thm:recency-proportional-resolution-algo-uncertainty-bound}.
 We provide a tested, but unproven, constant-time pruning enumeration implementation in the \texttt{hstrat} library, but will not cover it here.
 The extant record order of growth $O(\log n)$ also follows closely from the record enumeration algorithm, detailed in Theorem \ref{thm:recency-proportional-resolution-algo-enum-retained-ranks}.
@@ -43,7 +43,7 @@ Let us begin by noting properties applicable to all layers $l$,
 \begin{enumerate}
 \item gap width provided at retained layer $l$ increases monotonically as further observations proceed,
 \item the retained observation preceding or at $l$ has observation time at an even multiple of gap width (on either side), and
-\item all observation time multiples of gap width up to the newest observation exist among retained strata.
+\item all observation time multiples of gap width up to the newest observation exist among retained observations.
 \end{enumerate}
 Observe also that gap width decreases monotonically with layer youth.
 
