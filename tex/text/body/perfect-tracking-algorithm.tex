@@ -1,5 +1,30 @@
 \section{Perfect Tracking Algorithm} \label{sec:perfect-tracking}
 
+% Worst-case space complexity is O(N*G), which happens when each member of the population has exactly one offspring
+% Average-case is probably more informative. Due to coalesence, even "average" case (if we assume everything is random)
+% will still be worse than we would usually see in practice (except when we're running controls with no selection)
+%
+% For average case, each member of P at time i has a ((N-1)/N)^N chance of not being picked.
+% As explained here: https://math.stackexchange.com/questions/41519/expected-number-of-unique-items-when-drawing-with-replacement
+% this translates to an expected value of N - ((N-1)^N)/(N^(N-1))
+% i.e. each element has a (N - ((N-1)^N)/(N^(N-1))))/N probability of making it to the next generation
+% Double check, but allegedly the limit of this value as N goes to infinitiy is 1 - 1/e =~ 0.6321... (Wolfram Alpha agrees)
+%
+% Without pruning, this still leaves us with space complexity O(N*G), because each generation we add N taxa and we never delete
+% anything
+%
+% With pruning, on time step 1 we get to eliminate approximately 37% of the nodes from time step 0
+% At every time step we eliminate 37% of the nodes from the previous time step. Sometimes this also allows
+% us to eliminate nodes from even earlier time steps
+%
+% Expected number of nodes in each generation with exactly one offspring: (1/N) * ((N-1)/N)^(N-1).
+% These nodes have a 37% chance of being eliminated in the next generation
+%
+% Maybe try to define this all recursively?
+% P0, T=0: N nodes
+% P0, T=1. .63N nodes. O1: (1/N) * ((N-1)/N)^(N-1) have one offspring, O2: (1/N)^2 * ((N-1)/N)^(N-2) have 2. OX: (1/N)^X * ((N-1)/N)^(N-X) have X
+% P0, T=2. .63N - .37*O1 - ? * OX
+
 \input{alg/perfect-tracking.tex}
 \input{thm/perfect-tracking-todo.tex}
 
