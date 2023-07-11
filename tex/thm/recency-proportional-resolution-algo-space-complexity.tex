@@ -6,4 +6,10 @@
 \begin{proof}
 \label{prf:recency-proportional-resolution-algo-space-complexity}
 
+In earlier sections, we introduced the concept of `size order of growth.'
+This is defined to be the upper bound of memory usage of a policy algorithm with respect to elapsed generations.
+Since policy algorithms determine the strata retained into the following generation without the use of any additional data structures, the upper bound of their memory usage will be equivalent in order to the number of retained strata.
+In fact, we can guarantee the lower bound will also be equivalent.
+As such, the proof in this section will set out to prove that the number of retained strata of the Recency-Proportional Resolution policy algorithm will grow with an order of $\theta(k \log{n}),$ where $k$ is a user-defined constant and $n$ is the number of strata in the current generation.
+
 \end{proof}
