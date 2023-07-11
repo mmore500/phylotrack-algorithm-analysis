@@ -54,6 +54,8 @@ Although such analyses can passably be accomplished solely from direct analysis 
 This line of reasoning led to the recent development of hereditary stratigraphy methodology, which associates digital genomes with heritable annotations specially designed to provide universal system-invariant phylogenetic reconstruction with well-defined, tunable expectations for inference accuracy
 \citep{moreno2022hereditary}.
 
+
+%TODO should this whole bit move to methods?
 A fuller accounting appears in Section \ref{sec:methods}, but the principal aspects of hereditary stratigraphy can be sketched briefly.
 However, briefly sketching a more obvious alternate approach provides a point of reference more familiar to most readrs' intuiition.
 A simple heritable annotation to enable relatedness estimation would be a fixed--length bitstring under neutral drift by bit flip mutation.
@@ -74,7 +76,8 @@ Naive application of the approach described above would entail indefinitely leng
 To overcome this obstacle, hereditary stratigraphy prescribes a ``pruning'' process to discard strata on the fly as new strata are deposited.
 Note that pruning reduces annotation size, but at the expense of introducing inferential uncertainty: the last generation of common ancestry between two lineages can be resolved no finer than the time points associated with retained strata.
 Deciding which strata to discard when proves to be the main point of algorithmic interest associated with the technique.
-We refer to this decision-making process as a ``stratum retention'' algorithm.
+In fact, as will be delved into a little further on, we find this scenario to be an instance of a more general class of online algorithmic problems we term as ``streaming curation.''
+In the context of hereditary stratigraphy, we refer to the decision-making rules that decide which retained strata to discard per generation as a ``stratum retention'' algorithm.
 
 The obvious core issue of stratum retention is how many strata to discard.
 In many applied cases, it is desirable to keep the count of retained strata at or below a size cap indefinitely as generations elapse.
@@ -88,39 +91,54 @@ Thus, among a fixed-size retained sampling of time points, skewing the compositi
 Indeed, experiments reconstructing known lineages have shown that recency-skewing retention provides better quality reconstructions \citep{moreno2022hereditary}.
 So, in addition to evenly-spaced retention, we consider retention allocations that yield gap widths between successive retained strata (and corresponding estimation uncertainty) scaled proportionately to those strata's depth back in history.
 
+Because no single retention policy can meet requirements of all use cases, in Section \ref{sec:annotation-algorithms} presents a suite of complementary stratum retention algorithms covering possible combinations of retained stratum count order of growth and chronological skew.
+We describe retention algorithms in terms of upper bounds on memory usage and inference uncertainty.
+
+With respect to memory usage, we refer to guaranteed upper bounds as ``size order of growth'' in the asymptotic case with respect to elapsed generations or ``size cap'' in the absolute case.
+We refer to bounds on spacing between retained strata a ``resolution guarantee.''
+Resolution guarantee specification incorporates both the total number of generations elapsed and the historical depth of a particular time point in the stratigraphic record --- so, bounding is tailored within these particular circumstances.
+
+In addition to their particular size bounds and resolution guarantees, we demonstrate all proposed stratum retention algorithms to satisfy three nuts and bolts algorithmic considerations:
 \begin{enumerate}
-\item Column composition across intermediate generations.
-  For many use cases, resolution and column size guarantees will need to hold at all generations because the number of generations elapsed at the end of an experiment is often not known \textit{a priori} and the option of continuing a fixeed-length experiment with evolved genomes is desired.
-\item Prune sequencing.
+\item Tractability of directly enumerating deposit generations of retained strata at any arbitrary generation.
+
+  Efficient computation of the deposit generations retained at each time point provides a tractable reverse mapping from column array index to deposition generation.
+  Such a mapping enables deposition generation to be omitted from stored strata, potentially yielding several-fold space savings (depending on the differentia bit width used).
+
+\item Stratum discard sequencing for ``self-consistency.''
+
   When you discard a stratum now, it won't be available later.
   If you need a stratum at a particular time point, you must be able to guarantee it hasn't already been discarded at any prior time point.
-\item Tractability of enumerating the deposit generations of retained strata at an arbitrary generation.
-  Efficient computation of the deposit generations retained at each time point provides a tractable reverse mapping from column array index to deposition generation.
-  Such a mapping enables deposition generation to be omitted from strata, potentially yielding several-fold space savings (depending on the differentia bit width used).
+
 \end{enumerate}
 
+As a final spelling out of a critical conceptual point in discussion of stratum retention policies, note that size bounds and resolution guarantees are enforced across across all generations.
+This means stratum retention policies must manage ``online'' column composition across rolling generations.
+Indeed, for many use cases, resolution and column size guarantees will need to hold at all generations because the number of generations elapsed at the end of an experiment is often not known \textit{a priori} and the option of continuing a fixed-length experiment with evolved genomes is desired.
+This factor introduces a design subtlety: as generations elapse, deposited strata recede to increasingly ancient historical depth with respect to the current generation.
+Resolution guarantees may change along the way back.
+In those cases, cohorts of retained strata must, in dwindling, gracefully morph through a constrained series of retention patterns.
 
-Emerging so-called ``hereditary stratigraphy’’ methodology abstracts this problem to a more general one: how to satisfactorily maintain a temporally representative collection of observations that stream in on a rolling basis.
-We term this more general question the ``stream curation problem.’’
-Because ongoing data feeds necessitate continual downsampling when faced with storage and memory limitations, the streaming curation problem occurs also in context of unattended data loggers, irregularly-uplinked wireless sensor network devices, and servers under continuous application monitoring, among other scenarios.
-To meet requirements of diverse streaming curation scenarios, we present a suite of streaming curation policy algorithms that trade off along a continuum of collection size and temporal coverage.
-Policies span $\mathcal{O}(n)$, $\mathcal{O}(\log n)$, and $\mathcal{O}(1)$ orders of growth in curated collection size.
-Within each order of growth, policy algorithms differ in relative prioritization of newer versus older data.
-We explore two alternatives: even density distribution across history or recency-proportional distribution with greater density at more recent time points.
-Policy algorithm designs explicitly pre-determine retained collection composition at each time point, enabling key optimizations to reduce storage overhead and streamline processing of incoming observations.
+Stepping back, the online filtering obligations faced by hereditary stratigraph annotations not unlike those faced by unattended data logger devices.
+Both manage incoming observation streams on a potentially indefinite or indeterminate basis and both operate under storage space limitation.
+Further, both are presumedly tasked to operate under some stipulation for time coverage, whether simply rolling full retention of most recent data within available buffer space \citep{fincham1995use}, dismissal of incoming data after storage reaches capacity \citep{saunders1989portable,mahzan2017design}, best-effort even coverage of the elapsed period, or otherwise.
+Even high-capacity devices may experience overflow conditions when confronted with high-frequency data streams \citep{luharuka2003design}.
 
+Restated explicitly, these scenarios confront a question of how to satisfactorily maintain a temporally representative cross section of observations that stream in on a rolling basis.
+We propose this problem as the ``stream curation problem.''
+For the sake of generalizability, Section \ref{sec:annotation-algorithms} organizes presentation of stratum retention algorithms through the lens of the stream curation problem.
+There has been some work to extend the record capacity of data loggers through application-specific online compression algorithms that (\citep{hadiatna2016design}, but to our knowledge the streaming curation problem has not been treated directly from either a theoretical or empirical vantage.
 
-
-% suffers
-% In analogy to geological layering, we refer to ``fingerprints'' as being contained within a ``stratum'' associated with a particular generation, we refer
-% We call the annotation comprised of strata deposited at each generation a hereditary stratigraphic column.
-
-
-
-
-Describe how hstrat works (briefly?)
-mention \texttt{hstrat} software library \citep{moreno2022hstrat}
-
+Recalling earlier discussion of hardware trends, the accelerating ubiquitization of IoT hardware and, in particular, continuing downscaling toward smart dust call stream curation scenarios directly into play.
+Organization of IoT devices into wireless sensor networks is expected, in a considerable fraction of cases, to structure irregular device uplink schedules.
+For instance, the so-called ``mobile sink'' paradigm has risen to some prominence due to advantages with respect to power management, security, and network load management \citep{jain2022survey}.
+Under this model, network base station(s) physically traverse the coverage area and transact with nearby sensor nodes.
+Reliance on the mobile sink's patrol schedule potentially introducing uncertainty in data transfer schedules.
+Streaming curation may be particularly relevant to data management in surveillance devices such as doorbell or body-worn cameras have experienced notable market growth \citep{calacci2022cop,lum2019research}.
+Recency-proportional retention may suit some applications time intervals of interest may be flagged well after the fact, but tend to bias toward the recent past.
+This approach could also align with the objectives of some accident recording devices.
+% TODO this sentence sucks: rephrase
+Finally, streaming curation may even pertain to record management in large capacity centralized storage systems in some scenarios \citep{bhat2018data}.
 
 
 \begin{itemize}
@@ -134,28 +152,6 @@ mention \texttt{hstrat} software library \citep{moreno2022hstrat}
   \item interesting instance of reconstruction that shares a lot in common with hereditary stratigraphy: chain email sharing \citep{libennowell2008tracing}
 \end{itemize}
 
-\begin{itemize}
-  \item IoT/wireless sensor networks
-  \item low power/capacity hardware: smart dust \citep{warneke2001smart}
-  \item run out of space:
-  \begin{itemize}
-    \item long-duration solar-powered sensor --- battery is not limiting factor \citep{corke2007long}
-    \item not just limited onboard memory
-    \item high frequency data \citep{luharuka2003design}
-  \end{itemize}
-  \item common theme: irregular connectivity
-  \begin{itemize}
-    \item communicication outages/disruptions (need cite)
-    \item query-based networks (need cite) (note ``security'' applications where desired content is only known long after the fact?)
-    \item mobile sinks \citep{jain2022survey} (for security, power efficiency (fewer hops), reduce bottlenecking)
-    \item at the very extreme are autonomous loggers
-    \item logger: new data discarded once full \citep{saunders1989portable,mahzan2017design}
-    \item logger: new data replaces oldest data (flight data recorder; need cite)
-    \item logger: pplication-specific online compression algorithm that (\citep{hadiatna2016design} increases capacity twofold)
-  \end{itemize}
-  \item more data coming in from everywhere, also need a principled strategy to triage ``record management'' in centralized storage
-  \item end on: need a principled way to weed time series data on the fly that meets coverage requirements at any point in time
-\end{itemize}
 
 
 
