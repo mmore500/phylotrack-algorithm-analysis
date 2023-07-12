@@ -1,13 +1,16 @@
 \begin{algorithm}
-\caption{Geometric Sequence $n$th Root Stratum Discard Generator}
-\label{alg:geom-seq-nth-root-algo-gen-drop-ranks}
+\caption{Geometric Sequence $n$th Root Stratum Enumeration}
+\label{alg:geom-seq-nth-root-enum-retained-ranks}
 \begin{algorithmic}[1]
-\STATE $\text{spec} \gets \text{policy.GetSpec()}$
-\STATE \textbf{yield from} $\text{sorted(}$
-\STATE $\qquad \text{get\_retained\_ranks(}$
-\STATE $\qquad \qquad \text{spec.GetDegree(),}$
-\STATE $\qquad \qquad \text{spec.GetInterspersal(),}$
-\STATE $\qquad \qquad \texttt{num\_\text{strata}\_\text{deposited}}$
-\STATE $\qquad \text{)}$
+\STATE{Define $P:=T:=\{ \{1\},\ldots,\{d\}$\}}
+\WHILE{$\#P > 1$}
+\STATE\label{line3}{Choose $C^\prime\in\mathcal{C}_p(P)$ with $C^\prime :=
+\operatorname{argmin}_{C\in\mathcal{C}_p(P)} \varrho(C)$}
+\STATE{Find an optimal partition tree $T_{C^\prime}$ }
+\STATE{Update $P := (P{\setminus} C^\prime) \cup \{ \bigcup_{t\in C^\prime} t \}$}
+\STATE{Update $T := T \cup \{ \bigcup_{t\in\tau} t : \tau\in T_{C^\prime}{\setminus}
+\mathcal{L}(T_{C^\prime})\}$}
+\ENDWHILE
+\RETURN $T$
 \end{algorithmic}
 \end{algorithm}

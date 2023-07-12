@@ -1,6 +1,7 @@
 \usepackage[export]{adjustbox}
 \usepackage{algorithm}
 \usepackage{algorithmic}
+\usepackage{algpseudocode}
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{array}
 \usepackage{bibunits}
@@ -13,6 +14,7 @@
 \usepackage[T1]{fontenc} % adapted from https://tex.stackexchange.com/a/388208
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
+\usepackage{glossaries,glossaries-extra}
 \usepackage{hyperref,cleveref}
 \usepackage{hyperref}
 \usepackage{ifthen}
@@ -38,3 +40,7 @@
 \usepackage{xfp}
 \usepackage{xparse}
 \usepackage{xstring}
+
+\newcommand*\Let[2]{\State #1 $\gets$ #2}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
