@@ -3,27 +3,27 @@
 
 \begin{figure*}
   \centering
-  \dissertationonly{\footnotesize}
-  \begin{tabular}{m{0.05\textwidth}@{}|c@{}|c@{\hskip 0.01\textwidth}|m{0.14\textwidth}}
+  \footnotesize
+  \begin{tabular}{m{0.07\textwidth}@{}|c@{}|c@{\hskip 0.01\textwidth}|m{0.14\textwidth}}
 %-------------------------------------------------------------------------------
 \hspace{-1ex}Policy&Lower-Resolution Parameterization&Higher-Resolution Parameterization&\makecell[c]{Properties}\\\hline
 %-------------------------------------------------------------------------------
     \rotatebox{90}{\textbf{Fixed Resolution}}
   &
     \makecell{
-      \includegraphics[valign=t,width=\dissertationelse{0.3}{0.4}\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/fixed_resolution=512+num_layers=1024+stratum_retention_predicate=fixed-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/fixed_resolution=512+num_layers=1024+stratum_retention_predicate=fixed-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
     }
   &
     \makecell{
-      \includegraphics[valign=t,width=\dissertationelse{0.3}{0.4}\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/fixed_resolution=128+num_layers=1024+stratum_retention_predicate=fixed-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/fixed_resolution=128+num_layers=1024+stratum_retention_predicate=fixed-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
     }
   &
   \makecell[{{p{0.14\textwidth}}}]{
   \centering
     \bf{Space Complexity}\\
-    $O(n)$\\
+    $\mathcal{O}(n)$\\
     \bf{MRCA Uncertainty}\\
-    $O(1)$
+    $\mathcal{O}(1)$
   }
   \makecell[{{p{0.14\textwidth}}}]{
   \raggedright
@@ -35,24 +35,24 @@
       rotate=90,
     }{
       \centering
-      \textbf{Depth-Proportional Resolution}
+      \textbf{Depth-Proportional\\Resolution}
       \par
     }
   &
     \makecell{
-      \includegraphics[valign=t,width=\dissertationelse{0.3}{0.4}\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=1+num_layers=1024+stratum_retention_predicate=depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=1+num_layers=1024+stratum_retention_predicate=depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
     }
   &
     \makecell{
-      \includegraphics[valign=t,width=\dissertationelse{0.3}{0.4}\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=4+num_layers=1024+stratum_retention_predicate=depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=4+num_layers=1024+stratum_retention_predicate=depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
     }
   &
   \makecell[{{p{0.14\textwidth}}}]{
   \centering
     \bf{Space Complexity}\\
-    $O(1)$\\
+    $\mathcal{O}(1)$\\
     \bf{MRCA Uncertainty}\\
-    $O(n)$
+    $\mathcal{O}(n)$
   }
   \makecell[{{p{0.14\textwidth}}}]{
   \raggedright
@@ -60,57 +60,57 @@
   }\\\hline
 %-------------------------------------------------------------------------------
   \adjustbox{
-    minipage=15em,
+    minipage=10em,
     rotate=90,
   }{
     \centering
-    \textbf{Recency-Proportional\\Resolution}
+    \textbf{Recency-proportional\\Resolution}
     \par
   }
   &
   \makecell{
-    \includegraphics[valign=t,width=\dissertationelse{0.3}{0.4}\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_mrca_recency_proportional_resolution=0+num_layers=1024+stratum_retention_predicate=recency-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+    \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_mrca_recency_proportional_resolution=0+num_layers=1024+stratum_retention_predicate=recency-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
   }
   &
   \makecell{
-    \includegraphics[valign=t,width=\dissertationelse{0.3}{0.4}\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_mrca_recency_proportional_resolution=4+num_layers=1024+stratum_retention_predicate=recency-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+    \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_mrca_recency_proportional_resolution=4+num_layers=1024+stratum_retention_predicate=recency-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
   }
   &
   \makecell[{{p{0.14\textwidth}}}]{
   \centering
-  \bf{Space Complexity}\\
-  $O(\log(n))$\\
-  \bf{MRCA Uncertainty}\\
-  $O(m)$
+    \bf{Space Complexity}\\
+    $\mathcal{O}(\log(n))$\\
+    \bf{MRCA Uncertainty}\\
+    $\mathcal{O}(m)$
   }
   \makecell[{{p{0.14\textwidth}}}]{
   \raggedright
-  where $m$ is gens since MRCA and $n$ is total gens elapsed.
+    where $m$ is gens since MRCA and $n$ is total gens elapsed.
   }\\\hline
 %-------------------------------------------------------------------------------
     \adjustbox{
-      minipage=15em,
+      minipage=10em,
       rotate=90,
     }{
       \centering
-      \textbf{Geometric Sequence $n$th Root}
+      \textbf{Geometric Sequence\\$n$th Root}
       \par
     }
   &
     \makecell{
-      \includegraphics[valign=t,width=\dissertationelse{0.3}{0.4}\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=1+num_layers=1024+stratum_retention_predicate=tapered-depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=1+num_layers=1024+stratum_retention_predicate=tapered-depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
     }
   &
     \makecell{
-      \includegraphics[valign=t,width=\dissertationelse{0.3}{0.4}\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=4+num_layers=1024+stratum_retention_predicate=tapered-depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=4+num_layers=1024+stratum_retention_predicate=tapered-depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
     }
   &
   \makecell[{{p{0.14\textwidth}}}]{
   \centering
     \bf{Space Complexity}\\
-    $O(1)$\\
+    $\mathcal{O}(1)$\\
     \bf{MRCA Uncertainty}\\
-    $O(n)$
+    $\mathcal{O}(n)$
   }
   \makecell[{{p{0.14\textwidth}}}]{
   \raggedright
@@ -118,7 +118,7 @@
   }\\\hline
 %-------------------------------------------------------------------------------
     \adjustbox{
-      minipage=15em,
+      minipage=10em,
     rotate=90,
     }{
       \centering
@@ -126,20 +126,22 @@
       \par
     }
   &
+    %TODO generate this graphic
     \makecell{
-      \includegraphics[valign=t,width=\dissertationelse{0.3}{0.4}\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=1+num_layers=1024+stratum_retention_predicate=tapered-depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=1+num_layers=1024+stratum_retention_predicate=tapered-depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
     }
   &
+  %TODO generate this graphic
     \makecell{
-      \includegraphics[valign=t,width=\dissertationelse{0.3}{0.4}\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=4+num_layers=1024+stratum_retention_predicate=tapered-depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=4+num_layers=1024+stratum_retention_predicate=tapered-depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
     }
   &
   \makecell[{{p{0.14\textwidth}}}]{
   \centering
     \bf{Space Complexity}\\
-    $O(1)$\\
+    $\mathcal{O}(1)$\\
     \bf{MRCA Uncertainty}\\
-    $O(n)$
+    $\mathcal{O}(n)$
   }
   \makecell[{{p{0.14\textwidth}}}]{
   \raggedright

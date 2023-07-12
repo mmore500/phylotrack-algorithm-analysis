@@ -1,13 +1,13 @@
 \subsection{Recency-proportional Resolution (RPR) Policy Algorithm}
 \label{sec:recency-proportional-resolution-algo}
 
-This stratum retention algorithm's properties fall between the properties of the fixed and depth-proportional resolution policy algorithms, covered in the immediately preceding sections.
+This sreaming curation algorithm's properties fall between the properties of the fixed and depth-proportional resolution policy algorithms, covered in the immediately preceding sections.
 
 Recall that the depth-proportional resolution policy algorithm's gap widths grow in linear proportion to record depth.
 In contrast, the fixed resolution algorithm's gap width remains constant below a specified bound across record depths.
 
 The recency-proportional resolution (RPR) algorithm policy bounds gap width to a linear factor of layer age (i.e., time steps back from the newest layer).
-Suppose $n$ depositions have elapsed.
+Suppose $n$ observations have elapsed.
 Then, for a user-specified constant $r$, no resolution for layer $m$ will exceed width
 \begin{align}
   \left\lfloor \frac{k}{r} \right\rfloor.
@@ -15,25 +15,25 @@ Then, for a user-specified constant $r$, no resolution for layer $m$ will exceed
 \end{align}
 Resolution at each layer widens linearly with record depth.
 Consequently, resolution widens in linear proportion to layer age.
-Resolution for any given layer age, however, remains constant for all diuturnities.
+Resolution for any given layer age, however, remains constant for all record ages.
 
 The FR and DPR policy algorithms exhibit $O(r)$ and $O(rn)$ extant record orders of growth, respectively.
 We will show extant record order of growth as $O(r\log{n})$ under the recency-proportional resolution retention algorithm.
 
-Algorithm \ref{alg:recency-proportional-resolution-algo-enum-retained-ranks} enumerates deposition times of retained strata under the RPR policy algorithm.
+Algorithm \ref{alg:recency-proportional-resolution-algo-enum-retained-ranks} enumerates observation times of retained observations under the RPR policy algorithm.
 Figure \ref{fig:retention-policies} shows a time-lapse of the extant record enacted as a result.
 
-The extant record is determined iteratively, beginning at deposition time zero --- which is always retained.
-Per Equation \ref{eqn:rpr-gap}, gap width to the next retained stratum can be at most $\lfloor n/r \rfloor$ sites, where $n$ is record depth.
-Although selecting to retain the $\lfloor n/r \rfloor$ deposition time stratum would satisfy policy resolution guarantees, a slight complication is necessary to ensure that retained strata have been consistently retained since deposition.
+The extant record is determined iteratively, beginning at observation time zero --- which is always retained.
+Per Equation \ref{eqn:rpr-gap}, gap width to the next retained observation can be at most $\lfloor n/r \rfloor$ sites, where $n$ is record depth.
+Although selecting to retain the $\lfloor n/r \rfloor$ observation time observation would satisfy policy resolution guarantees, a slight complication is necessary to ensure that retained observations have been consistently retained since observation.
 A fuller self-consistency rationale will follow, but in short gap width is floored to the next lower power of two,
 \begin{align*}
   2^{\lfloor \log_{2}\left(\frac{n}{r}\right) \rfloor}.
 \end{align*}
-The next iteration repeats the procedure from the newly retained deposition time instead of deposition time zero.
-Iteration continues until reaching the newest stratum.
+The next iteration repeats the procedure from the newly retained observation time instead of observation time zero.
+Iteration continues until reaching the newest observation.
 
-The set of strata to eliminate can be calculated from set subtraction between enumerations of the historical record at time points $t-1$ and $t$.
+The set of observations to eliminate can be calculated from set subtraction between enumerations of the historical record at time points $t-1$ and $t$.
 So, update time complexity follows from extant record enumeration time complexity, which turns out to be $O(\log n)$ as detailed in Theorem \ref{thm:recency-proportional-resolution-algo-uncertainty-bound}.
 We provide a tested, but unproven, constant-time pruning enumeration implementation in the \texttt{hstrat} library, but will not cover it here.
 The extant record order of growth $O(\log n)$ also follows closely from the record enumeration algorithm, detailed in Theorem \ref{thm:recency-proportional-resolution-algo-enum-retained-ranks}.
@@ -41,9 +41,9 @@ The extant record order of growth $O(\log n)$ also follows closely from the reco
 Why does flooring step sizes to a binary power ensure self-consistency?
 Let us begin by noting properties applicable to all layers $l$,
 \begin{enumerate}
-\item gap width provided at retained layer $l$ increases monotonically as further depositions proceed,
-\item the retained stratum preceding or at $l$ has deposition time at an even multiple of gap width (on either side), and
-\item all deposition time multiples of gap width up to the newest stratum exist among retained strata.
+\item gap width provided at retained layer $l$ increases monotonically as further observations proceed,
+\item the retained observation preceding or at $l$ has observation time at an even multiple of gap width (on either side), and
+\item all observation time multiples of gap width up to the newest observation exist among retained observations.
 \end{enumerate}
 Observe also that gap width decreases monotonically with layer youth.
 
@@ -56,7 +56,7 @@ Availability of the new gap endpoint is guaranteed from the stacking properties 
 Theorem \ref{thm:recency-proportional-resolution-algo-self-consistency} uses inductive proof-by-contradiction to show this point.
 
 The RPR policy algorithm provides stable relative accuracy indefinitely.
-This makes it particularly attractive in scenarios where phylogenetic reconstruction accuracy is paramount.
+This makes it particularly attractive in hereditary stratigraphy scenarios where phylogenetic reconstruction accuracy is paramount.
 At comparable annotation sizes, we have found that recency-proportional gap width distribution outperforms uniform gap width distribution in phylogenetic information recovery \citep{moreno2022hereditary}.
 Maintaining 3\% relative precision appears sufficient to eliminate most bias from reconstruction error on phylogenetic metrics \citep{moreno2023toward}
 
