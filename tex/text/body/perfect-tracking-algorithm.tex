@@ -1,5 +1,34 @@
 \section{Perfect Tracking Algorithm} \label{sec:perfect-tracking}
 
+Traditionally, the problem of recording the phylogenies of replicating digital 
+entities has been solved using a ``perfect tracking'' approach where all replication 
+events are recorded and stored in a tree (or forest, if there are multiple roots) [TODO: Cite phylotrackpy].
+In this section, we present results on the time and space complexity of perfect tracking;
+these results will serve as a basis of comparison for our curation policy algorithms in the context
+of lineage tracking.
+
+Perfect tracking algorithms are designed to plug into the ongoing replication proces.
+As such, they exist in three separate steps: 1) initialization, 2) handling the birth of new objects, and 3) (optionally) handling the removal of existing objects.
+The initialization step happens at the beginning of the process being measured.
+The birth handling sub-algorithm gets called any time a new object is created.
+Similarly, the removal handling sub-algorithm gets called any time an object is removed from the set of currently active objects.
+The naive perfect tracking algorithm is fairly straightforward and is formally desribed in algorithm \ref{alg:perfect-tracking}. 
+%For the purposes of analysis, we assume that this algorithm is being used in the context of a digital evolving system with a population of size $N$ that runs for $G$ generations. 
+
+\input{alg/perfect-tracking.tex}
+
+\input{thm/perfect-tracking-todo.tex}
+
+For most substantial applications, this space complexity is prohibitive.
+Instead, most practitioners use an alternative perfect tracking algorithm that includes a ``pruning'' step to reduce memory use (see algorithm \ref{alg:perfect-tracking-pruning}).
+This algorithm removes all parts of the phylogeny that are no longer relevant to explaining the history of currently extant objects.
+Thus, like naive perfect tracking, it does not introduce any uncertainty into down-stream analyses.
+
+%Note that another important axis of comparison is the amount of information retained
+%In this ``perfect tracking'' approach, no information is lost
+%As we will show in this section, this perfect tracking
+%approach can be carried out efficiently on traditional hardware. 
+
 % Worst-case space complexity is O(N*G), which happens when each member of the population has exactly one offspring
 % Average-case is probably more informative. Due to coalesence, even "average" case (if we assume everything is random)
 % will still be worse than we would usually see in practice (except when we're running controls with no selection)
@@ -25,8 +54,6 @@
 % P0, T=1. .63N nodes. O1: (1/N) * ((N-1)/N)^(N-1) have one offspring, O2: (1/N)^2 * ((N-1)/N)^(N-2) have 2. OX: (1/N)^X * ((N-1)/N)^(N-X) have X
 % P0, T=2. .63N - .37*O1 - ? * OX
 
-\input{alg/perfect-tracking.tex}
-\input{thm/perfect-tracking-todo.tex}
 
 \input{alg/perfect-tracking-pruning.tex}
 \input{thm/perfect-tracking-with-pruning-todo.tex}

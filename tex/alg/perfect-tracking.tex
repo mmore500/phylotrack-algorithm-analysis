@@ -1,16 +1,17 @@
+\renewcommand{\algorithmiccomment}[1]{ \newline \textbf{comment:} \textit{#1}}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+
 \begin{algorithm}
     \caption{Perfect phylogenetic tracking}
     \label{alg:perfect-tracking}
+    \textbf{Part 1: Initialization}
     \begin{algorithmic}[1]
-    \STATE{Define $T:=$ an empty tree}
-    \STATE{Define $P:=$ a population of size $n$}
-    \STATE{Add node representing common ancestor to $T$}
-    \FOR{$i = 0$ to $g$}
-        \FOR{$j = 0$ to $n$}
-            \STATE{Add node representing $P_j$ to $T$}
-            \STATE{Add edge in $T$ from parent of $P_j$ to $P_j$}
-        \ENDFOR
-    \ENDFOR
-    \RETURN $T$
+    \STATE{Define $T:=$ an empty forest}
+    \end{algorithmic}
+    \textbf{Part 2: Handle birth event}
+    \begin{algorithmic}[1]
+        \REQUIRE{$P_i$ = newly created organism, $P_j$ = $P_i$'s parent}
+        \STATE{Add node representing $P_i$ to $T$}
+        \STATE{Add edge in $T$ from $P_j$ to $P_i$}
     \end{algorithmic}
 \end{algorithm}

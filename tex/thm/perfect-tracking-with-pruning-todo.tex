@@ -1,23 +1,28 @@
+The pruning algorithm also has a constant (amortized) time complexity, although it is not as immediately obvious that this is the case:
+
 \begin{theorem}{Pruning Time Complexity}
-\label{thm:perfect-tracking-with-pruning-todo}
+\label{thm:perfect-tracking-with-pruning-time}
 The time complexity of pruning in perfect phylogenetic tracking is $\mathcal{O}(1)$, amortized. 
 \end{theorem}
 
 \begin{proof}
-\label{prf:perfect-tracking-with-pruning-todo}
-The added time complexity of pruning is incurred when taxa are removed.
-When taxon $t$ is removed, there are two possibilities: 1) $t$'s parent is either alive or has other descendants that are alive, or 2) $t$ was the last living descendant of it's parent.
-In case 1, nothing other than $t$ can be removed from the phylogeny.
-Consequently, case 1 takes constant time, as the only added cost from pruning is checking whether we are in case 1 or case 2.
+\label{prf:perfect-tracking-with-pruning-time}
+The initialization and birth-handling steps of the pruning algorithm are trivially constant-time, as explained in proof \ref{prf:perfect-tracking-time} (technically the pruning algorithm adds two constant-time operations to the birth-handling step, but this fact is inconsequential).
+Next, we prove that the removal-handling pruning algorithm runs in amortized constant time.
+When an arbitrary taxon $t$ is removed, there are three possibilities: 1) $t$ has living descendants, 2) $t$ has no living descendants, but $t$'s parent is either alive or has other descendants that are alive, or 3) $t$ was the last living descendant of its parent.
+In case 1, nothing can be removed from the phylogeny.
+Case 1 takes contant time, because it only requires executing a single comparison operation.
+In case 2, only $t$ can be removed from the phylogeny.
+Case 2 also takes constant time, as it only requires removing a single node from the tree and doing three comparison operations.
 
-In case 2, pruning must be done.
+In case 3, pruning must be done.
 We recurse back up the lineage until we find a taxon, $a$, that is either alive or has living descendants. 
 Let the distance between $t$ and the root of the tree be $d_t$ and the distance between $a$ and the root of the tree be $d_a$.
-The pruning operation, then, take $\mathcal{O}(d_t - d_a)$ steps. 
+The pruning operation, then, takes $\mathcal{O}(d_t - d_a)$ steps. 
 In the worst case, this value will be equal to the number of elapsed generations.
 
-However, for case 2 to occur, all taxa from $t$ to $a$ (including $a$ but not including $t$) must have already been removed.
-Consequently, $d_t - d_a$ case 1 removal operations must happen for every case 2 removal operation.
+However, for case 3 to occur, all taxa from $t$ to $a$ (including $a$ but not including $t$) must have already been removed.
+Consequently, $d_t - d_a$ case 1 removal operations must happen for every case 3 removal operation.
 Thus, the amortized time to remove the sequence of taxa from $t$ to $a$ (including both $t$ and $a$) is:
 
 \[
@@ -32,5 +37,77 @@ Since
 
 the amortized time complexity of pruning is bounded by a constant, i.e. it is $\mathcal{O}(1)$.
 
+
+\end{proof}
+
+Analyzing the space complexity of perfect tracking with pruning is challenging. 
+Technically, the worst-case is the same as for naive perfect tracking (see theorem \ref{thm:perfect-tracking-space}).
+However, whereas that space complexity is also the best case for naive perfect tracking, it is a somewhat pathological case for perfect tracking with pruning.
+In perfect tracking, such a case would only occur when every object always successfully copies itself before beind removed.
+These scenarios might legitimately occur if objects are never removed or the number of objects is allowed to continuously grow, but in these cases space complexity would be as described in theorem \ref{thm:perfect-tracking-space} even without phylogeny tracking.
+They could potentially also happen when tracking digital objects that are copied with very small amounts of stochasticity.
+
+In any scenario with a substantial amount of stochasticity, however, the average space complexity will be dramatically smaller.
+Importantly, this category includes nearly all evolutionary scenarios (with the main possible exception being cases where there is extreme pressure for diversity maintenance). 
+Indeed, evolutionary scenarios involving selection (i.e. most of them) will usually have dramatically better space complexity than the average cases we are about to explore.
+
+The fundamental process that is relevant to understand for these purposes is coalescence. 
+Coalescence describes the way particles governed by random processes come together over time [cite Berestycki].
+Coalescence theory has a long history of use in evolutionary theory, due to the following observation:
+if we start from a population that exists in the present and look backwards in time, the process of evolution that lead to it is a coalescent process.
+Predictions from coalescence theory tell us that under random drift (i.e. the absence of selection), populations will periodically undergo ``coalesence'' 
+events in which the most recent common ancestor of the entire current population becomes more recent as a result of old lineages dying out.
+This observation implies that when we run our perfect tracking with pruning algorithm for sufficiently long periods of time, on average we should expect our tree to have a long ``stem'' of nodes with a single parent and single child.
+The most recent node in this chain will be the most recent common ancestor (MRCA) of the whole extant population.
+The descendants of the MRCA will form a more traditional looking tree, which we will call $T_c$.
+
+The size of $T_c$, then, will be the dominant factor affecting how the space complexity of perfect tracking with pruning scales.
+Although the asymptotic behavior of the expected size of $T_c$ depends on the specifics of the evolutionary process, it scales sub-linearly with respect to population size for all realistic models that have been investigated thus far.
+Thus, based on existing work, we can easily claim a loose bound of $\mathcal{O}(n + g)$.
+Trivially, the ``stem'' of $T$ can be pruned off when coalescence occurs, producing bound of $\mathcal{O}(n)$.
+Indeed, a tighter bound of $\mathcal{O}(\frac{n}{log(n)})$ would likely be accurate.
+However, any algorithm on which this tracking could be done almost certainly would already have a space complexity of at least $\mathcal{O}(n)$, as it would need to represent the current population.
+As such, 
+Fortunately, coalescence theory gives us tools for calculating the expected size of $T_c$ under various circumstances.
+The challenge is that different sets of assumptions that we could make about how the branching process proceeds 
+
+% Kingman coalescent expected tree length is O(log(n))
+% Boltzman-S is O(n/log(n))
+
+% Most importa, coalescence theory can also  tree between the extant population and its most recent common ancestor. 
+
+
+
+% where a lineage goes extinct, causing the most recent common ancestor of the entire population to  
+% Coalescent theory can be used to model the process of evolution under random drift (i.e. the absence of selection) by predicting the expected depth
+% number of generations between the present and the most recent common ancestors of different sets of individuals that currently exist.
+% Conveniently for us, 
+
+
+\begin{theorem}{Average Space Complexity of Perfect Tracking with Pruning}
+\label{thm:perfect-tracking-with-pruning-space}
+% Average case is best described by the upper-case-lambda coalescent, but math on that is maybe
+% less well understood than Kingman coalescent. Kingman coalescent makes a number of more limiting
+% assumptions, but most of them are actually fairly appropriate for most phylogeny tracking situations
+% (fixed-size population, wright-fisher model). The biggest problem is that it assumes only bifurcations
+% (no multi-furcations). However, a strictly bifurcating tree is the worst case for average space complexity
+% (a series of non-bifurcating trees is the absolute worst case, but under random selection it would
+% quickly turn into a pretty good (best?) case). So, if we can't do an exact proof based on the upper
+% case lambda coalescent, we can still do worst average case proof based on the Kingman coalescent
+% Oh wait, maybe bifurcations aren't the worst case? Apparently there is a paradoxical result that shows
+% that the Kingman Coalescent decreases fastest???
+
+% Okay, here's the thing - all of these different models behave in ways that populations being tracked
+% might behave. The argument to make here is that for a ton of them, the size of the tree (Ln) has been
+% shown to be constant, proportional to n, limited by some distribution or asymptote, etc. It may even
+% be sufficient to say that they come down from infinity. We end up with a space complexity something like
+% O(generations + Ln) which in the worst case could translate to something like O(generations + 2*pop_size^2),
+% except I think we can actually prove it's actually something more like O(generations + pop_size + log(pop_size))
+% slight risk that pop_size should be multiplied by log(pop_size)
+
+\end{theorem}
+
+\begin{proof}
+\label{prf:perfect-tracking-with-pruning-space}
 
 \end{proof}
