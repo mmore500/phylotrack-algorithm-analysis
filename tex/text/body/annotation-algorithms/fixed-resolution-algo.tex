@@ -5,9 +5,6 @@ The fixed resolution (FR) policy algorithm adopts a simplistic strategy: retain 
 This procedure equates to naive downsampling via decimation \citep[p. 31]{crochiere1983multirate}.
 We include discussion for completeness.
 
-\input{alg/fixed-resolution-algo-gen-drop-ranks.tex}
-\input{alg/fixed-resolution-algo-enum-retained-ranks.tex}
-
 The procedures to decide eliminated time points during the update process and to enumerate retained observation times are trivial.
 Pruning targets time points that are not the fixed resolution $r$ and enumeration traverses time points at an even stride $r$ until reaching record age.
 Algorithms \ref{alg:fixed-resolution-algo-gen-drop-ranks} and \ref{alg:fixed-resolution-algo-enum-retained-ranks} provide these procedures formally.
@@ -22,3 +19,6 @@ Any larger gap size would require at least one time point multiple of $r$ to hav
 The FR policy algorithm provides stable absolute accuracy indefinitely.
 Such an approach will be necessary for scenarios that can tolerate only certain observational uncertainties.
 However, because extant record size grows $O(n)$ this policy would not suit applications expecting long observational duration, high-frequency observation, or some storage limitation.
+
+\input{alg/fixed-resolution-algo-gen-drop-ranks.tex}
+\input{alg/fixed-resolution-algo-enum-retained-ranks.tex}
