@@ -6,13 +6,13 @@
         \REQUIRE{ $\texttt{r}$ -- the fixed resolution desired }
         \ENSURE{ array of retained strata }
     \end{algorithmic}
-        
+
     \Procedure{NumberToCondemn}{\texttt{n}, \texttt{r}}
     \begin{algorithmic}[1]
-        \IF{$ (\texttt{n} \bmod 2 = 1) \lor (\texttt{n} < 2 \cdot \texttt{r} + 1) $}
-            \STATE\Return{$0$} 
-        \ELSE 
-            \STATE\Return{1 + \Call{NumberToCondemn}{$\texttt{n} / 2$, \texttt{r}}}
+        \IF{$(\texttt{n} \bmod 2 = 1) \lor (\texttt{n} < 2 \cdot \texttt{r} + 1)$}
+            \RETURN $0$
+        \ELSE
+            \RETURN $1 + \Call{NumberToCondemn}{$\texttt{n} / 2$, \texttt{r}}$
         \ENDIF
     \end{algorithmic}
     \EndProcedure
