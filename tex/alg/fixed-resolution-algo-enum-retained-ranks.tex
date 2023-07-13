@@ -2,15 +2,14 @@
 \caption{Fixed Resolution Stratum Enumeration}
 \label{alg:fixed-resolution-enum-retained-rans}
 \begin{algorithmic}[1]
-\STATE{Define $P:=T:=\{ \{1\},\ldots,\{d\}$\}}
-\WHILE{$\#P > 1$}
-\STATE\label{line3}{Choose $C^\prime\in\mathcal{C}_p(P)$ with $C^\prime :=
-\operatorname{argmin}_{C\in\mathcal{C}_p(P)} \varrho(C)$}
-\STATE{Find an optimal partition tree $T_{C^\prime}$ }
-\STATE{Update $P := (P{\setminus} C^\prime) \cup \{ \bigcup_{t\in C^\prime} t \}$}
-\STATE{Update $T := T \cup \{ \bigcup_{t\in\tau} t : \tau\in T_{C^\prime}{\setminus}
-\mathcal{L}(T_{C^\prime})\}$}
-\ENDWHILE
-\RETURN $T$
+    \REQUIRE{$\texttt{n}$ -- the number of strata deposited}
+    \REQUIRE{$\texttt{r}$ -- the fixed resolution desired}
+    \FOR{$i = 0$ \textbf{to} $\texttt{n} - 1$ \textbf{step} $\texttt{r}$}
+        \STATE{ \textbf{yield} $i$ }
+    \ENDFOR
+    \STATE{ $\texttt{last\_rank} \gets \texttt{n} - 1$ }
+    \IF{$\texttt{last\_rank} > 0$ \textbf{and} $(\texttt{last\_rank} \mod \texttt{r}) \neq 0$}
+        \STATE{ \textbf{yield} $\texttt{last\_rank}$ }
+    \ENDIF
 \end{algorithmic}
 \end{algorithm}
