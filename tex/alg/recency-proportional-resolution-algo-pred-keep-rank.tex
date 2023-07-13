@@ -1,19 +1,16 @@
 \begin{algorithm}
-\caption{Recency-proportional Stratum Retention Predicate}
+\caption{Recency-proportional Resolution Stratum Retention Predicate}
 \label{alg:recency-proportional-resolution-algo-pred-keep-rank}
 \begin{algorithmic}[1]
-    \REQUIRE{$\texttt{n}$ -- the number of strata deposited}
-    \REQUIRE{$\texttt{r}$ -- the fixed resolution desired}
-
-    \STATE $\text{cur\_rank} \gets 0$
-    \STATE $last\_rank \gets \texttt{n} - 1$
-
-    \WHILE{$\text{last\_rank} - \text{cur\_rank} > \texttt{r}$}
-        \STATE \textbf{yield} $\text{cur\_rank}$
-        \STATE $\texttt{uncertainty} \gets \text{power of 2 less than or equal to } (\text{last\_rank} - \text{cur\_rank}) / (\texttt{r} + 1)$
-    \ENDWHILE
-    \FOR{$i = \max(\text{last\_rank} - \texttt{r}, 0)$ \textbf{to} $\texttt{n} - 1$}
-        \STATE \textbf{yield} $i$
-    \ENDFOR
+\STATE{Define $P:=T:=\{ \{1\},\ldots,\{d\}$\}}
+\WHILE{$\#P > 1$}
+\STATE\label{line3}{Choose $C^\prime\in\mathcal{C}_p(P)$ with $C^\prime :=
+\operatorname{argmin}_{C\in\mathcal{C}_p(P)} \varrho(C)$}
+\STATE{Find an optimal partition tree $T_{C^\prime}$ }
+\STATE{Update $P := (P{\setminus} C^\prime) \cup \{ \bigcup_{t\in C^\prime} t \}$}
+\STATE{Update $T := T \cup \{ \bigcup_{t\in\tau} t : \tau\in T_{C^\prime}{\setminus}
+\mathcal{L}(T_{C^\prime})\}$}
+\ENDWHILE
+\RETURN $T$
 \end{algorithmic}
 \end{algorithm}

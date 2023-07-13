@@ -1,16 +1,28 @@
 \begin{algorithm}
-\caption{Geometric Sequence $n$th Root Stratum Enumeration}
-\label{alg:geom-seq-nth-root-enum-retained-ranks}
-\begin{algorithmic}[1]
-\STATE{Define $P:=T:=\{ \{1\},\ldots,\{d\}$\}}
-\WHILE{$\#P > 1$}
-\STATE\label{line3}{Choose $C^\prime\in\mathcal{C}_p(P)$ with $C^\prime :=
-\operatorname{argmin}_{C\in\mathcal{C}_p(P)} \varrho(C)$}
-\STATE{Find an optimal partition tree $T_{C^\prime}$ }
-\STATE{Update $P := (P{\setminus} C^\prime) \cup \{ \bigcup_{t\in C^\prime} t \}$}
-\STATE{Update $T := T \cup \{ \bigcup_{t\in\tau} t : \tau\in T_{C^\prime}{\setminus}
-\mathcal{L}(T_{C^\prime})\}$}
-\ENDWHILE
-\RETURN $T$
-\end{algorithmic}
+\caption{Recency-proportional Resolution Stratum Discard Generator}
+\label{alg:recency-proportional-algo-gen-drop-ranks}
+    \begin{algorithmic}
+        \REQUIRE{ $\texttt{n}$ -- the number of strata deposited }
+        \REQUIRE{ $\texttt{r}$ -- the fixed resolution desired }
+        \ENSURE{ array of retained strata }
+    \end{algorithmic}
+        
+    \Procedure{NumberToCondemn}{\texttt{n}, \texttt{r}}
+    \begin{algorithmic}[1]
+        \IF{$ (\texttt{n} \bmod 2 = 1) \lor (\texttt{n} < 2 \cdot \texttt{r} + 1) $}
+            \STATE\Return{$0$} 
+        \ELSE 
+            \STATE\Return{1 + \Call{NumberToCondemn}{$\texttt{n} / 2$, \texttt{r}}}
+        \ENDIF
+    \end{algorithmic}
+    \EndProcedure
+
+    \begin{algorithmic}[1]
+        \STATE $\texttt{num\_to\_condemn} \gets \Call{NumberToCondemn}{\texttt{n}, \texttt{r}}$
+        \STATE $\texttt{arr} \gets \text{empty array of length num\_to\_condemn}$
+
+        \FOR{$i = 0$ \textbf{to} $\texttt{num\_to\_condemn} - 1$}
+        \STATE $\texttt{arr} [$i$] \gets \texttt{n} - 2^{i} \cdot (2 \texttt{r} + 1)$
+        \ENDFOR
+    \end{algorithmic}
 \end{algorithm}

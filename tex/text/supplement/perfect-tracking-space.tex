@@ -1,0 +1,15 @@
+\section{Additional notes on the memory requirements of perfect tracking} \label{sec:perfect-tracking-space-supp}
+% TODO: section name that isn't monstorously long
+
+Note that perfect phylogeny tracking algorithms are designed to plug into a larger computational process.
+For phylogeny tracking to be relevant, this computational process must have a collection of $N$ objects that are currently eligilble to be copied (in evolutionary terms, the population).
+Therefore, the space complexity of this process must be at least $\mathcal{O}(N)$.
+As long as the expected size of $T$ scales no faster than $\mathcal{O}(N)$, then, phylogeny tracking will not be the primary factor determining memory usage.
+While the memory cost of phylogeny tracking could still be significant in these cases, it is unlikely to be the primary factor determining whether running the program is tractable.
+
+Previously, we noted that cases where perfect tracking with pruning achieves its worst case size order of growth are esoteric.
+There are two ways that theses situations can occur:
+
+1. $N$ is continuously increasing.
+2. There is effectively no coalescence.
+
