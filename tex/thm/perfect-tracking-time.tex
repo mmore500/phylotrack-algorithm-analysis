@@ -1,5 +1,3 @@
-The naive perfect tracking algorithm is very inexpensive in terms of time complexity:
-
 \begin{theorem}{Naive Perfect Tracking Time Complexity}
 \label{thm:perfect-tracking-time}
 The naive perfect tracking algorithm can be implemented in constant time ($\mathcal{O}(1)$) per birth event.
@@ -18,18 +16,3 @@ these birth events are not part of the tracking algorithm and would have happene
 Consequently, adding phylogeny tracking will only increase the time complexity of a computational process to which it is added by a constant amount per birth event.
 \end{proof}
 
-However, naive perfect tracking has a very large cost in terms of space complexity:
-
-\begin{theorem}{Naive Perfect Tracking Space Complexity}
-\label{thm:perfect-tracking-space}
-The space complexity of the naive perfect tracking algorithm is $\mathcal{\theta}\sum_{t=0}^{G} N_t$, where $N_t$ is the number of new objects born at time $t$ and $G$ is the number of time steps.
-\end{theorem}
-
-\begin{proof}
-\label{prf:perfect-tracking-space}
-The birth-handling algorithm adds a node to the tree ($T$) each time it is called.
-It is called once for every birth event.
-No nodes are ever removed from $T$.
-Therefore, the number of nodes in $T$ is the total number of nodes ever created.
-\end{proof}
-    
