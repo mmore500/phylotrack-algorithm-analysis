@@ -1,7 +1,22 @@
 \section{Conclusion} \label{sec:conclusion}
 
-We have presented an approach to distributed tracking of replicating digital artifacts, with particular applications to .
+We have documented the algorithmic backing of the emerging ``hereditary stratigraphy'' methodology for distributed lineage tracking of replicating digital artifacts.
+This method works by annotating replicating entities with a heritable annotation, and then comparing end-state annotations after the fact to estimate their phylogenetic relationships --- akin to how biologists infer phylogenetic relationships from biosequeences.
+We have shown the underlying mechanism of hereditary to be an instance of a more general ``streaming curation'' problem.
+This problem requires online subsampling of a rolling observation stream to balance requirements to maintain coverage of retained observations over stream history and to limit the number of retained observations.
+In addition to hereditary stratigraphy, the streaming curation problem matches to use cases involving memory-constrainged data logger or wiresless sensor network devices.
+We identify five policy algorithms that provide different size/coverage trade-offs for the streaming curation problem, and provide procedures to enact them efficiently.
 
-This is ready to be used in practice, with an existing public-facing open source library implementation \citep{moreno2022hstrat}.
+We then explore postprocessing algorithms used to compare and interpret hereditary stratigraphic annotations.
+In particular, we sketch a trie-based tree reconstruction algorithm that proceeds from the underlying structure of the hereditary stratigraphy annotation.
+As a point of comparison, we provide an algorithmic formalization of the established perfect-tracking algorithms currently standard in agent-based evolutionary modeling.
+%TODO talk about the take away of comparing the two
 
-Future work will investigate storage-aware to simplify and optimize applications (hereditary stratigraphic surfaces).
+Much future work remains.
+We are particularly interested in adapting hereditary stratigraphy to even more effectively make use of space in fixed-capacity contexts and minimize rearrangement of strata in the underlying annotation data structure (e.g., array of strata) during the update process.
+One promising direction involves adapting retention policies to directly specify the index position of strata to deposit over rather than the semantic deposit times of strata to prune.
+%TODO more future work
+
+Ultimately, our interest in hereditary stratigraphy and streaming curation is application-driven.
+To these ends, reference implementatons of most algorithms described are provided in the accompanying, public-facing \texttt{hstrat} Python library \citep{moreno2022hstrat}.
+This library enables application of hereditary stratigraphy and streaming curation techniques in a few lines of code.
