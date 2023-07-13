@@ -14,11 +14,11 @@ Due to the self-consistency requirements of streaming curation policy, the shall
 So, we will search for the first mismatching stratum among the deeper's eligible time points.
 
 The possibility of spurious collisions between (i.e., identical differentia values by chance) complicates the possibility of applying a binary search procedure to identify the earliest set of mismatching strata.
-Consider true lineage divergence as a boolean predicate: it evaluates false for all strata before some threshold time point and then true for all strata after. 
+Consider true lineage divergence as a boolean predicate: it evaluates false for all strata before some threshold time point and then true for all strata after.
 Spurious collisions introduce the possiblity of false negatives into search for the predicate satisfaction threshold.
 Take $c$ as retained stratum count.
 If probabilistic confidence were acceptable, a binary search could be performed by testing sufficient differentia at each step to bound the net failure rate over worst-case $\log (c)$ possible opportunities for false negative detections.
-However, in the worst case when two annotations share no mismatching differentia, absolute certainty in determining the earliest discrepancy will require $\mathcal{O}(c)$ comparison of all differentia pairs. 
+However, in the worst case when two annotations share no mismatching differentia, absolute certainty in determining the earliest discrepancy will require $\mathcal{O}(c)$ comparison of all differentia pairs.
 
 Spurious collisions introduce a second, it is worthwhile to note that systematically overestimates relatedness.
 This introduces bias into .
@@ -31,11 +31,11 @@ Such methods, like neighbor joining and UPGMA \citep{peng2007distance}, operate 
 This approach was used in early work with hereditary stratigraphy \citep{moreno2022hereditary}.
 All-pairs comparisons necessary to prepare the distance matrix make such reconstruction is at least $\mathcal{O}(c n^2)$, with $n$ as population size and $c$ as retained stratum count.
 The acompanying \texttt{hstrat} library implements
-As will be shown presently, better results can be achieved by working directly with hereditary stratigraphic annotations' underlying structure.  
+As will be shown presently, better results can be achieved by working directly with hereditary stratigraphic annotations' underlying structure.
 
 \subsection{Trie-based Reconstruction}
 
-Annotations should share a common path down the reconstructed phylogenetic tree for the duration that they share common ancestry. 
+Annotations should share a common path down the reconstructed phylogenetic tree for the duration that they share common ancestry.
 Anatomically, hereditary stratigraphic annotations share common differentia up through the end of common ancestry --- a common prefix.
 These observations suggest application of a trie data structure to perform phylogenetic reconstruction \citep{fredkin1960trie}
 
@@ -44,10 +44,10 @@ Assuming a consistent retention policy algorithm across annotations, annotations
 Phylogenetic reconstruction through trie creation follows as $\mathcal{O}(c n)$ \citep{mehta2018handbook}.
 In recent work drawing on the accompanying Python \texttt{hstrat} library, this approach achieved reconstructions over population size 32,768 ($2^15$) with $\approx 1,200$ strata retained per annotation in around five minutes \citep{moreno2023toward}.
 
-Two reconstruction biases should be noted.  
+Two reconstruction biases should be noted.
 Because spurious differentia collisions bias towards overestimation of relatedness, as noted in Section \sec{sec:pairwise-relatedness}, mean branching event recency in the reconstructed tree will --- on average --- be greater than in the true tree.
 The expected rate of spurious collision is easily predictable, so this bias can readily be estimated and subtracted away.
-Another possibile approach to counteract this bias when analyzing tree structure would be monte-carlo sampling of tree space with sets of inner nodes ``unzipped'' as if they had arisen due to spurious collision.    
+Another possibile approach to counteract this bias when analyzing tree structure would be monte-carlo sampling of tree space with sets of inner nodes ``unzipped'' as if they had arisen due to spurious collision.
 Second, trie reconstruction can overrepresent polytomies (i.e., internal multifurcations).
 Branches that may have unfoleded as separate events but fall within the same uncertainty gap will all lumped together into a single polytomy.
 This bias can be accounted for by splitting polytomies into arbitrary bifurcations with zero-length edges.
@@ -72,4 +72,3 @@ Experimental performance evaluation with annotations derived from representative
 
 % TODO patch in comparison to "real life" phylogenetic reconstruction somewhere?
 % Althouh statistically-optimal reconstructions are generally NP-hard \citep{giribet2007efficient}, sub-quadratic heuristics are possible \citep{truszkowski2013fast}.
-
