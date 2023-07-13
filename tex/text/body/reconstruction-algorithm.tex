@@ -1,72 +1,79 @@
-\section{Phylogenetic Reconstruction Algorithm} \label{sec:reconstruction}
+\section{Phylogenetic Inference Algorithms} \label{sec:reconstruction}
 
-This section surveys methodology to estimate the sequence of lineage branching events that comprise the phylogenetic history of a population of hereditary stratigraphic annootations.
-
-\subsection{Pairwies Relatedness} \label{sec:pairwise-relatedness}
-
-As discussed earlier, relatedness estimation between hereditary stratigraphic annotations derive from a simple principle: mismatching differentia values at a time point indicates two annotations' lineages had diverged.
+This section surveys methodology to time sequence of common and independent descent among hereditary stratigraphic artifacts.
+Sections \ref{sec:distance-based-reconstructions} and \ref{sec:trie-based-reconstructions} present, one after the other, a naive and then a more apt approach to inferring hierarchical relatedness (e.g., phylogeny) among many hereditary stratigraphic columns.
 The phylogenetic reconstruction problem requires synthesis of relatedness relationships across the entire population to assemble an holistic historical accounting.
-Further discussion, however requires some attention to the algorithmic complexity of estimating relatedness between two annotations.
+To lay groundwork for this discussion, Section \ref{sec:pairwise-relatedness} first details relatedness estimation between paired hereditary stratigraphic columns.
 
-Assuming two annotations with identical record depth share the same streaming curation policy algorithm, they will have retained strata from identical time points.
-If one annotation has greater record depth (i.e., more generations elapsed), truncate its strata deposited past the depth of the other annotation --- we already know no common ancestry is shared at those time points.
-Due to the self-consistency requirements of streaming curation policy, the shallower annotation will have a superset of the deeper's remaining stratum time points.
-So, we will search for the first mismatching stratum among the deeper's eligible time points.
+\subsection{Pairwise Relatedness}
+\label{sec:pairwise-relatedness}
 
-The possibility of spurious collisions between (i.e., identical differentia values by chance) complicates the possibility of applying a binary search procedure to identify the earliest set of mismatching strata.
-Consider true lineage divergence as a boolean predicate: it evaluates false for all strata before some threshold time point and then true for all strata after.
-Spurious collisions introduce the possiblity of false negatives into search for the predicate satisfaction threshold.
+Recall that hereditary stratigraphic annotations consist of a sequence of inherited ``checkpoint'' fingerprint differentia, appended with a new randomly-generated differentia each generation.
+Independent lineages accrue (probabilistically) distinct differentia.
+Relatedness estimation between hereditary stratigraphic annotations derives from a simple principle: mismatching differentia values at a time point indicates divergence of two annotations' lineages.
+
+Assuming two annotations employed the same streaming curation policy algorithm, if they share identical record depth they will have retained strata from identical time points.
+If the case that one annotation has greater record depth (i.e., more generations elapsed), truncate its strata deposited past the depth of the other annotation --- we already know no common ancestry is shared at those time points.
+Then, due to the self-consistency requirements of streaming curation policy, the younger annotation's curated time points will superset those of the older annotation.
+So, we will search for the first mismatching stratum among the deeper's time points overlapping with the younger annotation's record depth.
+
+The possibility of spurious collisions between differentia (i.e., identical values by chance) complicates any application of binary search to identify the earliest time point with mismatched strata between annotations.
+Consider lineage divergence as a boolean predicate: it evaluates false for all strata before some the threshold of true lineage divergence and then true for all strata after.
+Spurious collisions introduce the possibility of false negatives into search for this predicate's satisfaction threshold.
 Take $c$ as retained stratum count.
 If probabilistic confidence were acceptable, a binary search could be performed by testing sufficient differentia at each step to bound the net failure rate over worst-case $\log (c)$ possible opportunities for false negative detections.
-However, in the worst case when two annotations share no mismatching differentia, absolute certainty in determining the earliest discrepancy will require $\mathcal{O}(c)$ comparison of all differentia pairs.
+However, absolute certainty in determining the earliest discrepancy will require $\mathcal{O}(c)$ comparison of all differentia pairs in the worst case when two annotations share no mismatching differentia.
 
-Spurious collisions introduce a second, it is worthwhile to note that systematically overestimates relatedness.
-This introduces bias into .
-Because this is known, in some scenarios it may be to subtract out expectation or to perform monte carlo sampling over possible false relatednesses.
+Spurious collisions introduce a second commplication: bias to systematically overestimates relatedness.
+Because spurious collision probability corresponds to number of unique differentia values, expected bias can be readily calculated.
+As such, it may be subtracted out to satisfy statistical analyses requiring mean-unbiased relatedness estimation.
 
 \subsection{Distance-based Reconstruction}
+\label{sec:distance-based-reconstruction}
 
-The ease of calculating pairwise relatedness provies a straightforward option for global reconstruction: distance-based tree construction methods.
+The ease of calculating pairwise relatedness lends a straightforward option for whole-tree estimation: distance-based tree construction methods.
 Such methods, like neighbor joining and UPGMA \citep{peng2007distance}, operate simply on pairwise distance estimates between taxa.
-This approach was used in early work with hereditary stratigraphy \citep{moreno2022hereditary}.
-All-pairs comparisons necessary to prepare the distance matrix make such reconstruction is at least $\mathcal{O}(c n^2)$, with $n$ as population size and $c$ as retained stratum count.
-The acompanying \texttt{hstrat} library implements
+This distance-based approach was used in early work with hereditary stratigraphy \citep{moreno2022hereditary}, and is packaged within the acompanying \texttt{hstrat} library.
+
+All-pairs comparisons necessary to prepare the distance matrix make such reconstructions at least $\mathcal{O}(c n^2)$, with $n$ as population size and $c$ as retained stratum count per annotation.
 As will be shown presently, better results can be achieved by working directly with hereditary stratigraphic annotations' underlying structure.
 
 \subsection{Trie-based Reconstruction}
+\label{sec:trie-based-reconstruction}
 
-Annotations should share a common path down the reconstructed phylogenetic tree for the duration that they share common ancestry.
-Anatomically, hereditary stratigraphic annotations share common differentia up through the end of common ancestry --- a common prefix.
-These observations suggest application of a trie data structure to perform phylogenetic reconstruction \citep{fredkin1960trie}
+The objective of phylogenetic reconstruction can be interpreted as production of a tree structure where leaf nodes share a common path from the root for the duration that their corresponding taxa shared common ancestry.
+Anatomically, hereditary stratigraphic annotations share common differentia up through the end of common ancestry.
+Restated, annotations share a common prefix until the point of lineage divergence.
+This observation suggests application of a trie data structure \citep{fredkin1960trie} to phylogenetic reconstruction of hereditary stratigraphic annotations.
 
-To begin, assume our population of $n$ annotations share consistent record depth.
-Assuming a consistent retention policy algorithm across annotations, annotations will also have consistent retained stratum count $c$.
-Phylogenetic reconstruction through trie creation follows as $\mathcal{O}(c n)$ \citep{mehta2018handbook}.
-In recent work drawing on the accompanying Python \texttt{hstrat} library, this approach achieved reconstructions over population size 32,768 ($2^15$) with $\approx 1,200$ strata retained per annotation in around five minutes \citep{moreno2023toward}.
+As a preliminary simplification to be relaxed later, assume our population of $n$ annotations share consistent record depth.
+Assuming identical retention policy algorithm across annotations, annotations will then also have consistent retained stratum count $c$.
+Phylogenetic reconstruction through trie building follows as $\mathcal{O}(c n)$ \citep{mehta2018handbook}.
+As an anecdotal reference for computational intensity, recent work achieved reconstructions over a population of 32,768 ($2^15$) synchronous annotations each comprised of $\approx 1,200$ retained strata within about five minutes using trie-building immplementation bundled with the Python \texttt{hstrat} library \citep{moreno2023toward}.
 
 Two reconstruction biases should be noted.
-Because spurious differentia collisions bias towards overestimation of relatedness, as noted in Section \sec{sec:pairwise-relatedness}, mean branching event recency in the reconstructed tree will --- on average --- be greater than in the true tree.
+Firstly, because spurious differentia collisions bias towards overestimation of relatedness, as noted in Section \sec{sec:pairwise-relatedness}, branching events in the reconstructed tree will --- on average --- be more recent than in the true tree.
 The expected rate of spurious collision is easily predictable, so this bias can readily be estimated and subtracted away.
-Another possibile approach to counteract this bias when analyzing tree structure would be monte-carlo sampling of tree space with sets of inner nodes ``unzipped'' as if they had arisen due to spurious collision.
-Second, trie reconstruction can overrepresent polytomies (i.e., internal multifurcations).
-Branches that may have unfoleded as separate events but fall within the same uncertainty gap will all lumped together into a single polytomy.
-This bias can be accounted for by splitting polytomies into arbitrary bifurcations with zero-length edges.
+Another possibile approach to counteract this bias when analyzing tree structure would be Monte Carlo sampling of tree space with sets of inner nodes ``unzipped'' as if they had arisen due to spurious collision.
+Secondly, trie reconstruction can overrepresent polytomies (i.e., internal multifurcations).
+Branches that may have unfoleded as separate events but fall within the same uncertainty gap within annotations' historical records will all lump together into a single polytomy.
+This bias can be counteracted by splitting polytomies into arbitrary bifurcations with zero-length edges.
 
 Allowing for uneven record depth among annotations complicates trie-based reconstruction.
-As described in Section \ref{sec:pairwise-relatedness}, time points retained within deeper annotations subset time points within younger annotations (excluding time points beyond the depth of the younger annotation).
-So, arranging youngest-first insertion order for trie construction ensures that no insertion retroactively injects new trie node time points between existing nodes.
-Instead, insertions may encounter a trie node with a time point for which they do not have a corresponding retained stratum.
-This missing information, dure to streaming curation pruning, is conceptually equivalent to a query string wildcard position \citep{fukuyama2016partial}.
+As described in Section \ref{sec:pairwise-relatedness}, time points retained within deeper annotations subset time points within younger annotations (excluding time points past the depth of the younger annotation).
+So, arranging youngest-first insertion order for trie construction ensures that no insertion retroactively injects new a trie node between existing nodes.
+Instead, inserted annotations may encounter a trie node with a time point for which they do not have a corresponding retained stratum (i.e., having discarded it under streaming curation).
+This missing information is conceptually equivalent to a query string wildcard position \citep{fukuyama2016partial}.
 
-Such wildcard queries significantly complicate trie construction.
+Such wildcard queries can require evaluation of many branch paths during insertion, instead of just one.
 An inserted taxon's lineage could proceed along any of the outgoing edges from the trie node preceding the wildcard.
 Among possible paths, the path with the most successive common strata is best-evidenced.
-Unfortunately, in the case of multiple wildcard positions, this  potentially requires exploring a number of alternate paths exponential with respect to maximum stratum count $c$ (i.e., maximum trie depth).
+Unfortunately, in the case of multiple wildcard positions, finding the best-evidenced path requires exploring a number of alternate paths potentially exponential with respect to maximum stratum count $c$ (i.e., maximum trie depth).
 Taking the number of possible differentia values $d$ into account as the maximum branching factor, the worst case time complexity devolves to $\mathcal{O}(c d^c n)$ \citep{fukuyama2016partial}.
 Calculation of the average case depends on the streaming curation policy algorithm at play and the underlying phylogenetic structure being reconstructed, which introduces analytical complexity and likely varies significantly between use cases.
 % TODO justify branching factor point with a cite
-Limitations in the number of wildcard sites due to record depth similarity among annotations and limitations in the early branching factor of the underlying phylogeny being reconstructed likely damp execution time cost.
-Experimental performance evaluation with annotations derived from representative phylogenies is warranted to explore the in-practice run time cost of wildcarding pruned-away strata.
+Limitations in the number of wildcard sites due to record depth similarity among annotations and tendency for low branching factor early in underlying phylogenies likely damp time costs.
+Experimental performance evaluation with annotations derived from representative phylogenies is warranted to explore the in-practice run time of wildcarding pruned-away strata.
 
 
 
