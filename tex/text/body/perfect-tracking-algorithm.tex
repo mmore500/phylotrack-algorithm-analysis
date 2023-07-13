@@ -1,9 +1,9 @@
 \section{Perfect Tracking Algorithm} \label{sec:perfect-tracking}
 
 Traditionally, the problem of recording the phylogenies of replicating digital 
-entities has been solved using a ``perfect tracking'' approach where all replication 
-events are recorded and stored in a tree (or forest, if there are multiple roots) [TODO: Cite phylotrackpy].
-In this section, we present results on the time and space complexity of perfect tracking;
+artifacts has been solved using a ``perfect tracking'' approach where all replication 
+events are recorded and stored in a tree (or forest, if there are multiple roots) \citep{dolson2023phylotrackpy}.
+In this section, we present results on the time and memory size complexity of perfect tracking;
 these results will serve as a basis of comparison for our curation policy algorithms in the context
 of lineage tracking.
 
@@ -12,6 +12,10 @@ As such, they exist in three separate steps: 1) initialization, 2) handling the 
 The initialization step happens at the beginning of the process being measured.
 The birth handling sub-algorithm gets called any time a new object is created.
 Similarly, the removal handling sub-algorithm gets called any time an object is removed from the set of currently active objects.
+
+Perfect tracking can be used regardless of whether each artifact has one or multiple parents (i.e. asexual vs. sexual reproduction).
+Our analysis here will focus on the case where each artifact has only parent, but most of our results generalize to the multi-parent case.
+
 
 \subsection{Naive perfect tracking}
 
