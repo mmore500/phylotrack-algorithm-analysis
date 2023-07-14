@@ -13,7 +13,7 @@
         \State $\texttt{uncertainty} \gets (\text{largest integral power of two} \le x) \lor 1$
         \State $\texttt{arr} \gets \text{empty array of length } \frac{n}{\texttt{uncertainty}} + 1$
 
-        \FOR{$i = 0$ \textbf{to} $\texttt{n} - 1$ \textbf{step} $\text{uncertainty}$}
+        \For{$i = 0$ \textbf{to} $\texttt{n} - 1$ \textbf{step} $\text{uncertainty}$}
             \State $\texttt{arr} [$i$] \gets i$
         \EndFor
         \State $\texttt{last\_rank} \gets \texttt{n} - 1$
