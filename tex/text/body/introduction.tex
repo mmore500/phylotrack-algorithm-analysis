@@ -47,6 +47,15 @@ Although phylogenetic analysis is a powerful tool for understanding digital evol
 Most existing analyses use direct lineage tracking, where a centralized data structure collates individual reproduction events to produce a complete, perfect phylogenetic record \citep{dolson2023phylotrackpy}.
 However, this approach requires centralized data storage which performs poorly in distributed computing environments (see Sections \ref{sec:perfect-tracking-distrbuted} and \ref{sec:perfect-tracking-pruning-distrbuted} for more information).
 
+The problem of recording phylogenies in a distributed context generalizes beyond digital evolution.
+Phylogenies can be used to understand any process in which a population of objects exist and those objects are sometimes replicated (with or without modification).
+Indeed, phylogenetic techniques have been used to study the routes through which digital image misinformation and computer viruses spread \citep{friggeri2014rumor,cohen1987computer}.
+As in digital evolution, such studies generally rely on centralized tracking and are thus inhibited when it is not possible.
+
+% As such, hereditary stratigraphic techniques certainly possess some potential afford experimenters visibility into the otherwise cloistered processes through which such digital artifacts spread.
+% Notably, though, such experiments would predicate on some level of influence over the artifact copy process in to ensure dispatch of the hereditary stratigraphic update process and the absence of actors with motivation and capability to antagonistically deface annotation data.
+
+
 %TODO we could probably add some citations/examples about why phylogenetic tracking is important
 % AND how perfect phylogenetic tracking is super powerful at doing otherwise unimaginable analyses
 % probably pilfer phylotrackpy JOSS paper for ideas
@@ -59,7 +68,7 @@ However, this approach requires centralized data storage which performs poorly i
 % This sensitivity to data loss poses a second major challenge in scaling perfect tracking.
 
 % Looking to natural systems, however, fruitful efforts across generations of systematic biologists evidence the viability of robust phylogenetic analyses from data generated through fully-distributed processes.
-Looking to natural systems, however, it is clear that robust phylogenetic analyses can be conducted on data generated through fully-distributed processes.
+Looking to natural systems, it is clear that robust phylogenetic analyses can be conducted on data generated through fully-distributed processes.
 % An alternate approach to studying phylogenetic dynamics in distributed systems, therefore, can be entertained: post-hoc inference from heritable data rather than centralized tracking.
 Inspired by systematic biology, we can consider post-hoc inference from heritable data as an alternative tocentralized tracking.
 % Although such analyses can passably be accomplished solely from direct analysis of pre-existing, functional digital genome contents \citep{moreno2021case}, such algorithms do not generalize across diverse digital evolution systems and suffer from many of the complications that plague phylogenetic analyses of biological systems.
@@ -99,7 +108,13 @@ The crux of hereditary stratigraphy is that each at generation, a new fixed-leng
 These stochastic ``fingerprints,'' typically sized on the order of a few bits or bytes, serve as a sort of checkpoint for lineage identity at a particular generation.
 At future time points, extant annotations will share identical fingerprints for the generations they experienced shared ancestry.
 
-Naive application of this approach would produce indefinitely lengthening genome annotation size in direct proportion to generations elapsed.
+Interestingly, a similar technique was used by \cite{libennowell2008tracing} to trace global dissemination of chain emails.
+These researchers applied \textit{post-hoc} methods to reconstruct estimated phylogenies of the propagation of two chain mail messages.
+These phylogenies then served as a reference to tune agent-based models, ultimately yielding a remarkable elucidation of email user behavior and underlying social dynamics.
+Interestingly, this study's reconstructions were solely enabled by a special peculiarity of the two sampled messages: they were email petitions.
+Thus, users would append their name to the list before forwarding it on --- a mechanism strikingly similar to the broad strokes of hereditary stratigraphy.
+
+Naive application of hereditary stratigraphy would produce indefinitely lengthening genome annotation size in direct proportion to generations elapsed.
 To overcome this obstacle, hereditary stratigraphy prescribes a ``pruning'' process to discard strata on the fly as new strata are deposited.
 Pruning reduces annotation size, but at the expense of introducing inferential uncertainty: the last generation of common ancestry between two lineages can be resolved no finer than the time points associated with retained strata.
 Deciding which strata to discard is the main point of algorithmic interest associated with the technique.
@@ -114,6 +129,7 @@ In the context of hereditary stratigraphy, we refer to the decision-making rules
 % Deciding which strata to discard when proves to be the main point of algorithmic interest associated with the technique.
 % In fact, as will be delved into a little further on, we find this scenario to be an instance of a more general class of online algorithmic problems we term as ``streaming curation.''
 % In the context of hereditary stratigraphy, we refer to the decision-making rules that decide which retained strata to discard per generation as a ``stratum retention'' algorithm.
+
 
 \subsection{Stratum retention}
 
@@ -185,31 +201,34 @@ As low-end hardware continues to march toward the downscale and ubiquity of ``sm
 % The ever abiding race to plumb the very lower limits of technical feasibility seems likely to keep bare-bones computing modalities front and center within this engineering domain far into the future.
 
 % Recalling earlier discussion of hardware trends, the accelerating ubiquitization of IoT hardware and, in particular, continuing downscaling toward smart dust call stream curation scenarios directly into play.
-Organization of IoT devices into wireless sensor networks is expected, in a considerable fraction of cases, to structure irregular device uplink schedules.
-For instance, the so-called ``mobile sink'' paradigm has risen to some prominence due to advantages with respect to power management, security, and network load management \citep{jain2022survey}.
+
+Some of the same curation policy algorithms we propose for stratum retention could also be useful in these cases.
+For example, organization of IoT devices into wireless sensor networks is expected, in a considerable fraction of cases, to structure irregular device uplink schedules, such as the ``mobile sink'' paradigm \citep{jain2022survey}.
+% The so-called ``mobile sink'' paradigm has risen to some prominence due to advantages with respect to power management, security, and network load management \citep{jain2022survey}.
 Under this model, network base station(s) physically traverse the coverage area and transact with nearby sensor nodes.
 Reliance on the mobile sink's patrol schedule potentially introduces uncertainty in data transfer schedules.
-Streaming curation may be particularly relevant to data management in surveillance devices such as doorbell or body-worn cameras have experienced notable market growth \citep{calacci2022cop,lum2019research}.
-Recency-proportional retention may suit some applications time intervals of interest may be flagged well after the fact, but tend to bias toward the recent past.
+% TODO: One sentence on why our curation policies would help with this
+Streaming curation may be particularly relevant to data management in surveillance devices such as doorbell or body-worn cameras, which have experienced notable market growth \citep{calacci2022cop,lum2019research}.
+Recency-proportional retention may suit some applications, where time intervals of interest may be flagged well after the fact, but tend to bias toward the recent past.
 % This approach could also align with the objectives of some accident recording devices.
 % TODO this sentence sucks: rephrase
 Finally, streaming curation may even pertain to record management in large capacity centralized storage systems in some scenarios \citep{bhat2018data}.
 
-It should also be noted that beyond connections to streaming curation, hereditary stratigraphy itself bears upon applications outside digital evolution modeling.
-Computer viruses and digital media also proliferate through replication, often outside the scope of direct centralized observability.
-Furthermore, understanding the dynamics of these phenomena is of significant scientific and societal interest \citep{aslan2020comprehensive,dupuis2019spread,ling2021dissecting}.
-Indeed, some research has reported on the routes through which digital image misinformation and computer viruses spread \citep{friggeri2014rumor,cohen1987computer}.
-Such studies generally rely on centralized tracking, which is not possible in many circumstances.
-A notable exception is work by \cite{libennowell2008tracing} to trace global dissemination of chain emails.
-These researchers applied \textit{post-hoc} methods to reconstruct estimated phylogenies of the propagation of two chain mail messages.
-These phylogenies then served as a reference to tune agent-based models, ultimately yielding a remarkable means elucidation of email user behavior and underlying social dynamics.
-Interestingly, this study's reconstructions were solely enabled by a special peculiarity of the two sampled messages: they were email petitions.
-Thus, users would append their name to the list before forwarding it on --- a mechanism strikingly similar to the broad strokes of hereditary stratigraphy.
+% It should also be noted that beyond connections to streaming curation, hereditary stratigraphy itself bears upon applications outside digital evolution modeling.
+% Computer viruses and digital media also proliferate through replication, often outside the scope of direct centralized observability.
+% Furthermore, understanding the dynamics of these phenomena is of significant scientific and societal interest \citep{aslan2020comprehensive,dupuis2019spread,ling2021dissecting}.
+% Indeed, some research has reported on the routes through which digital image misinformation and computer viruses spread \citep{friggeri2014rumor,cohen1987computer}.
+% Such studies generally rely on centralized tracking, which is not possible in many circumstances.
+% A notable exception is work by \cite{libennowell2008tracing} to trace global dissemination of chain emails.
+% These researchers applied \textit{post-hoc} methods to reconstruct estimated phylogenies of the propagation of two chain mail messages.
+% These phylogenies then served as a reference to tune agent-based models, ultimately yielding a remarkable means elucidation of email user behavior and underlying social dynamics.
+% Interestingly, this study's reconstructions were solely enabled by a special peculiarity of the two sampled messages: they were email petitions.
+% Thus, users would append their name to the list before forwarding it on --- a mechanism strikingly similar to the broad strokes of hereditary stratigraphy.
 
-As such, hereditary stratigraphic techniques certainly possess some potential afford experimenters visibility into the otherwise cloistered processes through which such digital artifacts spread.
-Notably, though, such experiments would predicate on some level of influence over the artifact copy process in to ensure dispatch of the hereditary stratigraphic update process and the absence of actors with motivation and capability to antagonistically deface annotation data.
+% As such, hereditary stratigraphic techniques certainly possess some potential afford experimenters visibility into the otherwise cloistered processes through which such digital artifacts spread.
+% Notably, though, such experiments would predicate on some level of influence over the artifact copy process in to ensure dispatch of the hereditary stratigraphic update process and the absence of actors with motivation and capability to antagonistically deface annotation data.
 
-Remaining exposition is structured as follows:
+Remaining exposition in this paper is structured as follows:
 \begin{itemize}
 % \item Section \ref{sec:methods} covers preliminaries and glossarizes key terminology,
 \item Section \ref{sec:annotation-algorithms} surveys a suite of streaming curation algorithms, introducing intuition, presenting the formal definition, proving self-consistent stratum discard sequencing, and demonstrating resolution and collection size properties.
