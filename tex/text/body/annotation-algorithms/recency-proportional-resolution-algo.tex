@@ -22,8 +22,8 @@ Resolution for any given layer age, however, remains constant for all record dep
 The FR and DPR policy algorithms exhibit $O(r)$ and $O(rn)$ extant record orders of growth, respectively.
 We will show extant record order of growth as $O(r\log{n})$ under the recency-proportional resolution policy algorithm.
 
-Algorithm \ref{alg:recency-proportional-resolution-algo-enum-retained-ranks} enumerates time points of retained observations under the RPR policy algorithm.
-Figure \ref{fig:retention-policies} shows a time-lapse of the extant record enacted as a result. % enacted is confusing
+Algorithm \ref{alg:recency-proportional-algo-gen-drop-ranks} enumerates time points of dropped observations under the RPR policy algorithm.
+Figure \ref{fig:retention-policies} includes a time-lapse of the extant record under this policy algorithm.
 
 The extant record is determined iteratively, beginning at observation time zero --- which is always retained.
 Per Equation \ref{eqn:rpr-gap}, gap width to the next retained observation can be at most $\lfloor n/r \rfloor$ sites, where $n$ is record depth.

@@ -3,26 +3,16 @@
 Contemporary advances in the engineering and manufacture of compute hardware largely come as a double-edged sword.
 Fundamental physical limitations have essentially curtailed transformative progress in capabilities of individual processing elements \citep{sutter2005free}.
 Instead, the frontier of raw compute power in high-performance computing (HPC) has largely been driven forward by scale-out to multi- and many-core architectures \citep{morgenstern2021unparalleled}.
-On the flip side, economization and miniaturization has driven broad dissemination of computing capability through the Internet of Things (IoT) revolution \citep{rfc7228,ojo2018review}.
-A notable pattern cuts across some facets of both fringes: absolute reduction or tightening or relative tightening in resources and capabilities per processing element, particularly with respect to the capacity, latency, or bandwidth of memory and storage.
+% On the flip side, economization and miniaturization has driven broad dissemination of computing capability through the Internet of Things (IoT) revolution \citep{rfc7228,ojo2018review}.
+% A notable pattern cuts across some facets of both fringes: absolute reduction or tightening or relative tightening in resources and capabilities per processing element, particularly with respect to the capacity, latency, or bandwidth of memory and storage.
+% Along the march to exascale HPC, processing capacity growth (e.g., FLOPS) has outpaced memory performance and capacity --- particularly with respect to hardware accelerators \citep{kogge2013exascale,khan2021analysis}.
+% This ``memory wall'' bottlenecks throughput unless memory access volume is kept sufficiently low in proportion to processing workload (i.e., high ``arithmetic'' or ``operational'' intensity is achieved) \citep{obviousmemorywall,mckee2004reflections,ROOFLINEMODEL2008Berkley}.
+% Analogous performance trajectories have played out with respect to data storage \citep{heldens2020landscape,kunkel2014exascale}, imposing an analogous ``storage wall'' bottleneck \citep{hu2016storage}.
+% Recent introduction of the Cerebras Wafer-Scale Engine epitomizes the double-edged nature of recent HPC trends: this accelerator packages an astounding 850,000 computing elements onto a single piece of silicon, but restricts endows each with a modest 48kb of memory and provisions an exclusively-local mesh communication model \citep{cerebras2021wafer,lauterbach2021path}.
 
-Along the march to exascale HPC, processing capacity growth (e.g., FLOPS) has outpaced memory performance and capacity --- particularly with respect to hardware accelerators \citep{kogge2013exascale,khan2021analysis}.
-This ``memory wall'' bottlenecks throughput unless memory access volume is kept sufficiently low in proportion to processing workload (i.e., high ``arithmetic'' or ``operational'' intensity is achieved) \citep{obviousmemorywall,mckee2004reflections,ROOFLINEMODEL2008Berkley}.
-Analogous performance trajectories have played out with respect to data storage \citep{heldens2020landscape,kunkel2014exascale}, imposing an analogous ``storage wall'' bottleneck \citep{hu2016storage}.
-Recent introduction of the Cerebras Wafer-Scale Engine epitomizes the double-edged nature of recent HPC trends: this accelerator packages an astounding 850,000 computing elements onto a single piece of silicon, but restricts endows each with a modest 48kb of memory and provisions an exclusively-local mesh communication model \citep{cerebras2021wafer,lauterbach2021path}.
-
-Low-end hardware, on the other hand, marches toward the downscale and ubiquity of ``smart dust'' \citep{warneke2001smart}.
-The ``Michigan Micro Mote'' constitutes a notable waypoint \citep{lee2012modular}.
-These devices occupy only a cubic millimeter of volume, but provision a mere 3 kb of retentive memory.
-Introduced in 2012, applications have since been explored across imaging, motion detection, pressure measurement, and electrocardiography monitoring \citep{lee2015review}.
-Taking for instance another more recent high-profile project, computational capacity was recently tucked into wireless sensor network devices adopting the form factor of dandelion parachutes \citep{iyer2022wind}.
-The chipset for these devices provisions 2 kilobytes of volatile flash memory --- and a mere 128 bytes of retentive memory \citep{microchip2014atiny20}.
-% Even more striking is the advent of an epidermal physiological sensor equipped with carbon nanotube-based flash memory of a scant 48 bytes \citep{xiang2022epidermal}.
-The ever abiding race to plumb the very lower limits of technical feasibility seems likely to keep bare-bones computing modalities front and center within this engineering domain far into the future.
-
-The intersection of these observations is that despite relentless technological advancement, severely resource-limited computation will persist.
-In fact, in some domains technological progress has actually elevated the relevance of resource-limited computation.
-These trends, and the wider context of surging generation of digital data \citep{bhat2018data}, demand attention to algorithmic strategies to triage memory/storage-capacity gaps.
+% The intersection of these observations is that despite relentless technological advancement, severely resource-limited computation will persist.
+% In fact, in some domains technological progress has actually elevated the relevance of resource-limited computation.
+% These trends, and the wider context of surging generation of digital data \citep{bhat2018data}, demand attention to algorithmic strategies to triage memory/storage-capacity gaps.
 
 Burgeoning computational power has been broadly envisaged as driving force in advancing the field of digital evolution and, more broadly, artificial life \citep{ackley2014indefinitely}.
 In fact, a central motif in the field --- the problem of open-ended evolution, how and if closed systems can yield indefinitely yield new complexity, novelty, and adaptation --- is inexorably intertwined with computational scale, and has been implicated as meaningfully compute-constrained in at least some systems \citep{taylor2016open,channon2019maximum}.
@@ -48,7 +38,7 @@ Further, at large enough scales, node failures become inevitablies rather than i
 Within the perfect-tracking paradigm, individual missing relationships could potentially entirely disjoin knowledge of how large portions of phylogenetic history relate.
 This sensitivity to data loss poses a second major challenge in scaling perfect tracking.
 
-Looking to  natural systems, however, fruitful efforts across generations of systematic biologists evidence the viability of robust phylogenetic analyses from data generated through fully-distributed processes.
+Looking to natural systems, however, fruitful efforts across generations of systematic biologists evidence the viability of robust phylogenetic analyses from data generated through fully-distributed processes.
 An alternate approach to studying phylogenetic dynamics in distributed systems, therefore, can be entertained: post-hoc inference from heritable data rather than centralized tracking.
 Although such analyses can passably be accomplished solely from direct analysis of pre-existing, functional digital genome contents \citep{moreno2021case}, such algorithms do not generalize across diverse digital evolution systems and suffer from many of the complications that plague phylogenetic analyses of biological systems.
 An intriguing proposition arises: how might a genetic representation be designed to maximize ease and efficacy of phylogenetic reconstruction?
@@ -91,8 +81,8 @@ However, in some cases discussed later on, it may be desirable to allow a logari
 
 Determining stratum retention strategy also obliges a more subtle second consideration: what skew, if any, to induce on the composition of retained strata.
 Strata from evenly-spaced time points may retained in order to provide uniform inferential detail over the entire range of elapsed time points.
-However, coalescent theory suggests fine inferential detail over more recent time points as likely more informative to phylogenetic reconstruction than fine detail over more ancient time points.
-%TODO add citations and lock this down
+However, coalescent theory predicts that evolution-like processes will tend to produce phylogenies with many recent branches and progressively fewer more ancient branches \citep{nordborgCoalescentTheory2019, berestyckiRecentProgressCoalescent2009}.
+Thus, fine inferential detail over more recent time points is usually more informative to phylogenetic reconstruction than fine detail over more ancient time points.
 Thus, among a fixed-size retained sampling of time points, skewing the composition of retained strata to over-represent more recent time points would be expected to provide better bang for the buck with respect to reconstructive power.
 Indeed, experiments reconstructing known lineages have shown that recency-skewing retention provides better quality reconstructions \citep{moreno2022hereditary}.
 So, in addition to evenly-spaced retention, we consider retention allocations that yield gap widths between successive retained strata (and corresponding estimation uncertainty) scaled proportionately to those strata's depth back in history.
@@ -135,7 +125,16 @@ We propose this problem as the ``stream curation problem.''
 For the sake of generalizability, Section \ref{sec:annotation-algorithms} organizes presentation of stratum retention algorithms through the lens of the stream curation problem.
 There has been some work to extend the record capacity of data loggers through application-specific online compression algorithms that (\citep{hadiatna2016design}, but to our knowledge the streaming curation problem has not been treated directly from either a theoretical or empirical vantage.
 
-Recalling earlier discussion of hardware trends, the accelerating ubiquitization of IoT hardware and, in particular, continuing downscaling toward smart dust call stream curation scenarios directly into play.
+Indeed, low-end hardware continues to march toward the downscale and ubiquity of ``smart dust'' \citep{warneke2001smart}.
+The ``Michigan Micro Mote'' constitutes a notable waypoint \citep{lee2012modular}.
+These devices occupy only a cubic millimeter of volume, but provision a mere 3 kb of retentive memory.
+Introduced in 2012, applications have since been explored across imaging, motion detection, pressure measurement, and electrocardiography monitoring \citep{lee2015review}.
+Taking for instance another more recent high-profile project, computational capacity was recently tucked into wireless sensor network devices adopting the form factor of dandelion parachutes \citep{iyer2022wind}.
+The chipset for these devices provisions 2 kilobytes of volatile flash memory --- and a mere 128 bytes of retentive memory \citep{microchip2014atiny20}.
+% Even more striking is the advent of an epidermal physiological sensor equipped with carbon nanotube-based flash memory of a scant 48 bytes \citep{xiang2022epidermal}.
+The ever abiding race to plumb the very lower limits of technical feasibility seems likely to keep bare-bones computing modalities front and center within this engineering domain far into the future.
+
+% Recalling earlier discussion of hardware trends, the accelerating ubiquitization of IoT hardware and, in particular, continuing downscaling toward smart dust call stream curation scenarios directly into play.
 Organization of IoT devices into wireless sensor networks is expected, in a considerable fraction of cases, to structure irregular device uplink schedules.
 For instance, the so-called ``mobile sink'' paradigm has risen to some prominence due to advantages with respect to power management, security, and network load management \citep{jain2022survey}.
 Under this model, network base station(s) physically traverse the coverage area and transact with nearby sensor nodes.
@@ -162,12 +161,13 @@ Notably, though, such experiments would predicate on some level of influence ove
 
 Remaining exposition is structured as follows:
 \begin{itemize}
-\item Section \ref{sec:methods} covers preliminaries and glossarizes key terminology,
+% \item Section \ref{sec:methods} covers preliminaries and glossarizes key terminology,
 \item Section \ref{sec:annotation-algorithms} surveys a suite of streaming curation algorithms, introducing intuition, presenting the formal definition, proving self-consistent stratum discard sequencing, and demonstrating resolution and collection size properties.
 % TODO make sure this gets into the actual text
 \item Section \ref{sec:reconstruction-algorithm} presents a recently-developed algorithm for full-tree reconstruction from hehereditary stratigraphic annotation data and analyzes its runtime characteristics.
 \item Section \ref{sec:perfect-tracking-algorithm} supplies formal presentation of the alternate perfect phylogenetic tracking algorithm and analysis of its runtime characteristics then commentates on which situations better suit perfect tracking over hereditary stratigraphy, and vice versa.
 % TODO do we need a results and discussion section???
 % \item Section \ref{sec:results-and-discussion}
-\item Section \ref{sec:conclusion} reflects on broader implications and future work.
+\item Section \ref{sec:conclusion} reflects on broader implications and future work, and
+\item we include a Glossary of terminology related to hereditary stratigraphy, streaming curation, and phylogenetics in the Appendix.
 \end{itemize}

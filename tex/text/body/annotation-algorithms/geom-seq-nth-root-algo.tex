@@ -1,7 +1,7 @@
 \subsection{Geometric Sequence $n$th Root (GSNR) Policy Algorithm}
 \label{sec:geom-seq-nth-root-algo}
 
-The geometric sequence $n$th root (GSNR) policy algorithm tackles recency-proportional uncertainty objectives within fixed-capacity constraint.
+The geometric sequence $n$th root (GSNR) policy algorithm tackles recency-proportional uncertainty objectives within a fixed-capacity constraint.
 Although recency-proportional gap size cannot be bounded below a fixed threshold in this context, GSNR seeks to minimize it to the extent possible.
 
 Recall that the recency-proportional policy algorithm (RPR) suffers logarithmic growth in extant record size with respect to record depth $n$.
@@ -179,6 +179,7 @@ So, the worst case absolute provided gap size is
 
 Worst case recency-proportional gap size is therefore $n^{1/a}$.
 
+Figure \ref{fig:retention-policies} includes a time-lapse of the extant record under the GSNR policy algorithm.
 The distinguishing feature of the GSNR policy algorithm is its effort to minimize recency-proportional gap size indefinitely.
 This lends it to very-long duration applications.
 % However, before very-deep record depths, we have observed that recency-proportional resolution tends to better distribute equivalent numbers of retained observations.

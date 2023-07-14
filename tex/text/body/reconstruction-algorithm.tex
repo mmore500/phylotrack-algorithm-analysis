@@ -78,8 +78,11 @@ Among possible paths, the path with the longest successive streak of strata cons
 Unfortunately, in the case of multiple wildcard positions, finding the best-evidenced path requires exploring a number of alternate paths potentially exponential with respect to maximum stratum count $c$ (i.e., maximum trie depth).
 Taking the number of possible differentia values $d$ into account as the maximum branching factor, the worst case time complexity devolves to $\mathcal{O}(c d^c n)$ \citep{fukuyama2016partial}.
 Calculation of the average case depends on the streaming curation policy algorithm at play and the underlying phylogenetic structure being reconstructed, which introduces analytical complexity and likely varies significantly between use cases.
-Limitations in the number of wildcard sites due to record depth similarity and tendency for low branching factor early in underlying phylogenies likely damp time costs.
+Fortunately, the number of wildcard sites is limited due to: 1) record depth similarity, and 2) the tendency for there to be relatively few deep branches in most phylogenies, due to coalescence \citep{nordborgCoalescentTheory2019, berestyckiRecentProgressCoalescent2009}.
+These factors likely reduce time costs.
+%Limitations in the number of wildcard sites due to record depth similarity and tendency for low branching factor early in underlying phylogenies likely damp time costs.
 % TODO ^^^^ justify branching factor point with a cite
+% ELD: Added it, and also took a stab at making the sentence more readable (old sentence commented out)
 Experimental performance evaluation with annotations derived from representative phylogenies is warranted to explore the in-practice run time of wildcarding pruned-away strata.
 
 

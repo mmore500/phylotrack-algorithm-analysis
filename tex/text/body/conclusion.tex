@@ -10,7 +10,12 @@ We identify five policy algorithms that provide different size/coverage trade-of
 We then explore postprocessing algorithms used to compare and interpret hereditary stratigraphic annotations.
 In particular, we sketch a trie-based tree reconstruction algorithm that proceeds from the underlying structure of the hereditary stratigraphy annotation.
 As a point of comparison, we provide an algorithmic formalization of the established perfect-tracking algorithms currently standard in agent-based evolutionary modeling.
+We find that both perfect tracking and hereditary stratigraphy have circumstances in which they excel.
+Hereditary stratigraphy enables tracking in noisy, parallel, and distributed environments where perfect tracking would be impractical.
+It also makes stonger guarantees about memory use (although on average perfect tracking uses less memory than most hereditary stratigraphy policies).
+Lastly, it allows different tradeoffs between data resolution, accuracy, and memory use.
 %TODO talk about the take away of comparing the two
+% ELD: Took a stab at it
 
 Much future work remains.
 We are particularly interested in adapting hereditary stratigraphy to even more effectively make use of space in fixed-capacity contexts and minimize rearrangement of strata in the underlying annotation data structure (e.g., array of strata) during the update process.
