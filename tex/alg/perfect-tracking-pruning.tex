@@ -5,23 +5,23 @@
     Same as algorithm \ref{alg:perfect-tracking} \\
     \textbf{Part 2: Handle birth event}
     \begin{algorithmic}[1]
-        \REQUIRE{$P_i$ = newly created organism, $P_j$ = $P_i$'s parent}
-        \STATE{Add node representing $P_i$ to $T$}
-        \STATE{Add edge in $T$ from $P_i$ to $P_j$}
-        \STATE{Record that $P_i$ is alive}
-        \STATE{Increment $P_j$'s count of living offspring lineages}
+        \Require{$P_i$ = newly created organism, $P_j$ = $P_i$'s parent}
+        \State{Add node representing $P_i$ to $T$}
+        \State{Add edge in $T$ from $P_i$ to $P_j$}
+        \State{Record that $P_i$ is alive}
+        \State{Increment $P_j$'s count of living offspring lineages}
     \end{algorithmic}
     \textbf{Part 3: Handle removal event}
     \begin{algorithmic}[1]
-        \REQUIRE{$P_i$ = newly removed organism}
-        \STATE{$P_j$ $\gets$ parent of $P_i$}
-        \STATE{Record that $P_i$ is not alive}
+        \Require{$P_i$ = newly removed organism}
+        \State{$P_j$ $\gets$ parent of $P_i$}
+        \State{Record that $P_i$ is not alive}
 
         \WHILE{$P_i$ is not alive \textbf{and} $P_i$'s count of living offspring lineages == 0}
-            \STATE{Remove $P_i$ from $T$}
-            \STATE{Decrement $P_j$'s count of living offspring lineages}
-            \STATE{$P_i$ $\gets$ $P_j$}
-            \STATE{$P_j$ $\gets$ parent of $P_j$}
+            \State{Remove $P_i$ from $T$}
+            \State{Decrement $P_j$'s count of living offspring lineages}
+            \State{$P_i$ $\gets$ $P_j$}
+            \State{$P_j$ $\gets$ parent of $P_j$}
         \ENDWHILE
 
     \end{algorithmic}
