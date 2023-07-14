@@ -52,7 +52,9 @@ Asymptotic properties result solely from GSNR, as it constitutes the final desti
 Except when switching CRPR's active policy algorithm, we can also carry forward self-consistency assurances from the existing RPR and GSNR policy algorithms.
 However, when switching CRPR's active policy algorithm, we do need to assess self-consistency.
 Transitioned-to time point collections must be a subset of transitioned-from time point collections.
-As Theorem \ref{thm:curbed-recency-proportional-resolution-algo-self-consistency} recounts, self-consistency largely arises from peculiarities of stacking monotonically decreasing binary powers.
+% As Theorem \ref{thm:curbed-recency-proportional-resolution-algo-self-consistency} recounts, self-consistency largely arises from peculiarities of stacking monotonically decreasing binary powers.
+Self-consistency turns out to largely arise from peculiarities of stacking monotonically decreasing binary powers.
+
 
 In application, the CRPR policy algorithm should be preferable to GSNR and RPR for nearly all scenarios that call for recency-proportional resolution under capped-size storage limitations.
 Except when switching active policy, update implementation can be optimized by replacing the set subtraction procedure with the active policy algorithm's implementation.

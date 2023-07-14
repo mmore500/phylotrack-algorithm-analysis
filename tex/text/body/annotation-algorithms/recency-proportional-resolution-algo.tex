@@ -36,7 +36,7 @@ The next iteration repeats the procedure from the newly retained observation tim
 Iteration continues until reaching the newest observation.
 
 The set of observations to eliminate can be calculated from set subtraction between enumerations of the historical record at time points $t-1$ and $t$.
-So, update time complexity follows from extant record enumeration time complexity, which turns out to be $O(\log n)$ as detailed in Theorem \ref{thm:recency-proportional-resolution-algo-uncertainty-bound}.
+So, update time complexity follows from extant record enumeration time complexity, which turns out to be $O(\log n)$.
 We provide a tested, but unproven, constant-time pruning enumeration implementation in the \texttt{hstrat} library, but will not cover it here. % mention why?
 The extant record order of growth $O(\log n)$ also follows closely from the record enumeration algorithm, as detailed in Theorem \ref{thm:recency-proportional-resolution-algo-space-complexity}.
 
@@ -57,7 +57,7 @@ Conversely, preceding larger powers of 2 can be evenly divided by succeeding sma
 
 Under the binary flooring procedure, when gap size increases at a layer it will double (or quadruple, octuple, etc.).
 Availability of the new gap endpoint after a gap size increase is guaranteed from the tiling properties due to that endpoint being an even multiple of original step size.
-Theorem \ref{thm:recency-proportional-resolution-algo-self-consistency} uses inductive proof-by-contradiction to show this self-consistency.
+% Theorem \ref{thm:recency-proportional-resolution-algo-self-consistency} uses inductive proof-by-contradiction to show this self-consistency.
 
 The RPR policy algorithm provides stable relative accuracy indefinitely.
 This makes it particularly attractive in phylogenetic tracking scenarios using hereditary stratigraphy where guarantees about branch length accuracy are critical.
