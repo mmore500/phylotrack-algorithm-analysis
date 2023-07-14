@@ -4,98 +4,117 @@ Traditionally, the problem of recording the phylogenies of replicating digital
 artifacts has been solved using a ``perfect tracking'' approach where all replication
 events are recorded and stored in a tree (or forest, if there are multiple roots) \citep{dolson2023phylotrackpy}.
 In this section, we present results on the time and memory size complexity of perfect tracking;
-these results will serve as a basis of comparison for our curation policy algorithms in the context
-of lineage tracking.
+these results will serve as a basis of comparison for hereditary stratigraphy's curation policy and reconstruction algorithms.
 
-Perfect tracking algorithms are designed to plug into the ongoing replication proces.
-As such, they exist in three separate steps: 1) initialization, 2) handling the birth of new objects, and 3) (optionally) handling the removal of existing objects.
-The initialization step happens at the beginning of the process being measured.
-The birth handling sub-algorithm gets called any time a new object is created.
-Similarly, the removal handling sub-algorithm gets called any time an object is removed from the set of currently active objects.
+Perfect tracking algorithms are designed to augment an ongoing replication process by performing supplementary record-keeping.
+As such, perfect tracking algorithms execute three separate routines: 1) initialization, 2) handling the birth of new objects, and 3) (optionally) handling the removal of existing artifact.
+The initialization step happens when the founding set of replicating artifacts is introduced.
+The birth handling routine executes any time an artifact is replicated.
+Similarly, the removal-handling sub-algorithm gets called any time an artifact is removed from the set of currently active artifacts (i.e. the population).
 
-Perfect tracking can be used regardless of whether each artifact has one or multiple parents (i.e. asexual vs. sexual reproduction).
+Perfect tracking can be used regardless of whether each artifact has one or multiple parents (i.e., asexual vs. sexual reproduction).
 Our analysis here will focus on the case where each artifact has only parent, but most of our results generalize to the multi-parent case.
+The primary exception is the results presented in Section \ref{sec:perfect-tracking-pruning-space}, which will underestimate memory use in the average multi-parent case.
 
+Perfect tracking can be done at an arbitrary level of abstraction \citep{dolson2020interpreting, dolson2023phylotrackpy}.
+For example, individual replicator objects could be grouped on the basis of a particular genetic or phenotypic trait.
+As in biological phylogenetics, phylogenies can be used to show relationships between individuals, species, or any other taxonomic unit.
+Increasing the level of abstraction scales down memory use by a constant (but often large) factor.
+Here, we will assume that the entities being tracked are the underlying replicating artifacts, as this case is the most computationally expensive.
+
+In the following subsections, we present two different algorithms for perfect phylogenetic tracking: one which naively accumulates records for every node that ever existed and another which reclaims memory as lineages go extinct.
 
 \subsection{Naive perfect tracking}
+\label{sec:naive-perfect-tracking}
 
-The naive perfect tracking algorithm is fairly straightforward and is formally desribed in algorithm \ref{alg:perfect-tracking}.
+The naive perfect tracking algorithm is fairly straightforward.
+It is formally desribed in Algorithm \ref{alg:perfect-tracking}.
 
 \input{alg/perfect-tracking.tex}
 
 \subsubsection{Time complexity}
 
-The naive perfect tracking algorithm can be implemented in constant time (see theorm \ref{thm:perfect-tracking-time}).
+The naive perfect tracking algorithm can be implemented in constant time (see Theorem \ref{thm:perfect-tracking-time}).
 
 \input{thm/perfect-tracking-time.tex}
 
 \subsubsection{Size order of growth}
 
-Naive perfect tracking has a very large size order of growth, owing to the fact that it maintains a tree containing a node for every object that ever existed (see theorem \ref{thm:perfect-tracking-space}).
+Naive perfect tracking has a very large size order of growth, owing to the fact that it maintains a tree containing a node for every object that ever existed (see Theorem \ref{thm:perfect-tracking-space}).
 
 \input{thm/perfect-tracking-space.tex}
 
-\subsection{Perfect tracking with pruning}
+\subsection{Pruning-enabled perfect tracking}
+\label{sec:naive-perfect-tracking-with-pruning}
 
-For most substantial applications, the amount of memory used by naive perfect tracking is prohibitive.
-Instead, most practitioners use an alternative perfect tracking algorithm that includes a ``pruning'' step to reduce memory use (see algorithm \ref{alg:perfect-tracking-pruning}).
-This algorithm removes all parts of the phylogeny that are no longer relevant to explaining the history of currently extant objects.
+For most substinative applications, the amount of memory used by naive perfect tracking is prohibitive.
+As such, it is common to use a ``pruning''-enabled algorithm that deletes records associated with extinct lineages (see Algorithm \ref{alg:perfect-tracking-pruning}).
+This procedure removes all parts of the phylogeny that are no longer relevant to explaining the history of currently extant objects.
 Thus, like naive perfect tracking, it introduces no uncertainty into down-stream analyses.
 
 \input{alg/perfect-tracking-pruning.tex}
 
 \subsubsection{Time Complexity}
 
-The pruning algorithm has a constant (amortized) time complexity (see theorem \ref{thm:perfect-tracking-with-pruning-time}).
+The pruning-enabled algorithm has amortized constant time complexity (see Theorem \ref{thm:perfect-tracking-pruning-time}).
 
 \input{thm/perfect-tracking-with-pruning-time.tex}
 
 \subsubsection{Size order of growth}
+\label{sec:perfect-tracking-pruning-space}
 
-As with naive perfect tracking, the primary memory cost of this algorithm comes from maintaining the tree of records, $T$.
+As with naive (i.e. unpruned) perfect tracking, the primary memory cost of this algorithm comes from maintaining the tree of records, $T$.
 Thus, our analysis in this section will focus on the size of $T$.
-Technically, the worst-case size order of growth of perfect tracking with pruning is the same as for naive perfect tracking (see theorem \ref{thm:perfect-tracking-space}).
+Technically, the worst-case size order of growth of perfect tracking with pruning is the same as for naive perfect tracking (see Theorem \ref{thm:perfect-tracking-space}).
 However, whereas that order of growth is also the best case for naive perfect tracking, it is a somewhat pathological case with pruning.
-When using pruning, such a case would only occur when every object is copied before being removed.
-There are some legitimate reasons these cases might occur, but most of them are fairly esoteric (see \ref{sec:perfect-tracking-space-supp}).
+When using pruning, such a case would only occur when every object is copied before being removed (i.e., no lineages go extinct).
+There are some legitimate reasons these cases might occur, but most of them are fairly esoteric (see Section \ref{sec:perfect-tracking-space-supp}).
 
 % These scenarios might legitimately occur if objects are never removed or the number of objects is allowed to continuously grow, but in these cases $N$ would also be growing continuously.
 % They could potentially also happen when tracking digital objects that are copied with very small amounts of stochasticity.
 
-When pruning is used, the asymptotic behavior of the average case is both substantially different from and more practically informative than the asymptotic behavior of the worst case.
+With pruning, the asymptotic behavior of the average case turns out to be substantially better than that of the worst case. 
+Luckily, in the vast majority of applications, the average case is more practically informative than the asymptotic behavior of the worst case.
 Here, we investigate the expected size of $T$ (which we will call $E(|T|)$) in the average case as the population size ($N$) and number of time points ($G$) increase.
 Of course, investigating the average case requires making some assumptions about the scenarios where this algorithm may be used.
-An expedient assumption to make is that objects to be replicated are selected at random from the population.
-While this assumption is obviously not completely true in most cases, it will turn out that $E(|T|)$ is actually smaller for most realistic cases.
+An expedient assumption to make is that objects to be replicated are selected at random from the population (i.e., drift).
+This process is described by a neutral model.
+While this assumption is obviously not completely true in most cases, it will turn out that $E(|T|)$ is actually smaller for most realistic cases (e.g. any evolutionary scenario with directional selection).
 
-Conveniently, the asymptotic behavior of $E(|T|)$ as $N$ increases has been studied under a variety of models of random selection.
-The relevant branch of mathematics is coalescence theory, which describes the way particles governed by random processes come together over time [cite Berestycki].
-While different models of random selection yield different behavior, nearly models that are realistic for our purposes exhibit ``coalesence'' events in which the most recent common ancestor of the entire current population becomes more recent as a result of old lineages dying out.
-This observation implies that when we run our perfect tracking with pruning algorithm for sufficiently long periods of time, on average we should expect our tree to have a long ``stem'' of nodes with a single parent and single child.
-The most recent node in this chain will be the most recent common ancestor (MRCA) of the whole extant population.
-The descendants of the MRCA will form a more traditional looking tree, which we will call $T_c$.
+Conveniently, the asymptotic behavior of $E(|T|)$ as $N$ increases has been studied under a variety of random selection models \citep{berestyckiRecentProgressCoalescent2009, tellierCoalescenceMultipleBranching2014, nordborgCoalescentTheory2019}.
+The relevant branch of mathematics is coalescence theory, which describes the way particles governed by random processes agglomerate over time.
+There are a variety of models of random selection, all of which yield different behavior.
+Neutral models that could plausibly describe a process of replicating digital artifacts experience ``coalesence'' events.
+In these events, the population establishes a more-recent common ancestor as a result of old lineages dying out.
+This observation implies that when we run our perfect tracking with pruning algorithm for sufficiently long periods of time, on average we should expect our tree $T$ to have a long unifurcating ``stem.''
+The most recent node in this chain will be the most recent common ancestor of the whole extant population.
+The descendants of the MRCA will form a sub-tree, which we will call $T_c$.
 
-The expected size of $T_c$ (denoted $E(|T_c|)$; often referred to as $L_n$ in coalescence literature), then, will be the dominant factor affecting $E(|T|)$.
-Although the asymptotic behavior of $E(|T_c|)$ depends on the specifics of the evolutionary process, it scales sub-linearly with respect to population size for all realistic models that have been investigated thus far.
+% TODO: double check math
+% Add footnote if we change back to sub-linear
+The expected size of $T_c$ (denoted $E(|T_c|)$ here; often referred to as $L_n$ in coalescence literature), then, will be the dominant factor affecting $E(|T|)$.
+Although the asymptotic behavior of $E(|T_c|)$ depends on specifics of the evolutionary process, it scales at worst linearly with respect to population size for all realistic models that have been investigated in the literature to our knowledge.  % TODO consult literature and change this back to "linearly or better" but add a footnote
 How is this possible?
-Under realistic models, various subsets of the population will coalesce to common ancestors much faster than the whole population does.
+Under realistic models, various subsets of the population will coalesce to common ancestors much faster than the whole population does \citep{nordborgCoalescentTheory2019}.
 Consequently, there are many shallow branches.
 The farther back in $T_c$ you go, the fewer branches there are.
-Note that the time to coalescence depends entirely on the population size ($N$); the number of generations ($G$) does not affect the asymptotic growth rate of $E(|T_c|)$.
+As a result, the marginal impact of increasing $N$ diminishes as $N$ increases. 
+Note that the time to coalescence depends entirely on the population size ($N$); the total number of generations elasped since the start of the process ($G$) does not affect the asymptotic growth rate of $E(|T_c|)$.
 
-The precise asymptotic scaling of $E(|T_c|)$ depends on the exact model of random replication used.
-Under one common model, Kingman's Coalescent, it is $\mathcal{O}(log(N))$.
-Under another reasonable model, the Bolthausen-Sznitman coalescent, it is $\mathcal{O}(\frac{N}{log(N)})$.
+
+The precise asymptotic scaling of $E(|T_c|)$ with respect to population size $N$ depends on the exact model of random replication used \citep{tellierCoalescenceMultipleBranching2014}.
+Under the best-studied model, Kingman's Coalescent, it is $\mathcal{O}(log(N))$ \citep{kingmanCoalescent1982, delmasAsymptoticResultsLength2008}.
+Under another reasonable model, the Bolthausen-Sznitman coalescent, it is $\mathcal{O}(\frac{N}{log(N)})$ \citep{drmotaAsymptoticResultsConcerning2007}.
 %Notably, these are both less than $\mathcal{O}(N)$, which would necessarily be the space complexity of whatever program was generating the phylogeny being tracked.
 %Thus, we can conclude that in the average case perfect tracking with pruning will not be the primary factor determining memory usage.
-Some questionably-realistic models could also produce the star-shaped coalescent, in which $N$ offspring descend directly from the most recent common ancestor.
+Some exotic models could also produce the star-shaped coalescent, in which all $N$ offspring descend directly from the most recent common ancestor. 
 While this scenario actually takes less memory in total, its asymptotic growth is $\mathcal{O}(N)$.
 Thus, we can claim a loose bound on the average case growth rate of $\mathcal{O}(N + G)$.
 Trivially, the ``stem'' part of $T$ can be pruned off when coalescence occurs, producing a bound of $\mathcal{O}(N)$.
 
 Earlier, we mentioned that in practice $T$ will usually be smaller than predicted by these random models.
 These random models represent scenarios called ``neutral drift'' in evolutionary theory, which is the case in which coalescence takes the longest.
-When some members of the population are more likely to be selected than others (and $N$ is fixed), we expect to see ``selective sweeps'' in which those members of the population outcompete others.
+When some members of the population are more likely to be selected than others and that selective advantage is hereitable (assuming population size $N$ is stable), we expect to see ``selective sweeps'' in which those members of the population outcompete others.
 A selective sweep will lead to rapid coalescence.
 Thus, in general, in the presence of non-random selection, we expect $T_c$ to be much smaller than we would expect under drift.
 
@@ -105,15 +124,19 @@ Such a regime can theoretically occur when there is selection for stable coexist
 However, such a regime also involves introducing non-random selection.
 Thus, in practice, while these regimes maintain multiple deep branches, there is often frequent coalesence within those branches.
 Theoretically, though, extreme pressure for diversity could cause $E(|T|)$ to scale faster than $\matchcal{O}(N)$.
+Such scenarios could potentially be created via ecological interactions.
 
-% TODO:
-% - Address population size
-% - Asexual vs. sexual
-
+One factor that we have glossed over in this analysis is the possibility for $N$ to change over time.
+For reasons that are explored further in Section \ref{sec:perfect-tracking-space-supp}, allowing $N$ to fluctuate complicates mathematical analysis but does not substantially alter our conclusions.
 
 \subsection{Comparison between perfect tracking and hereditary stratigraphy}
 
+In choosing between perfect tracking and hereditary stratigraphy, there are multiple factors to consider: 1) time complexity in the relevant model of computation, 2) memory use, and 3) amount of information retained.
+
 % Considerations:
 % - Distributed vs. not
+%     - data loss
+%     - have to eventually collect data into a centralized representation?
+%     - have to propagate extinction notifications during experiment (unlike phylogeny collation which could hypothetically occur after the fact)
 % - Accuracy
 % - Memory fluctuations
