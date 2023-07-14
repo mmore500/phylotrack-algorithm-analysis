@@ -6,16 +6,16 @@ This section collects specification and validation of five proposed streaming cu
 These algorithms operate online on a rolling stream of incoming observations to maintain a representative subsample of retained observations.
 Streaming curation algorithms differ in the growth rate allowed for the curated observation collection and with respect to relative prioritization of retaining recent observations compared to older observations.
 
-For each surveyed algorithm, we present
-\begin{itemize}
-\item narration of retention policy algorithm strategy,
-\item retention policy algorithm extant record size order of growth (i.e., the scaling relationship between record depth and curated collection size),
-\item resolution guarantees (i.e., bounds on gap size between retained observations),
-\item instructions to enumerate time points retained within the curated subsample for any record depth,
-\item validation of policy algorithm self-consistency (i.e., that preceding record depths retain all observation time points required at later record depths),
-\item an algorithm for policy enactment (i.e., what observations to drop at each successive depth), and
-\item reflection of likely use case scenarios.
-\end{itemize}
+% For each surveyed algorithm, we present
+% \begin{itemize}
+% \item narration of retention policy algorithm strategy,
+% \item retention policy algorithm extant record size order of growth (i.e., the scaling relationship between record depth and curated collection size),
+% \item resolution guarantees (i.e., bounds on gap size between retained observations),
+% \item instructions to enumerate time points retained within the curated subsample for any record depth,
+% \item validation of policy algorithm self-consistency (i.e., that preceding record depths retain all observation time points required at later record depths),
+% \item an algorithm for policy enactment (i.e., what observations to drop at each successive depth), and
+% \item reflection of likely use case scenarios.
+% \end{itemize}
 
 We introduce the following five curation policy algorithms,
 \begin{itemize}
