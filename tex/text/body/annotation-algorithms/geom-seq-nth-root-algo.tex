@@ -2,27 +2,39 @@
 \label{sec:geom-seq-nth-root-algo}
 
 The geometric sequence $n$th root (GSNR) policy algorithm tackles recency-proportional uncertainty objectives within a fixed-capacity constraint.
+% ELD: What does fixed-capacity mean here? Is it size?
+% (feel free to disregard if its in the glossary)
 Although recency-proportional gap size cannot be bounded below a fixed threshold in this context, GSNR seeks to minimize it to the extent possible.
+% ELD: "cannot" as in its impossible or as in we haven't figured out how yet?
 
 Recall that the recency-proportional policy algorithm (RPR) suffers logarithmic growth in extant record size with respect to record depth $n$.
+% ELD: "suffers" seems a little harsh - logarthmic isn't that bad. Maybe "exhibits"?
 Take $a = \log_b(n)$.
 Equivalently, $b^a = n$.
-Under RPR growth in extant record size can be roughly conceptualized as related to insufficiency of logarithmic base to reach $n$ within $a$ multiplicative steps.
+% ELD: I don't think we need to state this both ways
+Under RPR, growth in extant record size can be roughly conceptualized as related to insufficiency of logarithmic base to reach $n$ within $a$ multiplicative steps.
+% ELD: maybe just say "b" instead of logarthmic base, since you already defined it?
+% Also, I'm confused by what this is saying.
+% Does RPR grow faster than logarithmic?
 The additional multiplicative step corresponds to an additional order of magnitude that must be covered with additional retained observations.
 Put another way, progression of the policy algorithm accommodates additional record depth by increasing $a$.
+% ELD: I feel like I was supposed to come away from this paragraph understanding what problem GSNR is trying to solve, but I don't
 
 In order to prevent such growth, the GSNR policy algorithm fixes $a$ and accommodates additional record depth by adjusting $b$.
 This scheme can be imagined as arrangement of $a$ exponentially-spaced target points along the historical record.
+% ELD: I know we don't have time or space, but I think a little picture of this would help a lot
 As time elapses, the quantity of target points remains constant.
 The target points shift to maintain exponential spacing, which necessitates gradual amplification of the geometric factor $b$.
 The necessary magnitude of $b$ works out as $b = n^{1/a}$.
 Target ages therefore correspond to $n^{0/a}, n^{1/a}, \ldots, n^{a/a}$.
 This geometrically-spaced target point sequence eponymizes the GSNR policy algorithm.
 Convert observation age to absolute time point, targets span $n - n^{0/a}, n - n^{1/a}, \ldots, n - n^{a/a}$.
+% ELD: Is this sentence missing a word? Or is it supposed to be "converting"?
 
 Now, attention turns to exploiting the $n$th root geometric targets to define a retention policy.
 We will break the problem down to consideration of one individual target point $n - n^{x/a}$.
 Under the constraint of $\mathcal{O}(1)$, we can only curate a fixed number of observations per target point.
+% ELD: Is this O(1) per point or total?
 We will seek to curate a fixed size collection of retained observations to bound gap size past the target point below $n^{x/a}$.
 
 By nature of definition, target point times advance monotonically.
@@ -30,9 +42,11 @@ As a consequence, a retained observation can remain behind a target point indefi
 We will incorporate such coverage into our design --- let's call such a point behind the target the ``backstop'' $\beta$.
 % Because the target point shifts with record depth, but retained time points are immutable, no retained backstop time point can exactly track the target point.
 We will reach for a binary power trick to maintain backstop coverage.
+% ELD: Maybe "use" instead of "reach for"? Also maybe power of 2 instead of binary power? It took me a while to parse what a binary power is
 % Instead, we will follow the vein of the RPR policy algorithm and the depth-proportional resolution policy algorithm and reach for a binary power.
 
 Take the binary floor of half $n^{x/a}$,
+% ELD: I'd either make this sentence have more intuition or cut it.
 % TODO we should probably define binary floor in preliminaries and refer there
 \begin{align*}
   \kappa(n)
@@ -40,6 +54,7 @@ Take the binary floor of half $n^{x/a}$,
   2^{\lfloor \log_{2}(n^{x/a}/2) \rfloor}.
 \end{align*}
 We will retain recent time points aligning at this cadence $\kappa$.
+% ELD: what does "aligning at this cadence" mean?
 Note that $n$ strictly increasing implies $\kappa(n)$ monotonically increasing.
 
 Let's define a floor $B$ to help place our backstop $\beta$,
@@ -68,8 +83,10 @@ We will retain the time point set $S_x$ comprising multiples of $\kappa$ at or a
   S_x(n) = \{\, t \mid \beta(n) \leq t < n \text{ and } t \mod \kappa(n) = 0 \,\}.
 \end{align*}
 
-Why are time points $S_x(n)$ is guaranteed a subset of $S_x(n-1) \cup \{n\}$ (i.e., self consistency)?
-Consider several non-mutually exclusive possibile scenarios transitioning from $n - 1$ to $n$,
+Why are time points $S_x(n)$ guaranteed to be a subset of $S_x(n-1) \cup \{n\}$ (i.e., self consistency)?
+% ELD: I tweaked some typos in the sentence above - make sure its still rigt
+Consider several non-mutually exclusive possible scenarios transitioning from $n - 1$ to $n$,
+% ELD: "that could occur when"
 \begin{enumerate}
   \item $\kappa$ changes: $\kappa(n - 1) \neq \kappa(n)$.
 
@@ -188,6 +205,6 @@ This lends it to very-long duration applications.
 \input{thm/geom-seq-nth-root-algo-space-complexity.tex}
 \input{thm/geom-seq-nth-root-algo-uncertainty-bound.tex}
 
-\input{alg/geom-seq-nth-root-algo-gen-drop-ranks.tex}
-\input{alg/geom-seq-nth-root-algo-pred-keep-rank.tex}
+% \input{alg/geom-seq-nth-root-algo-gen-drop-ranks.tex}
+% \input{alg/geom-seq-nth-root-algo-pred-keep-rank.tex}
 \input{alg/geom-seq-nth-root-algo-enum-retained-ranks.tex}
