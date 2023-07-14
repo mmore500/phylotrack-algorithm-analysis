@@ -1,7 +1,7 @@
 \section{Phylogenetic Inference Algorithms} \label{sec:reconstruction}
 
 This section surveys methodology to reconstruct patterns of descent among hereditary stratigraphic annotations.  % TODO: pass for vocabulary consistency (annotation vs column)
-Sections \ref{sec:distance-based-reconstructions} and \ref{sec:trie-based-reconstructions} present, one after the other, a naive and a more apt approach, respectively, to inferring hierarchical relatedness (i.e., phylogeny) among many hereditary stratigraphic annotations.
+Sections \ref{sec:distance-based-reconstruction} and \ref{sec:trie-based-reconstruction} present, one after the other, a naive and a more apt approach, respectively, to inferring hierarchical relatedness (i.e., phylogeny) among many hereditary stratigraphic annotations.
 Phylogenetic reconstruction requires synthesis of relatedness relationships across an entire population to assemble a holistic historical account.  % TODO: put population in the glossary
 To lay groundwork for this discussion, Section \ref{sec:pairwise-relatedness} first explores relatedness estimation between individual pairs of hereditary stratigraphic annotations.
 
@@ -74,7 +74,7 @@ Instead, in oldest-first order, inserted annotations may encounter a trie node w
 This missing information is conceptually equivalent to a query string wildcard position \citep{fukuyama2016partial}.
 Such wildcard queries can require evaluation of many branch paths during insertion, instead of just one.
 An inserted taxon's lineage could proceed along any of the outgoing edges from the trie node preceding the wildcard.
-Among possible paths, the path with the longest successive streak of strata consistent with the inserted annotation is best-evidenced. 
+Among possible paths, the path with the longest successive streak of strata consistent with the inserted annotation is best-evidenced.
 Unfortunately, in the case of multiple wildcard positions, finding the best-evidenced path requires exploring a number of alternate paths potentially exponential with respect to maximum stratum count $c$ (i.e., maximum trie depth).
 Taking the number of possible differentia values $d$ into account as the maximum branching factor, the worst case time complexity devolves to $\mathcal{O}(c d^c n)$ \citep{fukuyama2016partial}.
 Calculation of the average case depends on the streaming curation policy algorithm at play and the underlying phylogenetic structure being reconstructed, which introduces analytical complexity and likely varies significantly between use cases.

@@ -7,7 +7,7 @@ On the flip side, economization and miniaturization has driven broad disseminati
 A notable pattern cuts across some facets of both fringes: absolute reduction or tightening or relative tightening in resources and capabilities per processing element, particularly with respect to the capacity, latency, or bandwidth of memory and storage.
 
 Along the march to exascale HPC, processing capacity growth (e.g., FLOPS) has outpaced memory performance and capacity --- particularly with respect to hardware accelerators \citep{kogge2013exascale,khan2021analysis}.
-This ``memory wall'' bottlenecks throughput unless memory access volume is kept sufficiently low in proportion to processing workload (i.e., high ``arithmetic'' or ``operational'' intensity is achieved) \citep{obviousmemorywall,mckee2004reflections,ROOFLINEMODEL2008Berkley}.
+This ``memory wall'' bottlenecks throughput unless memory access volume is kept sufficiently low in proportion to processing workload (i.e., high ``arithmetic'' or ``operational'' intensity is achieved) \citep{wulf1995hitting,mckee2004reflections,williams2009roofline}.
 Analogous performance trajectories have played out with respect to data storage \citep{heldens2020landscape,kunkel2014exascale}, imposing an analogous ``storage wall'' bottleneck \citep{hu2016storage}.
 Recent introduction of the Cerebras Wafer-Scale Engine epitomizes the double-edged nature of recent HPC trends: this accelerator packages an astounding 850,000 computing elements onto a single piece of silicon, but restricts endows each with a modest 48kb of memory and provisions an exclusively-local mesh communication model \citep{cerebras2021wafer,lauterbach2021path}.
 
@@ -159,8 +159,8 @@ Remaining exposition is structured as follows:
 \item Section \ref{sec:methods} covers preliminaries and glossarizes key terminology,
 \item Section \ref{sec:annotation-algorithms} surveys a suite of streaming curation algorithms, introducing intuition, presenting the formal definition, proving self-consistent stratum discard sequencing, and demonstrating resolution and collection size properties.
 % TODO make sure this gets into the actual text
-\item Section \ref{sec:reconstruction-algorithm} presents a recently-developed algorithm for full-tree reconstruction from hehereditary stratigraphic annotation data and analyzes its runtime characteristics.
-\item Section \ref{sec:perfect-tracking-algorithm} supplies formal presentation of the alternate perfect phylogenetic tracking algorithm and analysis of its runtime characteristics then commentates on which situations better suit perfect tracking over hereditary stratigraphy, and vice versa.
+\item Section \ref{sec:reconstruction} presents a recently-developed algorithm for full-tree reconstruction from hehereditary stratigraphic annotation data and analyzes its runtime characteristics.
+\item Section \ref{sec:perfect-tracking} supplies formal presentation of the alternate perfect phylogenetic tracking algorithm and analysis of its runtime characteristics then commentates on which situations better suit perfect tracking over hereditary stratigraphy, and vice versa.
 % TODO do we need a results and discussion section???
 % \item Section \ref{sec:results-and-discussion}
 \item Section \ref{sec:conclusion} reflects on broader implications and future work.

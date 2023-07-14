@@ -1,7 +1,7 @@
 \section{Perfect Tracking Algorithm} \label{sec:perfect-tracking}
 
-Traditionally, the problem of recording the phylogenies of replicating digital 
-artifacts has been solved using a ``perfect tracking'' approach where all replication 
+Traditionally, the problem of recording the phylogenies of replicating digital
+artifacts has been solved using a ``perfect tracking'' approach where all replication
 events are recorded and stored in a tree (or forest, if there are multiple roots) \citep{dolson2023phylotrackpy}.
 In this section, we present results on the time and memory size complexity of perfect tracking;
 these results will serve as a basis of comparison for our curation policy algorithms in the context
@@ -19,7 +19,7 @@ Our analysis here will focus on the case where each artifact has only parent, bu
 
 \subsection{Naive perfect tracking}
 
-The naive perfect tracking algorithm is fairly straightforward and is formally desribed in algorithm \ref{alg:perfect-tracking}. 
+The naive perfect tracking algorithm is fairly straightforward and is formally desribed in algorithm \ref{alg:perfect-tracking}.
 
 \input{alg/perfect-tracking.tex}
 
@@ -46,7 +46,7 @@ Thus, like naive perfect tracking, it introduces no uncertainty into down-stream
 
 \subsubsection{Time Complexity}
 
-The pruning algorithm has a constant (amortized) time complexity (see theorem \ref{thm:perfect-tracking-pruning-time}). 
+The pruning algorithm has a constant (amortized) time complexity (see theorem \ref{thm:perfect-tracking-with-pruning-time}).
 
 \input{thm/perfect-tracking-with-pruning-time.tex}
 
@@ -79,7 +79,7 @@ The expected size of $T_c$ (denoted $E(|T_c|)$; often referred to as $L_n$ in co
 Although the asymptotic behavior of $E(|T_c|)$ depends on the specifics of the evolutionary process, it scales sub-linearly with respect to population size for all realistic models that have been investigated thus far.
 How is this possible?
 Under realistic models, various subsets of the population will coalesce to common ancestors much faster than the whole population does.
-Consequently, there are many shallow branches. 
+Consequently, there are many shallow branches.
 The farther back in $T_c$ you go, the fewer branches there are.
 Note that the time to coalescence depends entirely on the population size ($N$); the number of generations ($G$) does not affect the asymptotic growth rate of $E(|T_c|)$.
 
@@ -99,7 +99,7 @@ When some members of the population are more likely to be selected than others (
 A selective sweep will lead to rapid coalescence.
 Thus, in general, in the presence of non-random selection, we expect $T_c$ to be much smaller than we would expect under drift.
 
-Would we ever expect $T_c$ to be larger than under drift? 
+Would we ever expect $T_c$ to be larger than under drift?
 Only if lineages coexist for longer than we would expect by chance.
 Such a regime can theoretically occur when there is selection for stable coexistence or diversity maintenance.
 However, such a regime also involves introducing non-random selection.
