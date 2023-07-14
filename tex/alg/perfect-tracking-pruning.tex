@@ -17,12 +17,12 @@
         \State{$P_j$ $\gets$ parent of $P_i$}
         \State{Record that $P_i$ is not alive}
 
-        \WHILE{$P_i$ is not alive \textbf{and} $P_i$'s count of living offspring lineages == 0}
+        \While{$P_i$ is not alive \textbf{and} $P_i$'s count of living offspring lineages == 0}
             \State{Remove $P_i$ from $T$}
             \State{Decrement $P_j$'s count of living offspring lineages}
             \State{$P_i$ $\gets$ $P_j$}
             \State{$P_j$ $\gets$ parent of $P_j$}
-        \ENDWHILE
+        \EndWhile
 
     \end{algorithmic}
 \end{algorithm}
