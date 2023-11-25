@@ -1,4 +1,6 @@
 name: CI
+# see https://github.com/orgs/community/discussions/57724
+permissions: write-all
 on:
   push:
     branches: [ master, dev, cut-cookie ]
