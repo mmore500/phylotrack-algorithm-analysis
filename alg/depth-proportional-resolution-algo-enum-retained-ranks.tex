@@ -1,0 +1,20 @@
+\begin{algorithm}
+\caption{Depth-proportional Resolution Stratum Enumeration}
+\label{alg:depth-proportional-resolution-algo-enum-retained-ranks}
+\begin{algorithmic}[1]
+    \Require{ $\texttt{n}$ -- the number of strata deposited }
+    \Require{ $\texttt{r}$ -- the fixed resolution desired }
+    \Ensure{ array of retained strata }
+
+    \State $\texttt{uncertainty} \gets (\text{largest integral power of two} \le \frac{n}{r + 1}) \lor 1$
+    \State $\texttt{arr} \gets \text{empty array of length } \frac{n}{\texttt{uncertainty}} + 1$
+
+    \For{$i = 0$ \textbf{to} $\texttt{n} - 1$ \textbf{step} $\text{uncertainty}$}
+        \State $\texttt{arr} [$i$] \gets i$
+    \EndFor
+    \State $\texttt{last\_rank} \gets \texttt{n} - 1$
+    \If{$\texttt{last\_rank} > 0$ \textbf{and} $\texttt{last\_rank} \bmod \texttt{uncertainty} \neq 0$}
+        \State $\texttt{\texttt{last\_rank}} [$i$] \gets \texttt{last\_rank}$
+    \EndIf
+\end{algorithmic}
+\end{algorithm}

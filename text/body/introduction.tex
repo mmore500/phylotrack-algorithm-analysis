@@ -1,0 +1,242 @@
+\section{Introduction} \label{sec:introduction}
+
+Digital evolution is a field of research that sits at the intersection of evolutionary biology and machine learning.
+By instantiating evolution in computers, researchers are able to advance our knowledge of both subjects.
+Increasing computational power is essential to many advances in digital evolution and, more broadly, artificial life \citep{ackley2014indefinitely}.
+In fact, a central motif in the field --- the problem of open-ended evolution, which asks how and if closed systems can indefinitely yield new complexity, novelty, and adaptation --- is inexorably intertwined with computational scale, and has been implicated as meaningfully compute-constrained in at least some systems \citep{taylor2016open,channon2019maximum}.
+It is not an unreasonable possibility that orders-of-magnitude changes in computational power could induce qualitative changes in digital evolution and artificial life systems \citep{moreno2022engineering}, analogously to the renaissance of deep learning with the advent of GPGPU computing \citep{krizhevsky2012imagenet}.
+%Contemporary advances in the engineering and manufacture of compute hardware largely come as a double-edged sword.
+However, contemporary advances in computer hardware have been a double-edged sword.
+%Fundamental physical limitations have essentially curtailed transformative progress in capabilities of individual processing elements \citep{sutter2005free}.
+Fundamental physical limitations have essentially curtailed transformative progress in individual processing elements \citep{sutter2005free}.
+%Instead, the frontier of raw compute power in high-performance computing (HPC) has largely been driven forward by scale-out to multi- and many-core architectures \citep{morgenstern2021unparalleled}.
+Instead, the frontier of raw compute power in high-performance computing (HPC) has largely been advanced by increasing number of cores \citep{morgenstern2021unparalleled}.
+Leveraging this power for digital evolution will require contending with scaling challenges induced by these hardware trends.
+
+% On the flip side, economization and miniaturization has driven broad dissemination of computing capability through the Internet of Things (IoT) revolution \citep{rfc7228,ojo2018review}.
+% A notable pattern cuts across some facets of both fringes: absolute reduction or tightening or relative tightening in resources and capabilities per processing element, particularly with respect to the capacity, latency, or bandwidth of memory and storage.
+% Along the march to exascale HPC, processing capacity growth (e.g., FLOPS) has outpaced memory performance and capacity --- particularly with respect to hardware accelerators \citep{kogge2013exascale,khan2021analysis}.
+% This ``memory wall'' bottlenecks throughput unless memory access volume is kept sufficiently low in proportion to processing workload (i.e., high ``arithmetic'' or ``operational'' intensity is achieved) \citep{obviousmemorywall,mckee2004reflections,ROOFLINEMODEL2008Berkley}.
+% Analogous performance trajectories have played out with respect to data storage \citep{heldens2020landscape,kunkel2014exascale}, imposing an analogous ``storage wall'' bottleneck \citep{hu2016storage}.
+% Recent introduction of the Cerebras Wafer-Scale Engine epitomizes the double-edged nature of recent HPC trends: this accelerator packages an astounding 850,000 computing elements onto a single piece of silicon, but restricts endows each with a modest 48kb of memory and provisions an exclusively-local mesh communication model \citep{cerebras2021wafer,lauterbach2021path}.
+
+% The intersection of these observations is that despite relentless technological advancement, severely resource-limited computation will persist.
+% In fact, in some domains technological progress has actually elevated the relevance of resource-limited computation.
+% These trends, and the wider context of surging generation of digital data \citep{bhat2018data}, demand attention to algorithmic strategies to triage memory/storage-capacity gaps.
+
+% ELD: Moving this to beginning
+% Burgeoning computational power has been broadly envisaged as driving force in advancing the field of digital evolution and, more broadly, artificial life \citep{ackley2014indefinitely}.
+% In fact, a central motif in the field --- the problem of open-ended evolution, how and if closed systems can yield indefinitely yield new complexity, novelty, and adaptation --- is inexorably intertwined with computational scale, and has been implicated as meaningfully compute-constrained in at least some systems \citep{taylor2016open,channon2019maximum}.
+% It is not an unreasonable possibility that orders-of-magnitude changes in computational power could induce qualitative changes in digital evolution and artificial life systems \citep{moreno2022engineering}, analogously to the renaissance of deep learning with the advent of GPGPU computing \citep{krizhevsky2012imagenet}.
+% To accomplish such, however, will require contending with scaling challenges induced by aforementioned hardware trends.
+
+% ELD: TODO: consider cutting this paragraph
+Parallel and distributed computing is, indeed, widely leveraged in digital evolution.
+Applications range from processing entirely independent evolutionary replicates across compute jobs \citep{dolson2017spatial, hornby2006automated}, to data-parallel fitness evaluation of single individuals over independent test cases using hardware accelerators \citep{harding2007fast_springer, langdon2019continuous}, to application of primary-subordinate/controller-responder parallelism to delegate costly fitness evaluations of single individuals \citep{cantu2001master,miikkulainen2019evolving}.
+In recent years, Sentient Technologies spearheaded evolutionary computation projects on an unprecedented computational scale, comprising over a million heterogeneous CPUs from time-available providers capable of a peak performance of 9 petaflops \citep{miikkulainen2019evolving,gilbert2015artificial,blondeau2009distributed}.
+
+Although highlighted as key to the future of the field, fully decentralized, highly-distributed approaches such as island models \citep{bennett1999building,schulte2010genetic} and mesh-computing approaches prioritizing dynamic interactions \citep{ray1995proposal,ackley2018digital,moreno2021conduit} have been less thoroughly developed.
+%Observability constitutes a major barrier to effective applications of the fully-distributed paradigm: in the absence of a global population-level view, the course of evolution becomes much more challenging to study --- undercutting the objective of these systems as an experimental tool.
+A major barrier to effective applications of the fully-distributed paradigm is the difficulty of observing the state of the system. 
+In the absence of a global population-level view, the course of evolution becomes much more challenging to study --- undercutting the objective of these systems as an experimental tool.
+A prime example of this problem is the difficulty of recording phylogenies (i.e. ancestry trees) in distributed systems.
+
+\subsection{Phylogeny recording}
+
+Although phylogenetic analysis is a powerful tool for understanding digital evolution \citep{dolson2020interpreting}, typical approaches are particularly difficult to scale. %poses a particularly problematic stumbling block.
+Most existing analyses use direct lineage tracking, where a centralized data structure collates individual reproduction events to produce a complete, perfect phylogenetic record \citep{dolson2023phylotrackpy}.
+However, this approach requires centralized data storage which performs poorly in distributed computing environments (see Sections \ref{sec:perfect-tracking-distrbuted} and \ref{sec:perfect-tracking-pruning-distrbuted} for more information).
+
+The problem of recording phylogenies in a distributed context generalizes beyond digital evolution.
+Phylogenies can be used to understand any process in which a population of objects exist and those objects are sometimes replicated (with or without modification).
+Indeed, phylogenetic techniques have been used to study the routes through which digital image misinformation and computer viruses spread \citep{friggeri2014rumor,cohen1987computer}.
+As in digital evolution, such studies generally rely on centralized tracking and are thus inhibited when it is not possible.
+
+% As such, hereditary stratigraphic techniques certainly possess some potential afford experimenters visibility into the otherwise cloistered processes through which such digital artifacts spread.
+% Notably, though, such experiments would predicate on some level of influence over the artifact copy process in to ensure dispatch of the hereditary stratigraphic update process and the absence of actors with motivation and capability to antagonistically deface annotation data.
+
+
+%TODO we could probably add some citations/examples about why phylogenetic tracking is important
+% AND how perfect phylogenetic tracking is super powerful at doing otherwise unimaginable analyses
+% probably pilfer phylotrackpy JOSS paper for ideas
+% TODO also tie in the algorithmic analysis of phylogenies here
+% ELD: TODO: See if any of the points below aren't made in the perfect tracking section, and if not move them
+% However, long distance, potentially many-hop, transmission of reproduction event records to a centralized data store introduces potentially significant amounts of communication overhead and bottlenecking.
+% The necessity to propagate extinction notifications at runtime so that records of lineages without extant descendants can be pruned away to prevent runaway memory use imposes additional communication overhead.
+% Further, at large enough scales, node failures become inevitablies rather than inconveniences and, at even larger scales, the cost of attempting full recovery from node dropout to prevent data loss could become high enough to conceivably preclude forward simulation progress \citep{cappello2014toward}.
+% Within the perfect-tracking paradigm, individual missing relationships could potentially entirely disjoin knowledge of how large portions of phylogenetic history relate.
+% This sensitivity to data loss poses a second major challenge in scaling perfect tracking.
+
+% Looking to natural systems, however, fruitful efforts across generations of systematic biologists evidence the viability of robust phylogenetic analyses from data generated through fully-distributed processes.
+Looking to natural systems, it is clear that robust phylogenetic analyses can be conducted on data generated through fully-distributed processes.
+% An alternate approach to studying phylogenetic dynamics in distributed systems, therefore, can be entertained: post-hoc inference from heritable data rather than centralized tracking.
+Inspired by systematic biology, we can consider post-hoc inference from heritable data as an alternative tocentralized tracking.
+% Although such analyses can passably be accomplished solely from direct analysis of pre-existing, functional digital genome contents \citep{moreno2021case}, such algorithms do not generalize across diverse digital evolution systems and suffer from many of the complications that plague phylogenetic analyses of biological systems.
+Although such analyses can be accomplished solely from pre-existing, functional digital genome contents \citep{moreno2021case}, such algorithms do not generalize across diverse digital evolution systems and suffer from many of the complications that plague phylogenetic analyses of biological systems.
+An intriguing proposition arises: how might a genetic representation be designed to maximize ease and efficacy of phylogenetic reconstruction?
+% If sufficiently compact, such a representation could be attached as a non-functional annotation to facilitate phylogenetic inference over some other genomes of interest.
+If sufficiently compact, such a representation could be attached as a non-functional annotation to facilitate phylogenetic inference over genomes of interest.
+This line of reasoning led to the recent development of ``hereditary stratigraphy'' methodology, which associates digital genomes with heritable annotations specially designed to provide universal system-invariant phylogenetic reconstruction with well-defined, tunable expectations for inference accuracy
+\citep{moreno2022hereditary}.
+
+% ELD: TODO: I think this should maybe go in the conclusion?
+% Although envisioned first-and-foremost as application-oriented tool for experiment instrumentation, this line of thinking also presents something of an intruiguing curiosity.
+% Typically, phylogeneticists tailor algorithms to the demands of available data, not the other way around.
+% This notion invites deeper consideration of phylogenetic information encoding within genomes.
+% For example, it would be interesting to explore upper bounds on phylogenetic reconstruction accuracy given genome length for different generational depths and population sizes.
+
+%TODO should this whole bit move to methods?
+% ELD: Yeah I think so
+% The principal aspects of hereditary stratigraphy can be sketched briefly.
+% However, briefly sketching a more obvious alternate approach provides a point of reference more familiar to most readers' intuiition.
+% A simple heritable annotation to enable relatedness estimation would be a fixed--length bitstring under neutral drift by bit flip mutation.
+% As lineages diverge from a common ancestor, gradual mutational accumulation probabilistically causes the hamming distance between annotations to diverge.
+% Therefore, hamming distance between these annotations can be used as inferential proxy: more mismatching sites imply less relatedness between two annotated digital organisms.
+% Unfortunately, this model suffers from several serious drawbacks in application as a tool for relatedness estimation, including difficulty resolving uneven lineage branch lengths and difficulty parameterizing the model for effective inference over greatly varying generational scales.
+
+% Hereditary stratigraphy annotations employ a systematic update process at generational turnovers instead of a stochastic mutational process as described above.
+% Each generation, a new fixed-length packet of randomly-generated data is appended to inherited annotations.
+% These stochastic ``fingerprints,'' typically sized on the order of a few bits or bytes, serve as a sort of checkpoint for lineage identity at a particular generation.
+% At future time points, extant annotations will share identical fingerprints for the generations they experienced shared ancestry.
+% Estimation of the last common ancestor generation is straightforward: the first mismatching fingerprints denote the end of common ancestry.
+% However, note that overestimation of relatedness can occur due to spurious fingerprint collision events (i.e., where strata happen to share the same randomly-generated value by chance); the probability of such events depends on ``fingerprint'' width.
+% The nomenclature of ``hereditary stratigraphy'' was chosen through analogy to geological layering processes.
+
+\subsection{Hereditary stratigraphy}
+
+The crux of hereditary stratigraphy is that each at generation, a new fixed-length packet of randomly-generated data is appended to inherited annotations.
+These stochastic ``fingerprints,'' typically sized on the order of a few bits or bytes, serve as a sort of checkpoint for lineage identity at a particular generation.
+At future time points, extant annotations will share identical fingerprints for the generations they experienced shared ancestry.
+
+Interestingly, a similar technique was used by \cite{libennowell2008tracing} to trace global dissemination of chain emails.
+These researchers applied \textit{post-hoc} methods to reconstruct estimated phylogenies of the propagation of two chain mail messages.
+These phylogenies then served as a reference to tune agent-based models, ultimately yielding a remarkable elucidation of email user behavior and underlying social dynamics.
+Interestingly, this study's reconstructions were solely enabled by a special peculiarity of the two sampled messages: they were email petitions.
+Thus, users would append their name to the list before forwarding it on --- a mechanism strikingly similar to the broad strokes of hereditary stratigraphy.
+
+Naive application of hereditary stratigraphy would produce indefinitely lengthening genome annotation size in direct proportion to generations elapsed.
+To overcome this obstacle, hereditary stratigraphy prescribes a ``pruning'' process to discard strata on the fly as new strata are deposited.
+Pruning reduces annotation size, but at the expense of introducing inferential uncertainty: the last generation of common ancestry between two lineages can be resolved no finer than the time points associated with retained strata.
+Deciding which strata to discard is the main point of algorithmic interest associated with the technique.
+In fact, this scenario turns out to be an instance of a more general class of online algorithmic problems we hereby term as ``streaming curation.''
+In the context of hereditary stratigraphy, we refer to the decision-making rules that decide which retained strata to discard per generation as a ``stratum retention'' algorithm.
+% ELD: TODO: is this correct or do we call them curation policy algorithms now?
+
+% Putting ``hereditary stratigraphy'' techniques into practice requires a point of further consideration.
+% Naive application of the approach described above would entail indefinitely lengthening genome annotation size in direct proportion to generations elapsed due to the creation of new ``fingerprint'' data each generation.
+% To overcome this obstacle, hereditary stratigraphy prescribes a ``pruning'' process to discard strata on the fly as new strata are deposited.
+% Note that pruning reduces annotation size, but at the expense of introducing inferential uncertainty: the last generation of common ancestry between two lineages can be resolved no finer than the time points associated with retained strata.
+% Deciding which strata to discard when proves to be the main point of algorithmic interest associated with the technique.
+% In fact, as will be delved into a little further on, we find this scenario to be an instance of a more general class of online algorithmic problems we term as ``streaming curation.''
+% In the context of hereditary stratigraphy, we refer to the decision-making rules that decide which retained strata to discard per generation as a ``stratum retention'' algorithm.
+
+
+\subsection{Stratum retention}
+
+The obvious core issue of stratum retention is how many strata to discard.
+In many applied cases, it is desirable to keep the count of retained strata at or below a size cap indefinitely as generations elapse.
+However, in some cases discussed later on, it may be desirable to allow a logarithmic growth rate of annotation size to guarantee upper bounds on inferential uncertainty.
+
+Determining stratum retention strategy also raises a more subtle second consideration: what skew, if any, to induce on the composition of retained strata.
+Strata from evenly-spaced time points may be retained in order to provide uniform inferential detail over the entire range of elapsed time points.
+However, coalescent theory predicts that evolution-like processes will tend to produce phylogenies with many recent branches and progressively fewer more ancient branches \citep{nordborgCoalescentTheory2019, berestyckiRecentProgressCoalescent2009}.
+Thus, fine inferential detail over more recent time points is usually more informative to phylogenetic reconstruction than fine detail over more ancient time points.
+Thus, among a fixed-size retained sampling of time points, skewing the composition of retained strata to over-represent more recent time points would likely provide better bang for the buck with respect to reconstructive power.
+Indeed, experiments reconstructing known lineages have shown that recency-skewing retention provides better quality reconstructions \citep{moreno2022hereditary}.
+So, in addition to evenly-spaced retention, we consider retention allocations that yield gap widths between successive retained strata (and corresponding estimation uncertainty) scaled proportionately to those strata's depth back in history.
+
+Because no single retention policy can meet requirements of all use cases, we present in Section \ref{sec:annotation-algorithms} a suite of complementary stratum retention algorithms covering possible combinations of retained stratum count order of growth and chronological skew.
+We describe retention algorithms in terms of upper bounds on memory usage and inference uncertainty.
+
+With respect to memory usage, we refer to guaranteed upper bounds as ``size order of growth'' in the asymptotic case with respect to elapsed generations or ``size cap'' in the absolute case.
+We refer to bounds on spacing between retained strata a ``resolution guarantee.''
+Resolution guarantee specification incorporates both the total number of generations elapsed and the historical depth of a particular time point in the stratigraphic record --- so, bounding is tailored within these particular circumstances.
+
+%ELD: TODO: This said "three nutes and bolts consdierations" but there were only two. I changed it to say two, but is there one missing?
+In addition to their particular size bounds and resolution guarantees, we demonstrate all proposed stratum retention algorithms satisfy two nuts and bolts algorithmic considerations:
+\begin{enumerate}
+\item \textbf{Tractability of directly enumerating deposition time of retained strata at any arbitrary generation.} Efficient computation of the deposition times retained at each time point provides a tractable reverse mapping from column array index to deposition generation.
+  Such a mapping enables deposition generation to be omitted from stored strata, potentially yielding several-fold space savings (depending on the differentia bit width used).
+
+\item \textbf{Stratum discard sequencing for ``self-consistency.''} 
+  When you discard a stratum now, it won't be available later.
+  If you need a stratum at a particular time point, you must be able to guarantee it hasn't already been discarded at any prior time point.
+
+\end{enumerate}
+
+% As a final spelling out of a critical conceptual point in discussion of stratum retention policies, note that size bounds and resolution guarantees are enforced across across all generations.
+% This means stratum retention policies must manage ``online'' column composition across rolling generations.
+% Indeed, for many use cases, resolution and column size guarantees will need to hold at all generations because the number of generations elapsed at the end of an experiment is often not known \textit{a priori} and the option of continuing a fixed-length experiment with evolved genomes is desired.
+% This factor introduces a design subtlety: as generations elapse, deposited strata recede to increasingly ancient historical depth with respect to the current generation.
+% Resolution guarantees may change along the way back.
+% In those cases, cohorts of retained strata must, in dwindling, gracefully morph through a constrained series of retention patterns.
+
+Note that size bounds and resolution guarantees are enforced across across all generations.
+Thus, stratum retention policies must manage ``online'' column composition across rolling generations.
+Indeed, for many use cases, resolution and column size guarantees will need to hold at all generations because the number of generations elapsed at the end of an experiment is often not known \textit{a priori} and the option of continuing a fixed-length experiment with evolved genomes is desired.
+This factor introduces a design subtlety: as generations elapse, deposited strata recede to increasingly ancient historical depth with respect to the current generation.
+Resolution guarantees may change along the way back.
+In those cases, cohorts of retained strata must, in dwindling, gracefully morph through a constrained series of retention patterns.
+
+\subsection{The streaming curation problem}
+
+Stepping back, the online filtering obligations faced by hereditary stratigraph annotations are not unlike those faced by unattended data logger devices.
+Both manage incoming observation streams on a potentially indefinite or indeterminate basis and both operate under storage space limitations.
+Further, both are presumedly tasked to operate under some stipulation for time coverage, whether simply rolling full retention of most recent data within available buffer space \citep{fincham1995use}, dismissal of incoming data after storage reaches capacity \citep{saunders1989portable,mahzan2017design}, best-effort even coverage of the elapsed period, or otherwise.
+Even high-capacity devices may experience overflow conditions when confronted with high-frequency data streams \citep{luharuka2003design}.
+
+Restated explicitly, these scenarios confront a question of how to satisfactorily maintain a temporally representative cross section of observations that stream in on a rolling basis.
+We propose this problem as the ``stream curation problem.''
+For the sake of generalizability, Section \ref{sec:annotation-algorithms} organizes presentation of stratum retention algorithms through the lens of the streaming curation problem.
+There has been some work to extend the record capacity of data loggers through application-specific online compression algorithms \citep{hadiatna2016design}, but to our knowledge the streaming curation problem has not been treated directly from either a theoretical or empirical vantage.
+As low-end hardware continues to march toward the downscale and ubiquity of ``smart dust'' \citep{warneke2001smart}, we expect this problem will become increasingly relevant.
+
+% Indeed, low-end hardware continues to march toward the downscale and ubiquity of ``smart dust'' \citep{warneke2001smart}.
+% The ``Michigan Micro Mote'' constitutes a notable waypoint \citep{lee2012modular}.
+% These devices occupy only a cubic millimeter of volume, but provision a mere 3 kb of retentive memory.
+% Introduced in 2012, applications have since been explored across imaging, motion detection, pressure measurement, and electrocardiography monitoring \citep{lee2015review}.
+% Taking for instance another more recent high-profile project, computational capacity was recently tucked into wireless sensor network devices adopting the form factor of dandelion parachutes \citep{iyer2022wind}.
+% The chipset for these devices provisions 2 kilobytes of volatile flash memory --- and a mere 128 bytes of retentive memory \citep{microchip2014atiny20}.
+% Even more striking is the advent of an epidermal physiological sensor equipped with carbon nanotube-based flash memory of a scant 48 bytes \citep{xiang2022epidermal}.
+% The ever abiding race to plumb the very lower limits of technical feasibility seems likely to keep bare-bones computing modalities front and center within this engineering domain far into the future.
+
+% Recalling earlier discussion of hardware trends, the accelerating ubiquitization of IoT hardware and, in particular, continuing downscaling toward smart dust call stream curation scenarios directly into play.
+
+Some of the same curation policy algorithms we propose for stratum retention could also be useful in these cases.
+For example, organization of IoT devices into wireless sensor networks is expected, in a considerable fraction of cases, to structure irregular device uplink schedules, such as the ``mobile sink'' paradigm \citep{jain2022survey}.
+% The so-called ``mobile sink'' paradigm has risen to some prominence due to advantages with respect to power management, security, and network load management \citep{jain2022survey}.
+Under this model, network base station(s) physically traverse the coverage area and transact with nearby sensor nodes.
+Reliance on the mobile sink's patrol schedule potentially introduces uncertainty in data transfer schedules.
+% TODO: One sentence on why our curation policies would help with this
+Streaming curation may be particularly relevant to data management in surveillance devices such as doorbell or body-worn cameras, which have experienced notable market growth \citep{calacci2022cop,lum2019research}.
+Recency-proportional retention may suit some applications, where time intervals of interest may be flagged well after the fact, but tend to bias toward the recent past.
+% This approach could also align with the objectives of some accident recording devices.
+% TODO this sentence sucks: rephrase
+Finally, streaming curation may even pertain to record management in large capacity centralized storage systems in some scenarios \citep{bhat2018data}.
+
+% It should also be noted that beyond connections to streaming curation, hereditary stratigraphy itself bears upon applications outside digital evolution modeling.
+% Computer viruses and digital media also proliferate through replication, often outside the scope of direct centralized observability.
+% Furthermore, understanding the dynamics of these phenomena is of significant scientific and societal interest \citep{aslan2020comprehensive,dupuis2019spread,ling2021dissecting}.
+% Indeed, some research has reported on the routes through which digital image misinformation and computer viruses spread \citep{friggeri2014rumor,cohen1987computer}.
+% Such studies generally rely on centralized tracking, which is not possible in many circumstances.
+% A notable exception is work by \cite{libennowell2008tracing} to trace global dissemination of chain emails.
+% These researchers applied \textit{post-hoc} methods to reconstruct estimated phylogenies of the propagation of two chain mail messages.
+% These phylogenies then served as a reference to tune agent-based models, ultimately yielding a remarkable means elucidation of email user behavior and underlying social dynamics.
+% Interestingly, this study's reconstructions were solely enabled by a special peculiarity of the two sampled messages: they were email petitions.
+% Thus, users would append their name to the list before forwarding it on --- a mechanism strikingly similar to the broad strokes of hereditary stratigraphy.
+
+% As such, hereditary stratigraphic techniques certainly possess some potential afford experimenters visibility into the otherwise cloistered processes through which such digital artifacts spread.
+% Notably, though, such experiments would predicate on some level of influence over the artifact copy process in to ensure dispatch of the hereditary stratigraphic update process and the absence of actors with motivation and capability to antagonistically deface annotation data.
+
+Remaining exposition in this paper is structured as follows:
+\begin{itemize}
+% \item Section \ref{sec:methods} covers preliminaries and glossarizes key terminology,
+\item Section \ref{sec:annotation-algorithms} surveys a suite of streaming curation algorithms, introducing intuition, presenting the formal definition, proving self-consistent stratum discard sequencing, and demonstrating resolution and collection size properties.
+% TODO make sure this gets into the actual text
+\item Section \ref{sec:reconstruction-algorithm} presents a recently-developed algorithm for full-tree reconstruction from hehereditary stratigraphic annotation data and analyzes its runtime characteristics.
+\item Section \ref{sec:perfect-tracking-algorithm} supplies formal presentation of the alternate perfect phylogenetic tracking algorithm and analysis of its runtime characteristics then commentates on which situations better suit perfect tracking over hereditary stratigraphy, and vice versa.
+% TODO do we need a results and discussion section???
+% \item Section \ref{sec:results-and-discussion}
+\item Section \ref{sec:conclusion} reflects on broader implications and future work, and
+\item we include a Glossary of terminology related to hereditary stratigraphy, streaming curation, and phylogenetics in the Appendix.
+\end{itemize}

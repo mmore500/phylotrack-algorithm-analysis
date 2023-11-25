@@ -1,0 +1,18 @@
+\begin{theorem}{Naive Perfect Tracking Time Complexity}
+\label{thm:perfect-tracking-time}
+The naive perfect tracking algorithm can be implemented in constant time ($\mathcal{O}(1)$) per birth event.
+\end{theorem}
+
+\begin{proof}
+\label{prf:perfect-tracking-time}
+For the purposes of this proof, we use the RAM model of computation. 
+Initialization takes a single simple operation and only happens once. 
+Thus, it is trivially constant-time.
+Handling a birth event takes two simple operations.
+Thus, each run of the birth-handling algorithim trivially takes constant time.
+The birth-handling algorithm will run once per birth event.
+Although the number of birth events is likely not constant with respect to the size of the population or the number of generations,
+these birth events are not part of the tracking algorithm and would have happened regardless of whether phylogeny tracking was in place.
+Consequently, adding phylogeny tracking will only increase the time complexity of a computational process to which it is added by a constant amount per birth event.
+\end{proof}
+

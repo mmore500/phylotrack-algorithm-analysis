@@ -1,0 +1,28 @@
+\begin{algorithm}
+    \caption{Perfect phylogenetic tracking with pruning}
+    \label{alg:perfect-tracking-pruning}
+    \textbf{Part 1: Initialization} \\
+    Same as algorithm \ref{alg:perfect-tracking} \\
+    \textbf{Part 2: Handle birth event}
+    \begin{algorithmic}[1]
+        \Require{$P_i$ = newly created organism, $P_j$ = $P_i$'s parent}
+        \State{Add node representing $P_i$ to $T$}
+        \State{Add edge in $T$ from $P_i$ to $P_j$}
+        \State{Record that $P_i$ is alive}
+        \State{Increment $P_j$'s count of living offspring lineages}
+    \end{algorithmic}
+    \textbf{Part 3: Handle removal event}
+    \begin{algorithmic}[1]
+        \Require{$P_i$ = newly removed organism}
+        \State{$P_j$ $\gets$ parent of $P_i$}
+        \State{Record that $P_i$ is not alive}
+
+        \While{$P_i$ is not alive \textbf{and} $P_i$'s count of living offspring lineages == 0}
+            \State{Remove $P_i$ from $T$}
+            \State{Decrement $P_j$'s count of living offspring lineages}
+            \State{$P_i$ $\gets$ $P_j$}
+            \State{$P_j$ $\gets$ parent of $P_j$}
+        \EndWhile
+
+    \end{algorithmic}
+\end{algorithm}

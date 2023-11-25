@@ -1,0 +1,31 @@
+\begin{abstract}
+
+% TODO we should probably use the word near optimal somewhere
+
+% Reconstruction of phylogenetic history from natural biosequences kindles an evergreen profusion of statistical and algorithmic innovation because it is interesting and useful but especially because it is hard.
+Reconstruction of phylogenetic history from biological sequences kindles an evergreen profusion of statistical and algorithmic innovation because it is interesting and useful but especially because it is hard.
+Efforts to observe the phylogenetic dynamics of highly distributed agent-based evolutionary models have motivated a peculiar converse question: how to best engineer artificial digital ``biosequences’’ to facilitate fast and accurate lineage reconstructions?
+% This issue directly implicates the design of virtual annotations on digital genomes to facilitate post-hoc inference — and analysis — of their lineages.
+Virtual annotations on digital genomes have been designed to solve this issue by facilitating post-hoc inference — and analysis — of their lineages.
+This emerging so-called ``hereditary stratigraphy’’ methodology abstracts this problem to a more general one: how to satisfactorily maintain a temporally representative collection of observations that stream in on a rolling basis.
+We term this more general question the ``streaming curation problem.’’
+Because ongoing data feeds necessitate continual downsampling when faced with storage and memory limitations, the streaming curation problem occurs also in context of unattended data loggers, irregularly-uplinked wireless sensor network devices, and servers under continuous application monitoring, among other scenarios.
+To meet requirements of diverse streaming curation scenarios, we present a suite of streaming curation policy algorithms that trade off along a continuum of collection size and temporal coverage.
+Policies span $\mathcal{O}(n)$, $\mathcal{O}(\log n)$, and $\mathcal{O}(1)$ orders of growth in curated collection size.
+Within each order of growth, policy algorithms differ in relative prioritization of newer versus older data.
+We explore two alternatives: even density distribution across history or recency-proportional distribution with greater density at more recent time points.
+Policy algorithm designs explicitly pre-determine retained collection composition at each time point, enabling key optimizations to reduce storage overhead and streamline processing of incoming observations.
+
+Hereditary stratigraphy’s application of streaming curation to lineage inference arises through interpretation of each individual as an independent observation of lineage association within an ongoing generational stream.
+Replicator annotations operationalize this abstract interpretation.
+% Each replicator is adjoined with a heritable set of checkpoint identifiers.
+Each replicator is given a heritable set of checkpoint identifiers.
+New checkpoints are created each generation, and streaming curation policy algorithms decide which to retain.
+Recent experimental work applying this principle has yielded robust recovery of phylogenetic information.
+Here, we formalize the theoretical foundations of hereditary stratigraphy through exposition of streaming curation algorithms.
+% and resolve a lynchpin limitation to its end-to-end application: methods for scalable, whole-tree reconstruction from checkpoint annotations.
+As a point of comparison, we also provide formal analysis for existing centralized methods for direct phylogenetic tracking.
+Phylogenetic analysis capabilities significantly advance distributed agent-based simulations as a tool for evolutionary research.
+Such decentralized tracing could extend also to other digital artifacts that proliferate through replication, like digital media and computer viruses.
+Implications of underlying streaming curation algorithms extend more broadly still, encompassing wider issues of rolling record management.
+\end{abstract}

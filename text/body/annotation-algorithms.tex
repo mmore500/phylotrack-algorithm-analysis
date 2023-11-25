@@ -1,0 +1,60 @@
+\section{Streaming Curation Algorithms} \label{sec:annotation-algorithms}
+
+\input{fig/retention-policies.tex}
+
+This section collects specification and validation of five proposed streaming curation algorithms.
+These algorithms operate online on a rolling stream of incoming observations to maintain a representative subsample of retained observations.
+Streaming curation algorithms differ in the growth rate allowed for the curated observation collection and with respect to relative prioritization of retaining recent observations compared to older observations.
+
+% For each surveyed algorithm, we present
+% \begin{itemize}
+% \item narration of retention policy algorithm strategy,
+% \item retention policy algorithm extant record size order of growth (i.e., the scaling relationship between record depth and curated collection size),
+% \item resolution guarantees (i.e., bounds on gap size between retained observations),
+% \item instructions to enumerate time points retained within the curated subsample for any record depth,
+% \item validation of policy algorithm self-consistency (i.e., that preceding record depths retain all observation time points required at later record depths),
+% \item an algorithm for policy enactment (i.e., what observations to drop at each successive depth), and
+% \item reflection of likely use case scenarios.
+% \end{itemize}
+
+We introduce the following five curation policy algorithms,
+\begin{itemize}
+\item Fixed-Resolution (FR) Policy Algorithm (Section \ref{sec:fixed-resolution-algo}),
+\item Depth-Proportional Resolution (DPR) Policy Algorithm (Section \ref{sec:depth-proportional-resolution-algo}),
+\item Recency-Proportional Resolution (RPR) Policy Algorithm (Section \ref{sec:recency-proportional-resolution-algo}),
+\item Geometric Seqpence $n$th Root(GSNR) Policy Algorithm (Section \ref{sec:geom-seq-nth-root-algo}), and
+\item Curbed Recency-Proportional Resolution (CRPR) Policy Algorithm (Section \ref{sec:curbed-recency-proportional-resolution-algo}).
+\end{itemize}
+The accomanying \texttt{hstrat} library provides reference implementations for all five.
+Figure \ref{fig:retention-policies} compares retention patterns induced by each algorithm and recaps each policy algorithm's principal properties.
+FR and DPR follow even curation prioritization while RPR, GSNR, and CRPR follow recency-proportional curation prioritization.
+Recency-proportional techniques are of particular interest due to predictions from coalescence theory \citep{nordborgCoalescentTheory2019, berestyckiRecentProgressCoalescent2009}, which suggest that in most cases there will be more lineage divergences in recent time points.
+Thus, prioritizing recent data should often improve the accuracy of subsequent data analysis. 
+% should we justify recency-proporitonal here?
+% ELD: Added it
+Collection size grows the most aggressively under FR as $\mathcal{O}(n)$.
+RPR reduces collection size growth to $\mathcal{O}(\log n)$.
+The remaining algorithms enforce a fixed cap on curated collection size.
+Note that GSNR and CRPR exhibit identical asymptotic properties.
+We include both, as CRPR is an engineered extension of GSNR that improves the efficacy of available space usage during initial shallow record depth.
+
+Appropriate algorithm choice will depend on use case scenario.
+Relevant criteria to consider include
+\begin{itemize}
+  \item uncertainty and magnitude of upper bounds on record depth, if any,
+  \item available storage capacity,
+  \item relative importance of recent and ancient observations, and
+  \item any hard record quality requirements (i.e., maximum acceptable gap size).
+\end{itemize}
+
+In a real-time scenario, record depth bounds would be considered in terms of upper bounds on chronological duration of record collection and the real-time sampling rate of observations.
+
+\input{text/body/annotation-algorithms/fixed-resolution-algo.tex}
+
+\input{text/body/annotation-algorithms/depth-proportional-resolution-algo.tex}
+
+\input{text/body/annotation-algorithms/recency-proportional-resolution-algo.tex}
+
+\input{text/body/annotation-algorithms/geom-seq-nth-root-algo.tex}
+
+\input{text/body/annotation-algorithms/curbed-recency-proportional-resolution-algo.tex}

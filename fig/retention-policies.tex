@@ -1,0 +1,162 @@
+\input{lib/dissertationelse.tex}
+\input{lib/dissertationonly.tex}
+
+\begin{figure*}
+  \centering
+  \footnotesize
+  \begin{tabular}{m{0.07\textwidth}@{}|c@{}|c@{\hskip 0.01\textwidth}|m{0.14\textwidth}}
+%-------------------------------------------------------------------------------
+\hspace{-1ex}Policy&Lower-Resolution Parameterization&Higher-Resolution Parameterization&\makecell[c]{Properties}\\\hline
+%-------------------------------------------------------------------------------
+    \rotatebox{90}{\textbf{Fixed Resolution}}
+  &
+    \makecell{
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/fixed_resolution=512+num_layers=1024+stratum_retention_predicate=fixed-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+    }
+  &
+    \makecell{
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/fixed_resolution=128+num_layers=1024+stratum_retention_predicate=fixed-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+    }
+  &
+  \makecell[{{p{0.14\textwidth}}}]{
+  \centering
+    \bf{Space Complexity}\\
+    $\mathcal{O}(n)$\\
+    \bf{MRCA Uncertainty}\\
+    $\mathcal{O}(1)$
+  }
+  \makecell[{{p{0.14\textwidth}}}]{
+  \raggedright
+    where $n$ is gens elapsed.
+  }\\\hline
+%-------------------------------------------------------------------------------
+    \adjustbox{
+      minipage=10em,
+      rotate=90,
+    }{
+      \centering
+      \textbf{Depth-Proportional\\Resolution}
+      \par
+    }
+  &
+    \makecell{
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=1+num_layers=1024+stratum_retention_predicate=depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+    }
+  &
+    \makecell{
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=4+num_layers=1024+stratum_retention_predicate=depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+    }
+  &
+  \makecell[{{p{0.14\textwidth}}}]{
+  \centering
+    \bf{Space Complexity}\\
+    $\mathcal{O}(1)$\\
+    \bf{MRCA Uncertainty}\\
+    $\mathcal{O}(n)$
+  }
+  \makecell[{{p{0.14\textwidth}}}]{
+  \raggedright
+    where $n$ is gens elapsed.
+  }\\\hline
+%-------------------------------------------------------------------------------
+  \adjustbox{
+    minipage=10em,
+    rotate=90,
+  }{
+    \centering
+    \textbf{Recency-proportional\\Resolution}
+    \par
+  }
+  &
+  \makecell{
+    \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_mrca_recency_proportional_resolution=0+num_layers=1024+stratum_retention_predicate=recency-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+  }
+  &
+  \makecell{
+    \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_mrca_recency_proportional_resolution=4+num_layers=1024+stratum_retention_predicate=recency-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+  }
+  &
+  \makecell[{{p{0.14\textwidth}}}]{
+  \centering
+    \bf{Space Complexity}\\
+    $\mathcal{O}(\log(n))$\\
+    \bf{MRCA Uncertainty}\\
+    $\mathcal{O}(m)$
+  }
+  \makecell[{{p{0.14\textwidth}}}]{
+  \raggedright
+    where $m$ is gens since MRCA and $n$ is total gens elapsed.
+  }\\\hline
+%-------------------------------------------------------------------------------
+    \adjustbox{
+      minipage=10em,
+      rotate=90,
+    }{
+      \centering
+      \textbf{Geometric Sequence\\$n$th Root}
+      \par
+    }
+  &
+    \makecell{
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=1+num_layers=1024+stratum_retention_predicate=tapered-depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+    }
+  &
+    \makecell{
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=4+num_layers=1024+stratum_retention_predicate=tapered-depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+    }
+  &
+  \makecell[{{p{0.14\textwidth}}}]{
+  \centering
+    \bf{Space Complexity}\\
+    $\mathcal{O}(1)$\\
+    \bf{MRCA Uncertainty}\\
+    $\mathcal{O}(n^{1/a} \times m)$
+  }
+  \makecell[{{p{0.14\textwidth}}}]{
+  \raggedright
+    where $m$ is gens since MRCA, $a$ is a user-chosen constant, and $n$ is total gens elapsed.
+  }\\\hline
+%-------------------------------------------------------------------------------
+    \adjustbox{
+      minipage=10em,
+    rotate=90,
+    }{
+      \centering
+      \textbf{Curbed Recency-proportional Resolution}
+      \par
+    }
+  &
+    %TODO generate this graphic
+    \makecell{
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=1+num_layers=1024+stratum_retention_predicate=tapered-depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+    }
+  &
+  %TODO generate this graphic
+    \makecell{
+      \includegraphics[valign=t,width=0.3\textwidth]{submodules/hereditary-stratigraph-concept-binder/binder/retention-policies/teeplots/guaranteed_depth_proportional_resolution=4+num_layers=1024+stratum_retention_predicate=tapered-depth-proportional-resolution+viz=tweaked-stratum-retention-drip-plot+ext=}
+    }
+  &
+  \makecell[{{p{0.14\textwidth}}}]{
+  \centering
+    \bf{Space Complexity}\\
+    $\mathcal{O}(1)$\\
+    \bf{MRCA Uncertainty}\\
+    $\mathcal{O}(n^{1/a} \times m)$
+  }
+  \makecell[{{p{0.14\textwidth}}}]{
+  \raggedright
+   where $m$ is gens since MRCA, $a$ is a user-chosen constant, and $n$ is total gens elapsed.
+  }
+
+
+  \end{tabular}
+  \caption{
+  Comparison of streaming curation policy algorithms.
+  Policy visualizations show retained strata in black.
+  Time progresses along the $y$-axis from top to bottom.
+  New strata are introduced along the diagonal and then ``drip'' downward as a vertical line until eliminated.
+  The set of retained strata present within a column at a particular generation $g$ can be read as intersections of retained vertical lines with a horizontal line with intercept $g$.
+  Policy visualizations are provided for two contrastive parameterizations for each policy algorithm.
+  }
+  \label{fig:retention-policies}
+\end{figure*}
