@@ -45,6 +45,7 @@ RUN \
     nodejs \
     pcregrep \
     pdftk \
+    tree \
     && \
   rm -rf /var/lib/apt/lists/*
 
