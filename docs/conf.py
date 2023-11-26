@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# hstrat-algorithm-analysis documentation build configuration file, created by
+# phylotrack-algorithm-analysis documentation build configuration file, created by
 # sphinx-quickstart on Fri Jun  9 13:47:02 2017.
 #
 # This file is execfile()d with the current directory set to its
@@ -130,7 +130,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'hstrat-algorithm-analysisdoc'
+htmlhelp_basename = 'phylotrack-algorithm-analysisdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------
@@ -157,7 +157,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'hstrat-algorithm-analysis.tex',
+    (master_doc, 'phylotrack-algorithm-analysis.tex',
      u'Hereditary Stratigraphy Algorithm Analysis Documentation',
      u'Matthew Andres Moreno', 'manual'),
 ]
@@ -168,7 +168,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'hstrat-algorithm-analysis',
+    (master_doc, 'phylotrack-algorithm-analysis',
      u'Hereditary Stratigraphy Algorithm Analysis Documentation',
      [author], 1)
 ]
@@ -180,10 +180,10 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'hstrat-algorithm-analysis',
+    (master_doc, 'phylotrack-algorithm-analysis',
      u'Hereditary Stratigraphy Algorithm Analysis Documentation',
      author,
-     'hstrat-algorithm-analysis',
+     'phylotrack-algorithm-analysis',
      'One line description of project.',
      'Miscellaneous'),
 ]

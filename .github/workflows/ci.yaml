@@ -24,7 +24,7 @@ jobs:
           tags: "GITHUB_ACTION_${{ github.run_number }}_TEXIMAGE"
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          repository: mmore500/hstrat-algorithm-analysis
+          repository: mmore500/phylotrack-algorithm-analysis
           registry: ghcr.io
           path: ./tex/
           add_git_labels: true
@@ -64,7 +64,7 @@ jobs:
     needs:
       - docker-teximage-build
     container:
-      image: ghcr.io/mmore500/hstrat-algorithm-analysis:GITHUB_ACTION_${{ github.run_number }}_TEXIMAGE
+      image: ghcr.io/mmore500/phylotrack-algorithm-analysis:GITHUB_ACTION_${{ github.run_number }}_TEXIMAGE
       # github actions requires root to access mounted volumes
       options: --user root
     steps:
@@ -78,4 +78,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: manuscript
-          path: tex/hstrat-algorithm-analysis-draft.pdf
+          path: tex/phylotrack-algorithm-analysis-draft.pdf

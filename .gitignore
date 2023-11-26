@@ -19,7 +19,7 @@
 .DS_Store
 a.out
 a.out.js
-web/hstrat-algorithm-analysis.js
+web/phylotrack-algorithm-analysis.js
 
 build/
 doc/_build/

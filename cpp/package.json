@@ -6,7 +6,7 @@
     "puppeteer": "1.9.0"
   },
   "main": "index.js",
-  "name": "hstrat-algorithm-analysis",
+  "name": "phylotrack-algorithm-analysis",
   "scripts": {
     "test": "make test"
   },

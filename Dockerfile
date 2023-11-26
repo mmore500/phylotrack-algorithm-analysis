@@ -2,7 +2,7 @@ FROM mmore500/dishtiny:sha-7f3f5c8
 
 USER root
 
-COPY . /opt/hstrat-algorithm-analysis
+COPY . /opt/phylotrack-algorithm-analysis
 
 RUN \
   npm install -g \
@@ -11,7 +11,7 @@ RUN \
   echo "installed npm dependencies"
 
 RUN \
-  python3 -m pip install -r /opt/hstrat-algorithm-analysis/requirements.txt \
+  python3 -m pip install -r /opt/phylotrack-algorithm-analysis/requirements.txt \
     && \
   echo "installed python dependencies"
 
@@ -27,4 +27,4 @@ RUN \
 USER user
 
 # Define default working directory.
-WORKDIR /opt/hstrat-algorithm-analysis
+WORKDIR /opt/phylotrack-algorithm-analysis
