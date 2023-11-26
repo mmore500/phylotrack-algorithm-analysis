@@ -41,7 +41,7 @@ jobs:
           submodules: 'recursive'
       - run: python3 -m pip install --upgrade pip
       - run: python3 -m pip install -r requirements.txt
-      - run: pylib/test/run_tests.sh
+      - run: python3 -m pytest pylib/test/
 
  
   binder:

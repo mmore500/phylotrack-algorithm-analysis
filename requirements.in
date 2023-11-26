@@ -7,5 +7,6 @@ numpy
 matplotlib
 pandas
 patchworklib
+pytest
 seaborn
 teeplot
