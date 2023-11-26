@@ -1,11 +1,6 @@
 FROM mmore500/docker-texlive-full:sha-ea45eb5
 
-COPY . /opt/hstrat-algorithm-analysis/tex
-
 SHELL ["/bin/bash", "-c"]
-
-# Define default working directory.
-WORKDIR /opt/hstrat-algorithm-analysis/tex
 
 # Prevent interactive time zone config.
 # adapted from https://askubuntu.com/a/1013396
