@@ -12,25 +12,6 @@ on:
     - cron: '0 0 * * 0'
 jobs:
 
-  docker-build:
-    name: Docker Build
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-          fetch-depth: 0 # fetch all history for all branches and tags
-      - name: Push to GitHub Container Registry
-        uses: docker/build-push-action@v1
-        with:
-          push: true
-          tags: "GITHUB_ACTION_${{ github.run_number }}"
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          repository: mmore500/hstrat-algorithm-analysis
-          registry: ghcr.io
-          add_git_labels: true
-
   docker-teximage-build:
     name: Docker Tex Image Build
     runs-on: ubuntu-20.04
@@ -54,28 +35,21 @@ jobs:
   py-unit:
     name: Pylib Unit Tests
     runs-on: ubuntu-20.04
-    needs:
-      - docker-build
-    container:
-      image: ghcr.io/mmore500/hstrat-algorithm-analysis:GITHUB_ACTION_${{ github.run_number }}
-      # github actions requires root to access mounted volumes
-      options: --user root --cap-add=SYS_ADMIN
     steps:
-      - run: /opt/hstrat-algorithm-analysis/pylib/test/run_tests.sh
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - run: python3 -m pip install --upgrade pip
+      - run: python3 -m pip install -r requirements.txt
+      - run: pylib/test/run_tests.sh
 
  
   binder:
     name: Notebooks
     runs-on: ubuntu-20.04
-    needs:
-      - docker-build
-    container:
-      image: ghcr.io/mmore500/hstrat-algorithm-analysis:GITHUB_ACTION_${{ github.run_number }}
-      # github actions requires root to access mounted volumes
-      options: --user root
     steps:
       # Adapted from https://askubuntu.com/a/524368
-      - run: cd /opt/hstrat-algorithm-analysis/binder && ./execute_notebooks.sh
+      - run: cd binder && ./execute_notebooks.sh
       # adapted from https://unix.stackexchange.com/a/545630
       - run: find -type f -name "*.pdf" -exec bash -c 'gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dBATCH -dQUIET -sOutputFile="new.pdf" "{}"; rm "{}"; mv "new.pdf" "{}";' {} \;
       - run: git init
