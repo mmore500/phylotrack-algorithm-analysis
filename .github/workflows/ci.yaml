@@ -17,9 +17,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-          fetch-depth: 0 # fetch all history for all branches and tags
       - name: Build and Push to GitHub Container Registry
         uses: docker/build-push-action@v1
         with:
@@ -75,10 +72,13 @@ jobs:
       # github actions requires root to access mounted volumes
       options: --user root
     steps:
-      - run: make -C /opt/hstrat-algorithm-analysis/tex quick
-      - run: make -C /opt/hstrat-algorithm-analysis/tex
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - run: make -C tex quick
+      - run: make -C tex
       - name: Upload output as artifact
         uses: actions/upload-artifact@v2
         with:
           name: manuscript
-          path: /opt/hstrat-algorithm-analysis/tex/hstrat-algorithm-analysis-draft.pdf
+          path: tex/hstrat-algorithm-analysis-draft.pdf
