@@ -48,6 +48,9 @@ jobs:
     name: Notebooks
     runs-on: ubuntu-22.04
     steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
       # Adapted from https://askubuntu.com/a/524368
       - run: cd binder && ./execute_notebooks.sh
       # adapted from https://unix.stackexchange.com/a/545630
