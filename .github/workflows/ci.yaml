@@ -71,9 +71,6 @@ jobs:
       # github actions requires root to access mounted volumes
       options: --user root
     steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
       - run: make -C /opt/hstrat-algorithm-analysis/tex quick
       - run: make -C /opt/hstrat-algorithm-analysis/tex
       - name: Upload output as artifact
