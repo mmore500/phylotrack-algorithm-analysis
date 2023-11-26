@@ -1,0 +1,47 @@
+\subsection{Depth-Proportional Resolution (DPR) Policy Algorithm}
+\label{sec:depth-proportional-resolution-algo}
+
+The depth-proportional resolution policy algorithm affiliates even coverage over record history and capped extant record size.
+To accomplish this, depth-proportional resolution approximates the cadenced spacing of retained observations at a gap width proportional to record depth.
+An equivalent interpretation of DPR strategy would be interspersal of the historical record with a fixed number of waypoints.
+
+Because observation time points are immutable after the fact, translating this naive DPR plan to a rolling, ``online'' basis necessitates a further consideration.
+To conservatively maintain resolution guarantees, it is acceptable to error on the side of caution by choosing gap sizes smaller than naively supposed.
+This allows a simple trick for policy self-consistency: flooring gap sizes to the next lower power of two.
+Note that, under this scheme, when gap size slackens it will double.
+Note also that multiples of a binary power subsume multiples of higher binary power.
+So observations at slackened-to intervals always remain, having been retained as way points under the phased out gap size.
+As intuition, therefore, the full DPR policy algorithm can be conceived of through a simple principle: successive eliminations of every other retained observation when a capacity threshold is reached.
+
+Binary floor approximation exhibits another useful property: policy algorithm property distortions can be bounded by a constant.
+With respect to the initial naive supposition, gap width is at most halved.
+So, extant record count is at most doubled.
+We structure parameterization of the DPR policy algorithm to account for divagation from binary flooring.
+Policy algorithm behavior proceeds from a specified minimum gap count among retained observations, $r$.
+(Note that $r$ also corresponds to minimum the number of distinguishable granules over record history.)
+An absolute resolution guarantee of at least $n/r$, with $n$ as record depth, follows.
+Further resulting is a constant extant record size order of growth, capped as extant observation count capped at $2r$.
+
+Algorithm \ref{alg:depth-proportional-resolution-algo-enum-retained-ranks} provides enumeration of retained time points under the DPR scheme.
+Although enactment can be parsimoniously formulated as set subtraction between enumerations at successive time points with $\mathcal{O}(1)$ complexity, Algorithm \ref{alg:depth-proportional-resolution-algo-gen-drop-ranks} addends a more expedient approach.
+% Theorems \ref{thm:depth-proportional-resolution-algo-uncertainty-bound} and \ref{thm:depth-proportional-resolution-algo-space-complexity} cover extant record size order of growth and resolution guarantorship, respectively.
+Figure \ref{fig:retention-policies} includes a time-lapse of the extant record under the DPR policy algorithm.
+
+To streamline exposition, we have presented a bare-bones approach to provision of depth-proportional resolution where the entire record is simultaneously decimated by a factor of two upon reaching capacity.
+This procedure results in regular episodes where extant record instantaneously halves.
+Likely, such fluctuation would be undesirable in most use cases.
+Many prescriptions for constant space complexity will arise from fixed memory allocation.
+Such reserved memory cannot typically be use for other purposes, so maximization of space usage minimizes waste.
+Occupying only half of bounded capacity clearly comes out on the ``use it or lose it'' downside.
+
+An alternate ``tapered'' variant of the depth-proportional resolution algorithm can be easily defined to remedy this space-usage quirk.
+Instead of all at once, the tapered approach eliminates phased-out observations one by one as new observations accrue.
+% Supplementary Section \ref{sec:depth-proportional-resolution-tapered-algo} details this tapered DPR policy algorithm.
+% TODO: ADD SECTION ^^^
+The accompanying \texttt{hstrat} software library implements both variants.
+
+% \input{alg/depth-proportional-resolution-algo-pred-keep-rank.tex}.
+\input{alg/depth-proportional-resolution-algo-enum-retained-ranks.tex}
+\input{alg/depth-proportional-resolution-algo-gen-drop-ranks.tex}
+% \input{thm/depth-proportional-resolution-algo-space-complexity.tex}
+% \input{thm/depth-proportional-resolution-algo-uncertainty-bound.tex}

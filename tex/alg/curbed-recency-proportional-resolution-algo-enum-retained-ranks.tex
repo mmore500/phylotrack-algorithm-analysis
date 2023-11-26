@@ -1,0 +1,15 @@
+% TODO: missing pseudocode
+\begin{algorithm}
+\caption{Curbed Recency-proportional Resolution Stratum Enumeration}
+\label{alg:curbed-recency-proportional-algo-enum-retained-ranks}
+\begin{algorithmic}[1]
+\State{Define $P:=T:=\{ \{1\},\ldots,\{d\}$\}}
+\While{$\#P > 1$}
+\State{Find an optimal partition tree $T_{C^\prime}$ }
+\State{Update $P := (P{\setminus} C^\prime) \cup \{ \bigcup_{t\in C^\prime} t \}$}
+\State{Update $T := T \cup \{ \bigcup_{t\in\tau} t : \tau\in T_{C^\prime}{\setminus}
+\mathcal{L}(T_{C^\prime})\}$}
+\EndWhile
+\Return $T$
+\end{algorithmic}
+\end{algorithm}

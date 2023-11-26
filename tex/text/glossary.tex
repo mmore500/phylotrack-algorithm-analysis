@@ -1,0 +1,243 @@
+
+\makeglossaries
+
+\newglossaryentry{differentia}
+{
+    name=differentia,
+    description={randomly generated information that can be used to differentiate two strata at the same layer (with a probability of spurious collision)}
+}
+
+\newglossaryentry{stratum}
+{
+    name=stratum,
+    description={differentia container associated with a particular historical stage}
+}
+
+\newglossaryentry{deposit}
+{
+    name=deposit,
+    description={the act of extending the historical record with a new stratum}
+}
+
+\newglossaryentry{deposition}
+{
+    name=deposition,
+    description={the stratum appended to the historical record}
+}
+
+\newglossaryentry{time point}
+{
+    name=time point,
+    description={refers to the stage where a specific number of depositions have taken place}
+}
+
+\newglossaryentry{deposition time}
+{
+    name=deposition time,
+    description={refers to the time point at which a stratum was deposited, zero indexed}
+}
+
+\newglossaryentry{genesis}
+{
+    name=genesis,
+    description={the time point associated with the first stratum deposition}
+}
+
+\newglossaryentry{time}
+{
+    name=time,
+    description={number of depositions elapsed between two time points}
+}
+
+\newglossaryentry{layer age}
+{
+    name=layer age,
+    description={the number of depositions elapsed since a layer's deposition time}
+}
+
+\newglossaryentry{record depth}
+{
+    name=record depth,
+    description={the number of depositions elapsed onto the historical record --- the number of layers within a historical record}
+}
+
+\newglossaryentry{layer}
+{
+    name=layer,
+    description={position within a historical record associated with a single time point, which may or may be occupied}
+}
+
+\newglossaryentry{retained/pruned layer}
+{
+    name=retained/pruned layer,
+    description={a layer within a historical record with present/removed strata, respectively}
+}
+
+\newglossaryentry{layer time point}
+{
+    name=layer time point,
+    description={the deposition time associated with a layer}
+}
+
+\newglossaryentry{pruning}
+{
+    name=pruning,
+    description={deletion of strata from a historical record (i.e., to reduce space occupied by the record) --- also used to refer to deletion of perfect tracking records for extinct lineages,}
+}
+
+\newglossaryentry{retention}
+{
+    name=retention,
+    description={the act of carrying over a stratum into the next time point during the stratum deposition process}
+}
+
+\newglossaryentry{gap}
+{
+    name=gap,
+    description={layers associated with contiguous time points that have been pruned ---- introduces inference uncertainty when comparing two columns}
+}
+
+\newglossaryentry{gap width}
+{
+    name=gap width,
+    description={the number of contiguous time points that have been pruned --- gap with increases inference uncertainty}
+}
+
+\newglossaryentry{sparse/dense retention}
+{
+    name=sparse/dense retention,
+    description={refers to relatively wide or relatively tight gap width, respectively}
+}
+
+\newglossaryentry{gap width distribution}
+{
+    name=gap width distribution,
+    description={how gap widths relate to layer deposition times}
+}
+
+\newglossaryentry{resolution}
+{
+    name=resolution,
+    description={the width of the gap containing a pruned layer or immediately following a retained layer (may be zero in the case of two successive retained strata)}
+}
+
+\newglossaryentry{stratum retention policy algorithm}
+{
+    name=stratum retention policy algorithm,
+    description={the decision-making procedure of which strata to prune at each time point (also referred to simply as ``policy'')}
+}
+
+\newglossaryentry{policy resolution guarantee}
+{
+    name=policy resolution guarantee,
+    description={upper bounds on resolutions across layers of a historical record with respect to layer age and/or record depth}
+}
+
+\newglossaryentry{extant record size}
+{
+    name=extant record size,
+    description={the quantity of strata retained within a historical record at a particular time point}
+}
+
+\newglossaryentry{extant record order of growth}
+{
+    name=extant record order of growth,
+    description={the asymptotic scaling relationship between the extant record size and record depth; see Section \ref{sec:extant_record_oog}}
+}
+
+\newglossaryentry{pruning enumeration}
+{
+    name=pruning enumeration,
+    description={calculation of the set of strata to be pruned at a particular time point under a retention policy}
+}
+
+\newglossaryentry{policy enactment}
+{
+    name=policy enactment,
+    description={the act of performing pruning enumeration and deleting strata with enumerated deposition times}
+}
+
+\newglossaryentry{update}
+{
+    name=update,
+    description={the process of performing a deposition and applying policy enactment}
+}
+
+\newglossaryentry{update time complexity}
+{
+    name=update time complexity,
+    description={the scaling relationship associated with the number of computational operations necessary to perform an update}
+}
+
+\newglossaryentry{founding stratum}
+{
+    name=founding stratum,
+    description={the first stratum deposited into the historical record, the oldest stratum}
+}
+
+\newglossaryentry{newest stratum}
+{
+    name=newest stratum,
+    description={the most recent stratum deposited into the historical record}
+}
+
+\newglossaryentry{extant record}
+{
+    name=extant record,
+    description={the set of strata that have been retained through the policy at the present time point}
+}
+
+\newglossaryentry{extant record enumeration}
+{
+    name=extant record enumeration,
+    description={calculation of deposition times present in the extant record at a time point under a retention policy}
+}
+
+\newglossaryentry{policy self-consistency}
+{
+    name=policy self-consistency,
+    description={the requirement for each deposition time within an extant record enumeration to be consistently present in all extant enumerations since that deposition time}
+}
+
+\newglossaryentry{historical record}
+{
+    name=historical record,
+    description={refers to the set of layers defined up to the current time point, also referred to as a ``record''}
+}
+
+\newglossaryentry{hereditary stratigraphic column}
+{
+    name=hereditary stratigraphic column,
+    description={container for a historical record --- in phylogenetic applications, associated with a digital population member, also referred to as a ``column''}
+}
+
+\newglossaryentry{annotation}
+{
+    name=annotation,
+    description={the one-to-one association of hereditary stratigraphic records with individual digital organisms to facilitate phylogenetic analysis}
+}
+
+\newglossaryentry{inheritance}
+{
+    name=inheritance,
+    description={the act of copying the parent organism's hereditary stratigraphic column annotation and performing an update to create the offspring organism's hereditary stratigraphic column annotation during a reproduction event}
+}
+
+\newglossaryentry{inference}
+{
+    name=inference,
+    description={best-effort estimation of historical phylogenetic relationships from extant hereditary stratigraphic columns}
+}
+
+\newglossaryentry{perfect tracking}
+{
+    name=perfect tracking,
+    description={maintenance of an exact record of phylogenetic events during an evolutionary simulation}
+}
+
+\newglossaryentry{streaming disposal problem}
+{
+    name=streaming disposal problem,
+    description={poses the question of how to satisfactorily maintain a temporally representative collection of stored observations on a rolling basis as new observations stream in}
+}
+

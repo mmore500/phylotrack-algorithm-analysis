@@ -1,0 +1,31 @@
+\section{Conclusion} \label{sec:conclusion}
+
+We have documented the algorithmic backing of the emerging ``hereditary stratigraphy'' methodology for distributed lineage tracking of replicating digital artifacts.
+This method works by annotating replicating entities with a heritable annotation, and then comparing end-state annotations after the fact to estimate their phylogenetic relationships --- akin to how biologists infer phylogenetic relationships from biological sequeences.
+We have shown the underlying mechanism of hereditary stratigraphy to be an instance of a more general ``streaming curation'' problem.
+This problem requires online subsampling of a rolling observation stream to balance requirements to maintain information over stream history and to limit the number of retained observations.
+In addition to hereditary stratigraphy, the streaming curation problem is faced in use cases involving memory-constrainged data logger or wiresless sensor network devices.
+We identify five policy algorithms that provide different size/coverage trade-offs for the streaming curation problem, and provide procedures to enact them efficiently.
+
+We then explore postprocessing algorithms used to compare and interpret hereditary stratigraphic annotations.
+In particular, we sketch a trie-based tree reconstruction algorithm that proceeds from the underlying structure of the hereditary stratigraphy annotation.
+As a point of comparison, we provide an algorithmic formalization of the established perfect-tracking algorithms currently standard in agent-based evolutionary modeling.
+We find that both perfect tracking and hereditary stratigraphy have circumstances in which they excel.
+Hereditary stratigraphy enables tracking in noisy, parallel, and distributed environments where perfect tracking would be impractical.
+It also makes stonger guarantees about memory use (although on average perfect tracking uses less memory than most hereditary stratigraphy policies).
+Lastly, it allows different tradeoffs between data resolution, accuracy, and memory use.
+%TODO talk about the take away of comparing the two
+% ELD: Took a stab at it
+
+Much future work remains.
+We are particularly interested in adapting hereditary stratigraphy to even more effectively make use of space in fixed-capacity contexts and minimize rearrangement of strata in the underlying annotation data structure (e.g., array of strata) during the update process.
+One promising direction involves adapting retention policies to directly specify the index positions to replace rather than the deposit times of strata to prune.
+Additionally, more general applications of the streaming curation problem would be worth exploring more directly.
+There is also more theoretical analysis to be done.
+Most notably, through the lens of information theory it would be possible to conduct a more formal analysis of the information-retention trade-offs among different policy algorithms. 
+This work would also open the door to a more precise analysis of the relationship between pairwise relatedness estimation accuracy and overall tree reconstruction quality.
+Finally, it would be worth assessing the extent to which curation policy algorithms minimize the number of records necessary to achieve their guarantees.
+
+Ultimately, our interest in hereditary stratigraphy and streaming curation is application-driven.
+To these ends, reference implementatons of most algorithms described are provided in the public-facing \texttt{hstrat} and \texttt{phylotackpy} Python libraries \citep{moreno2022hstrat, dolson2023phylotrackpy}.
+These libraries enable application of perfect phylogenetic tracking, hereditary stratigraphy, and streaming curation techniques in a few lines of code.

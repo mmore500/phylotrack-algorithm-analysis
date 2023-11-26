@@ -1,0 +1,26 @@
+\subsection{Fixed Resolution (FR) Policy Algorithm}
+\label{sec:fixed-resolution-algo}
+
+The fixed resolution (FR) policy algorithm adopts a simplistic strategy: retain observation time points at intervals of a user-specified factor $r$.
+This procedure equates to naive downsampling via decimation \citep[p. 31]{crochiere1983multirate}.
+We include discussion of this policy algorithm primarliy for completeness.
+
+The procedures to decide eliminated time points during the update process and to enumerate retained observation times are trivial.
+Pruning targets time points that are not multiples of the fixed resolution $r$ and enumeration traverses time points at an even stride $r$ until reaching record depth.
+% Algorithms \ref{alg:fixed-resolution-algo-gen-drop-ranks} and \ref{alg:fixed-resolution-algo-enum-retained-ranks} provide these procedures formally.
+
+Unsurprisingly, extant record size order of growth is $\mathcal{O}(n)$.
+A simple justification can be given: record depth $n$ provides an upper bound for extant record size because, being strictly subtractive, pruned size cannot exceed record depth.
+Likewise, the downsampling factor $r$ enforces an upper bound $r$ on gap size between retained observations.
+Any larger gap size would require at least one time point multiple of $r$ to have been discarded.
+% \input{thm/fixed-resolution-algo-space-complexity.tex}
+% \input{thm/fixed-resolution-algo-uncertainty-bound.tex}
+
+The FR policy algorithm provides stable absolute accuracy indefinitely.
+Such an approach will be necessary for scenarios that can tolerate only certain observational uncertainties.
+However, because extant record size grows linearly this policy would not suit applications expecting long observational duration, high-frequency observation, or storage limitation.
+Figure \ref{fig:retention-policies} includes a time-lapse of the extant record under the FR policy algorithm.
+
+% TODO fill in if time available
+% \input{alg/fixed-resolution-algo-gen-drop-ranks.tex}
+% \input{alg/fixed-resolution-algo-enum-retained-ranks.tex}

@@ -1,0 +1,57 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+
+\input{lib/dependencies.tex}
+\input{lib/pragmaonce.tex}
+% adapted from https://www.siam.org/Portals/0/Macros/Standard/docsiamart.pdf
+\Crefname{ALC@unique}{Line}{Lines}
+
+\ifdefined\mydraft
+\mydraft
+\fi
+
+\defaultbibliography{bibl}
+\defaultbibliographystyle{apalike}
+
+\graphicspath{{./}{./hereditary-stratigraph-concept/tex}{./hstrat-evolutionary-inference}}
+
+\newtheorem{theorem}{Theorem}
+
+\input{text/glossary.tex}
+
+\begin{document}
+
+\input{text/frontmatter.tex}
+
+\clearpage
+\newpage
+
+\begin{bibunit}
+
+\input{text/body.tex}
+
+% \input{text/acknowledgement.tex}
+
+\input{text/references.tex}
+
+\end{bibunit}
+
+\clearpage
+\newpage
+
+\setcounter{section}{0}
+\makeatletter
+\renewcommand \thesection{S\@arabic\c@section}
+\renewcommand\thetable{S\@arabic\c@table}
+\renewcommand \thefigure{S\@arabic\c@figure}
+\makeatother
+
+\begin{bibunit}
+
+\input{text/supplement.tex}
+
+\input{text/references.tex}
+
+\end{bibunit}
+
+\end{document}

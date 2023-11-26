@@ -1,0 +1,25 @@
+\begin{algorithm}
+\caption{Geometric Sequence $n$th Root Stratum Enumeration}
+\label{alg:geom-seq-nth-root-enum-retained-ranks}
+\begin{algorithmic}
+    \Require{ $\texttt{n}$ -- the number of strata deposited }
+    \Require{ $\texttt{p}$ -- the interspersal  }
+    \Require{ $\texttt{d}$ -- the degree } 
+    \Ensure{ set of retained strata }
+\end{algorithmic}
+
+\begin{algorithmic}[1]
+    \State $\texttt{set} \gets {0, n - 1}$
+
+    \For{$p = 1$ \textbf{to} $\texttt{d} + 1$}
+        \State $\texttt{r} \gets n^{\frac{p}{d}}$
+
+        \State $\texttt{k} \gets \text{largest integral power of two} \le \max \{\frac{r}{p}, 1 \}$ % retained_ranks_sep
+
+        \State $\texttt{c} \gets \max \{n - \ceil{r + \frac{r}{p}}, 0\}$
+        \State $\texttt{a} \gets \texttt{c} - (\texttt{c} \bmod -\texttt{k})$
+
+        \State $\texttt{set} \gets \texttt{set} \cup \{\texttt{a}, \texttt{a} + \texttt{k}, \texttt{a} + 2\texttt{k}, {a} + 3\texttt{k}, \dots, n\}$
+    \EndFor
+\end{algorithmic}
+\end{algorithm}

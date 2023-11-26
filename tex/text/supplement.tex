@@ -1,0 +1,15 @@
+\section{Appendix}
+
+\printunsrtglossary[numberedsection=autolabel]
+
+\input{text/supplement/perfect-tracking-space.tex}
+
+\subsection{Extant Record Size Order of Growth of Retention Policy Algorithms} \label{sec:extant_record_oog}
+The concept of `extant record order of growth' is defined to be the upper bound of memory usage of a policy algorithm with respect to elapsed generations.
+Since policy algorithms determine the strata retained into the following generation without the use of any additional data structures, the upper bound of their memory usage will be equivalent in order to the number of retained strata.
+In fact, given that no intermediate data structures other than the final output array are used, we can guarantee the lower bound will also be equivalent.
+
+As such, Extant Record Size Order of Growth proofs will set out to prove that the number of retained strata of each respective retention policy algorithm will grow with an order of $\mathcal{\theta}(f(n, k)),$ where $f$ is unique to each retention policy algorithm, $k$ is a user-defined constant and $n$ is the number of strata in the current generation.
+
+
+

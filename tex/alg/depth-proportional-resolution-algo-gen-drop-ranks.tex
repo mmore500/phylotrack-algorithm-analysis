@@ -1,0 +1,22 @@
+\begin{algorithm}
+\caption{Depth-proportional Resolution Discard Generator}
+\label{alg:depth-proportional-resolution-algo-gen-drop-ranks}
+\begin{algorithmic}[1]
+    \Require{ $\texttt{n}$ -- the number of strata deposited }
+    \Require{ $\texttt{r}$ -- the fixed resolution desired }
+    \Ensure{ array of dropped strata }
+
+    \State $\texttt{curr\_uncertainty} \gets (\text{largest integral power of two} \le \frac{n}{r + 2}) \lor 1$
+    \State $\texttt{prev\_uncertainty} \gets (\text{largest integral power of two} \le \frac{n}{r + 1}) \lor 1$
+    \State $\texttt{arr} \gets \text{empty array of length } \frac{n}{\texttt{uncertainty}} + 1$
+
+    \If{$\texttt{curr\_uncertainty} \neq \texttt{prev\_uncertainty}$}
+        \For{$i = \texttt{prev\_uncertainty}$ \textbf{to} $\texttt{n} - 2$ \textbf{step} $\text{curr\_uncertainty}$}
+            \State $\texttt{arr} [$i$] \gets i$
+        \EndFor
+    \EndIf
+    \If{$\texttt{n} - 2 \bmod \texttt{curr\_uncertainty} \neq 0$}
+        \State $\texttt{\texttt{last\_rank}} [\texttt{n} - 2] \gets \texttt{n} - 2$
+    \EndIf
+\end{algorithmic}
+\end{algorithm}

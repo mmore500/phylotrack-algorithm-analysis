@@ -1,0 +1,63 @@
+\subsection{Curbed Recency-proportional Resolution (CRPR) Policy Algorithm}
+\label{sec:curbed-recency-proportional-resolution-algo}
+
+The curbed recency-proportional resolution (CRPR) policy algorithm exists to enhance in-practice utility of recency-proportional resolution.
+This policy algorithm combines the geometric sequence $n$th root (GSNR) and recency-proportional resolution (RPR) algorithms to harness the strengths of both.
+Figure \ref{fig:retention-policies} includes a time-lapse of the extant record under the CRPR policy algorithm.
+
+The GSNR algorithm sustains best-effort recency-proportional resolution to asymptotic limits, but distributes retained observations less effectively than RPR in earlier periods.
+This can result in higher worst-case recency-proportional gap size than necessary.
+However, RPR only makes use of available storage space up to the retention density of its parameterized resolution.
+Parameterizing low resolution to provide support for long historical depths would cause majorities of available storage space to go unused earlier on.
+Nevertheless, ultimately at even the lowest possible parameterized resolution, extant record size will eventually outgrow any size cap under RPR.
+
+The CRPR policy algorithm delivers the best of both worlds: full, effective storage space use of high-resolution parameterized RPR policy plus the graceful, indefinite tail support of GSNR policy.
+It does this, actually, by stitching these two policy algorithms together.
+In fact, CRPR stitches successively degrading RPR parameterizations together and then, once the lowest-resolution RPR policy would exceed available space, it switches to GSNR.
+The CRPR policy algorithm itself provides $\mathcal{O}(1)$ extant record size order of growth, and is parameterized by a desired upper bound $m$ on retained observation count.
+Support is provided for $m \geq 8$.
+
+The CRPR policy switches from RPR to GSNR at time point,
+\begin{align*}
+n = \left\lfloor \frac{2^{\lfloor m/3 \rfloor}}{2} \right\rfloor
+\end{align*}
+
+with the delegated-to GSNR policy algorithm permanently parameterized to degree:
+\begin{align*}
+a = \max \left(
+  \left\lfloor \frac{m - 2}{6} \right\rfloor,
+  1
+\right).
+\end{align*}
+
+At preceding time points $n$, RPR policy is parameterized to resolution
+\begin{align*}
+r = \left(
+  m \,
+  \left\lfloor
+  \frac{1}{\lceil \log_2(n + 1) \rceil + 1}
+  \right\rfloor
+  - 1
+\right).
+\end{align*}
+Note that this resolution $r$ progressively decreases with record depth $n$.
+
+In describing the CRPR algorithm, we will build off the properties of the RPR and GSNR algorithms established in sections \ref{sec:recency-proportional-resolution-algo} and \ref{sec:geom-seq-nth-root-algo}.
+Under the CRPR, at any given point in time either the RPR or GSNR is currently active.
+If RPR is active, resolution parameterization depends on record depth $n$.
+Whichever algorithm is currently active enumerates retained observation time points.
+Time points to delete can be calculated through set subtraction of of subsequential curated collection enumerations.
+Because curated collection size is bounded, this procedure is $\mathcal{O}(1)$.
+Asymptotic properties result solely from GSNR, as it constitutes the final destination of the CRPR stitched policy sequence.
+Except when switching CRPR's active policy algorithm, we can also carry forward self-consistency assurances from the existing RPR and GSNR policy algorithms.
+However, when switching CRPR's active policy algorithm, we do need to assess self-consistency.
+Transitioned-to time point collections must be a subset of transitioned-from time point collections.
+% As Theorem \ref{thm:curbed-recency-proportional-resolution-algo-self-consistency} recounts, self-consistency largely arises from peculiarities of stacking monotonically decreasing binary powers.
+Self-consistency turns out to largely arise from peculiarities of stacking monotonically decreasing binary powers.
+
+
+In application, the CRPR policy algorithm should be preferable to GSNR and RPR for nearly all scenarios that call for recency-proportional resolution under capped-size storage limitations.
+Except when switching active policy, update implementation can be optimized by replacing the set subtraction procedure with the active policy algorithm's implementation.
+It turns out such transitions exclusively occur at perfect power-of-two time points.
+
+% \input{thm/curbed-recency-proportional-resolution-algo-self-consistency.tex}

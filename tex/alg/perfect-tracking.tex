@@ -1,0 +1,17 @@
+\renewcommand{\algorithmiccomment}[1]{ \newline \textbf{comment:} \textit{#1}}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+
+\begin{algorithm}
+    \caption{Perfect phylogenetic tracking}
+    \label{alg:perfect-tracking}
+    \textbf{Part 1: Initialization}
+    \begin{algorithmic}[1]
+    \State{Define $T:=$ an empty forest}
+    \end{algorithmic}
+    \textbf{Part 2: Handle birth event}
+    \begin{algorithmic}[1]
+        \Require{$P_i$ = newly created organism, $P_j$ = $P_i$'s parent}
+        \State{Add node representing $P_i$ to $T$}
+        \State{Add edge in $T$ from $P_j$ to $P_i$}
+    \end{algorithmic}
+\end{algorithm}

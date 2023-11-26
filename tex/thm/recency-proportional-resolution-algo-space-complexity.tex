@@ -1,0 +1,19 @@
+\begin{theorem}{Recency-proportional Resolution Space Complexity}
+\label{thm:recency-proportional-resolution-algo-space-complexity}
+
+The \gls{extant record size} of the Recency-proportional Resolution Policy Algorithm grows with order $\mathcal{\theta}{(k \log n)}.$
+
+\end{theorem}
+
+\begin{proof}
+\label{prf:recency-proportional-resolution-algo-space-complexity}
+As per \ref{sec:extant_record_oog}, we will set out to prove that output array of this policy algorithm has an order of growth of $\mathcal{\theta}{(k \log n)},$ where $k$ is a user-provided resolution and $n$ is the number of depositions.
+
+Algorithm \ref{alg:recency-proportional-algo-gen-drop-ranks} determines the array of strata to be dropped at any given time point.
+Observe that whenever $2 \mid n$ at least one stratum will be dropped.
+More generally, for any positive integer $i \le \log_2 n$, we have that if $2^i \mid n$ then $i$ strata will be dropped. 
+Thus, the number of dropped strata is bounded above by $\sum_{i=1}^{\log_2 n} n = n \log_2 n.$
+As such, the number of retained strata is bound by $n - n \log_2 n \le \log_2 n$ for all positive $n.$
+Given that no strata are dropped when $\frac{n}{2} - 1 < k,$ we observe that the output array of this policy algorithm is bound above by $\mathcal{O}{(k \log n)}.$
+Via \ref{sec:extant_record_oog}, we can conclude that this bound is actually $\mathcal{\theta}{(k \log n)}.$
+\end{proof}

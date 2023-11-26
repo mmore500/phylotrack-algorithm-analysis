@@ -1,0 +1,68 @@
+\begin{theorem}{Pruning Time Complexity}
+\label{thm:perfect-tracking-with-pruning-time}
+The time complexity of pruning in perfect phylogenetic tracking is $\mathcal{O}(1)$, amortized. 
+\end{theorem}
+
+\begin{proof}
+\label{prf:perfect-tracking-with-pruning-time}
+The initialization and birth-handling steps of the pruning algorithm are trivially constant-time, as explained in proof \ref{prf:perfect-tracking-time} (technically the pruning algorithm adds two constant-time operations to the birth-handling step, but this fact is inconsequential).
+Next, we prove that the removal-handling pruning algorithm runs in amortized constant time.
+When an arbitrary taxon $t$ is removed, there are three possibilities: 1) $t$ has living descendants, 2) $t$ has no living descendants, but $t$'s parent is either alive or has other descendants that are alive, or 3) $t$ was the last living descendant of its parent.
+In case 1, nothing can be removed from the phylogeny.
+Case 1 takes contant time, because it only requires executing a single comparison operation.
+In case 2, only $t$ can be removed from the phylogeny.
+Case 2 also takes constant time, as it only requires removing a single node from the tree and doing three comparison operations.
+
+In case 3, pruning must be done.
+We recurse back up the lineage until we find a taxon, $a$, that is either alive or has living descendants. 
+Let the distance between $t$ and the root of the tree be $d_t$ and the distance between $a$ and the root of the tree be $d_a$.
+The pruning operation, then, takes $\mathcal{O}(d_t - d_a)$ steps. 
+In the worst case, this value will be equal to the number of elapsed generations.
+
+However, for case 3 to occur, all taxa from $t$ to $a$ (including $a$ but not including $t$) must have already been removed.
+Consequently, $d_t - d_a$ case 1 removal operations must happen for every case 3 removal operation.
+Thus, the amortized time to remove the sequence of taxa from $t$ to $a$ (including both $t$ and $a$) is:
+
+\[
+\frac{2(d_t - d_a) + 1}{d_t - d_a + 1}
+\]
+
+Since
+
+\[
+\lim_{d_t - d_a\to\infty} \frac{2(d_t - d_a) + 1}{d_t - d_a + 1} = 2
+\],
+
+the amortized time complexity of pruning is bounded by a constant, i.e. it is $\mathcal{O}(1)$.
+
+
+\end{proof}
+
+% TODO: missing proof
+% \begin{theorem}{Average Space Complexity of Perfect Tracking with Pruning}
+% \label{thm:perfect-tracking-with-pruning-space}
+% Average case is best described by the upper-case-lambda coalescent, but math on that is maybe
+% less well understood than Kingman coalescent. Kingman coalescent makes a number of more limiting
+% assumptions, but most of them are actually fairly appropriate for most phylogeny tracking situations
+% (fixed-size population, wright-fisher model). The biggest problem is that it assumes only bifurcations
+% (no multi-furcations). However, a strictly bifurcating tree is the worst case for average space complexity
+% (a series of non-bifurcating trees is the absolute worst case, but under random selection it would
+% quickly turn into a pretty good (best?) case). So, if we can't do an exact proof based on the upper
+% case lambda coalescent, we can still do worst average case proof based on the Kingman coalescent
+% Oh wait, maybe bifurcations aren't the worst case? Apparently there is a paradoxical result that shows
+% that the Kingman Coalescent decreases fastest???
+
+% Okay, here's the thing - all of these different models behave in ways that populations being tracked
+% might behave. The argument to make here is that for a ton of them, the size of the tree (Ln) has been
+% shown to be constant, proportional to n, limited by some distribution or asymptote, etc. It may even
+% be sufficient to say that they come down from infinity. We end up with a space complexity something like
+% O(generations + Ln) which in the worst case could translate to something like O(generations + 2*pop_size^2),
+% except I think we can actually prove it's actually something more like O(generations + pop_size + log(pop_size))
+% slight risk that pop_size should be multiplied by log(pop_size)
+
+% \end{theorem}
+
+% \begin{proof}
+% \label{prf:perfect-tracking-with-pruning-space}
+
+% \end{proof}
