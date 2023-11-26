@@ -71,6 +71,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: 'recursive'
+      - run: tree tex  # debug
       - run: make -C tex quick
       - run: make -C tex
       - name: Upload output as artifact
