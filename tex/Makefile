@@ -14,6 +14,9 @@ draft: ${BUILD_DIR}-draft.pdf ${BUILD_DIR}-manuscript-draft.pdf ${BUILD_DIR}-sup
 
 release: ${BUILD_DIR}.pdf ${BUILD_DIR}-manuscript.pdf ${BUILD_DIR}-supplement.pdf ${BUILD_DIR}.tex
 
+quick:
+	pdflatex main.tex
+
 ${BUILD_DIR}.pdf: main.tex
 	latexmk -pdf -silent \
     -jobname=${BUILD_DIR} \
@@ -63,4 +66,4 @@ cleaner: clean
 	find . -type f -name ${BUILD_DIR}"*" ! -name '*.tex' ! -name '*.bib' -delete
 	rm -rf *.bbl *.blg *.aux
 
-.PHONY: draft release clean sview cleaner fresh
+.PHONY: draft release clean sview cleaner fresh quick
