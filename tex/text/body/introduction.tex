@@ -9,8 +9,11 @@ Distillation of this onslaught of history is necessary for data management tract
 Nonetheless, existing analyses of phylgoentic structure within digital systems have already proven valuable, enabling dignosis of underlying evolutionry dynamics \citep{moreno2023toward,hernandez2022can,shahbandegan2022untangling, lewinsohnStatedependentEvolutionaryModels2023a} and even serving as mechanism to guide evolution in application-oriented domains \cite{lalejini2024methods,murphy2008simple,burke2003increased}.
 
 Here, we formalize data structures and algorithmic procedures for space-efficient aggregation of phylogenetic history from evolutionary simulations on a rolling basis, and investigate their runtime performance characteristics.
-We focus in particular on asexual lineages, in which each entity has exactly one parent.
-Sexual lineages, in which entities may more than one parent, have historically underpinned a substantial proportion of evolutionary computation and simulation systems \citep{koza1994genetic,jefferson1990evolution} and present unique challenges in tracking that merit methodological treatment in their own right \citep{godin2019apoget,moreno2024methods,mcphee2018detailed}.
+% We focus in particular on asexual lineages, in which each entity has exactly one parent.
+% Sexual lineages, in which entities may have more than one parent, are beyond the scope of this paper.
+% They present unique challenges in phylogenetic tracking that merit methodological treatment in their own right \citep{godin2019apoget,moreno2024methods,mcphee2018detailed}.
+In this paper, we focus in particular on asexual lineages, in which each entity has exactly one parent --- as opposed to sexual lineages, in which entities may have more than one parent.
+Although they have historically underpinned a substantial proportion of evolutionary computation and simulation systems \citep{koza1994genetic,jefferson1990evolution} and continue to be of great interest within the community \citep{dang2018escaping}, they present unique challenges in phylogenetic tracking that merit methodological treatment in their own right \citep{godin2019apoget,moreno2024methods,mcphee2018detailed}.
 
 We cover two approaches: pruning of extinct lineages and coarsening of phylogenetic history.
 The former applies to direct tracking approaches and targets single-processor, serial simulation.
