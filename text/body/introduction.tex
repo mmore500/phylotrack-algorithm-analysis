@@ -15,9 +15,16 @@ Here, we formalize data structures and algorithmic procedures for space-efficien
 In this paper, we focus in particular on asexual lineages, in which each entity has exactly one parent --- as opposed to sexual lineages, in which entities may have more than one parent.
 Although they have historically underpinned a substantial proportion of evolutionary computation and simulation systems \citep{koza1994genetic,jefferson1990evolution} and continue to be of great interest within the community \citep{dang2018escaping}, they present unique challenges in phylogenetic tracking that merit methodological treatment in their own right \citep{godin2019apoget,moreno2024methods,mcphee2018detailed}.
 
-We cover two approaches: pruning of extinct lineages and coarsening of phylogenetic history.
-The former applies to direct tracking approaches and targets single-processor, serial simulation.
-The latter, in contrast, targets decentralized many-processor parallel/distributed simulation and involves a post hoc, reconstruction-based approach.
+
+%We cover two approaches: pruning of extinct lineages and coarsening of phylogenetic history.
+%The former applies to direct tracking approaches and targets single-processor, serial simulation.
+%The latter, in contrast, targets decentralized many-processor parallel/distributed simulation and involves a post hoc, reconstruction-based approach.
+
+We cover two approaches: (1) tracking lineages directly using a centralized data structure and (2) a decentralized, reconstruction-based approach called hereditary stratigraphy.
+The former approach allows perfect accuracy, and we show that it is efficient when targetting single-processor applications (\textit{i.e.} using serial simulation).
+The latter, in contrast, was designed for decentralized many-processor parallel/distributed simulation.
+It supports user-controlled trade-offs between reconstruction precision and runtime resource overhead (e.g., memory, bandwidth).
+% We find that hereditary stratigraphy indeed performs best in paralell/distributed contexts.
 
 Accompanying public-facing open source Python packages provide convenient, plug-and-play access to phylogenetic tracking methodology across simulation systems \citep{moreno2022hstrat,dolson2023phylotrackpy}.
 In this manner, methods described here promise to --- and, indeed, already have --- directly enable simulation-based evolution research.
