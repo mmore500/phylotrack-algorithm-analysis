@@ -68,8 +68,9 @@ To circumvent annotation size bloat, hereditary stratigraphy prescribes a ``prun
 This pruning, however, reduces precision of resulting phylogenies.
 The last generation of common ancestry between two lineages can be resolved no finer than retained checkpoint times.
 In the context of hereditary stratigraphy, we refer to the procedure for down sampling as a ``stratum retention algorithm'' and the resulting patterns of retained differentia as a ``stratum retention policy.''
-Stratum retention algorithms must decide how many records to discard, but also how remaining records distribute over past time.
-Discussion considers tuning stratum retention trade-offs elsewhere as an instance of the more general ``stream curation'' problem --- introduced separately below in Section \ref{sec:streaming-curation} and fully presented in Section \ref{sec:annotation-algorithms}:
+Stratum retention algorithms must decide how many records to discard, but also how remaining records should be distributed over past time.
+Tuning of stratum retention trade-offs is discussed in \citet{OTHERPREPRINT} as an instance of the more general ``stream curation'' problem. %TODO
+Here, we build on these results to discuss the use of hereditary stratigraphy specifically in a phylogenetic context.
 
 Procedures for ancestry tree reconstruction from a population of stratigraph annotations follow from the same principle as pairwise annotation comparison, but merit some further elaboration.
 Section \ref{sec:reconstruction-algorithm} provides a trie-based algorithm for this task.
