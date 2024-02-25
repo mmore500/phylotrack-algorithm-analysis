@@ -62,7 +62,7 @@ These annotations facilitate fast, accurate post hoc inference of phylogenetic r
 The core mechanism of hereditary stratigraphy is accretion, and subsequent inheritance, of a new randomized data packet onto column annotations each generation.
 These stochastic fingerprints, which we call ``differentia,'' serve as a sort of checkpoint for lineage identity at a particular generation.
 At future time points, extant annotations will share identical differentia for the generations during which they experienced shared ancestry.
-Thus, the first mismatched fingerprint between two annotations bounds their common ancestry.
+Thus, the first mismatched fingerprint between two annotations bounds the recency of their most recent common ancestor (MRCA).
 
 To circumvent annotation size bloat, hereditary stratigraphy prescribes a ``pruning'' process to delete differentia on the fly as generations elapse.
 This pruning, however, reduces precision of resulting phylogenies.
@@ -72,8 +72,10 @@ Stratum retention algorithms must decide how many records to discard, but also h
 Tuning of stratum retention trade-offs is discussed in \citet{OTHERPREPRINT} as an instance of the more general ``stream curation'' problem. %TODO
 Here, we build on these results to discuss the use of hereditary stratigraphy specifically in a phylogenetic context.
 
-Procedures for ancestry tree reconstruction from a population of stratigraph annotations follow from the same principle as pairwise annotation comparison, but merit some further elaboration.
-Section \ref{sec:reconstruction-algorithm} provides a trie-based algorithm for this task.
+% The primary additional complication that using hereditary stratigraphy for maintaining phylogenetic information adds over other use cases is the need to reconstruct the phylogeny at the end of a simulation.
+A typical objective for phylogeny-oriented application of hereditary stratigraphy is synthesis of population-level ancestry history.
+Although following from similar principles as pairwise MRCA estimation, procedures to reconstruct the ancestry tree of many stratigraph annotations merit some further elaboration.
+Section \ref{sec:reconstruction-algorithm} provides an agglomerative, trie-based algorithm for this task.
 
 \subsection{Outline}
 
