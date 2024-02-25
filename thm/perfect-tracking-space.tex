@@ -1,0 +1,12 @@
+\begin{theorem}{Naive Perfect Tracking Space Complexity}
+\label{thm:perfect-tracking-space}
+The space complexity of the naive perfect tracking algorithm is $\mathcal{\theta}(\sum_{t=0}^{G} N_t$), where $N_t$ is the number of new objects born at time $t$ and $G$ is the number of time steps.
+\end{theorem}
+
+\begin{proof}
+\label{prf:perfect-tracking-space}
+The birth-handling algorithm adds a node to the tree ($T$) each time it is called.
+It is called once for every birth event.
+No nodes are ever removed from $T$.
+Therefore, the number of nodes in $T$ is the total number of nodes ever created.
+\end{proof}

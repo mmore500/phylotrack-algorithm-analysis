@@ -1,0 +1,24 @@
+\begin{algorithm}
+\caption{Recency-proportional Resolution Stratum Discard Generator}
+\label{alg:recency-proportional-algo-gen-drop-ranks}
+\begin{algorithmic}
+    \Require{ $\texttt{n}$ -- the number of strata deposited }
+    \Require{ $\texttt{r}$ -- the fixed resolution desired }
+    \Ensure{ array of dropped strata }
+
+    \Procedure{NumberToCondemn}{$\texttt{n}, \texttt{r}$}
+        \If{$(\texttt{n} \bmod 2 = 1) \lor (\texttt{n} < 2 \cdot \texttt{r} + 1)$}
+            \Return $0$
+        \Else
+            \Return $1 + \Call{NumberToCondemn}{$\texttt{n} / 2$, \texttt{r}}$
+        \EndIf
+    \EndProcedure
+
+    \State $\texttt{num\_to\_condemn} \gets \Call{NumberToCondemn}{\texttt{n}, \texttt{r}}$
+    \State $\texttt{arr} \gets \text{empty array of length num\_to\_condemn}$
+
+    \For{$i = 0$ \textbf{to} $\texttt{num\_to\_condemn} - 1$}
+        \State $\texttt{arr} [$i$] \gets \texttt{n} - 2^{i} \cdot (2 \texttt{r} + 1)$
+    \EndFor
+\end{algorithmic}
+\end{algorithm}

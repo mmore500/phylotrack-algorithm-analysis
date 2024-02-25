@@ -1,0 +1,23 @@
+\begin{theorem}{Fixed Resolution Space Complexity}
+\label{thm:fixed-resolution-algo-space-complexity}
+
+\end{theorem}
+
+\begin{proof}
+\label{prf:fixed-resolution-algo-space-complexity}
+
+Given a resolution $a \in \mathbb{N}$, let $f(n) := \frac{n}{a}$. Given $c, k \in \mathbb{N}$, let $P(n) := 0 \le f(n) \le cn \; \forall n \ge k.$
+
+Take $c = a$ and $k = 1$. Then, $P(1): 0 \le \frac{1}{a} \le a,$ so $P(n)$ holds for $n = 1$.
+
+Now, assume that $P(n)$ holds. Then,
+
+\begin{align*}
+    P(n + 1) :& \frac{n + 1}{a} &\le (n + 1)a \\
+    & \frac{n}{a}  + \frac{1}{a} &\le an + a \\
+    & \frac{1}{a} &\le a &&\text{(via $P(n)$)}\\
+\end{align*}
+
+And so $P(n) \implies P(n + 1).$ Given that $P(1)$ holds, we can conclude that this algorithm has an $O(n)$ space complexity.
+
+\end{proof}

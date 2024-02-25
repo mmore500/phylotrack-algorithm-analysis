@@ -1,0 +1,78 @@
+\subsection{Recency-proportional Resolution (RPR) Policy Algorithm}
+\label{sec:recency-proportional-resolution-algo}
+
+This streaming curation algorithm's properties fall between the properties of the fixed resolution (FR) and depth-proportional resolution (DPR) policy algorithms, covered in the immediately preceding sections.
+
+Recall that the DPR policy algorithm's gap widths grow in linear proportion to record depth.
+In contrast, the fixed resolution algorithm's gap width remains constant below a specified bound across record depths.
+
+The recency-proportional resolution (RPR) policy algorithm bounds gap width to a linear factor of layer age (i.e., time steps back from the newest layer).
+Suppose $n$ observations have elapsed.
+% set k as age and explain that then replace n - m
+% annotate-equations (latex math annotation?)
+Then, for a user-specified constant $r$, no gap width for layer $m$ will exceed size
+\begin{align}
+  \left\lfloor \frac{n - m}{r} \right\rfloor.
+  \label{eqn:rpr-gap}
+\end{align}
+Resolution at each layer widens linearly with record depth.
+Consequently, resolution widens in linear proportion to layer age.
+Resolution for any given layer age, however, remains constant for all record depths.
+
+The FR and DPR policy algorithms exhibit $O(r)$ and $O(rn)$ extant record orders of growth, respectively.
+We will show extant record order of growth as $O(r\log{n})$ under the recency-proportional resolution policy algorithm.
+
+Algorithm \ref{alg:recency-proportional-algo-gen-drop-ranks} enumerates time points of dropped observations under the RPR policy algorithm.
+Figure \ref{fig:retention-policies} includes a time-lapse of the extant record under this policy algorithm.
+
+The extant record is determined iteratively, beginning at observation time zero --- which is always retained.
+Per Equation \ref{eqn:rpr-gap}, gap width to the next retained observation can be at most $\lfloor n/r \rfloor$ sites, where $n$ is record depth.
+Although selecting to retain the $\lfloor n/r \rfloor$ observation time observation would satisfy policy resolution guarantees, a slight complication is necessary to ensure that retained observations have previously been deleted.
+A fuller self-consistency rationale will follow, but in short gap width is floored to the next lower power of two,
+\begin{align*}
+  2^{\lfloor \log_{2}\left(\frac{n}{r}\right) \rfloor}.
+\end{align*}
+The next iteration repeats the procedure from the newly retained observation time instead of observation time zero.
+Iteration continues until reaching the newest observation.
+
+The set of observations to eliminate can be calculated from set subtraction between enumerations of the historical record at time points $t-1$ and $t$.
+So, update time complexity follows from extant record enumeration time complexity, which turns out to be $O(\log n)$.
+We provide a tested, but unproven, constant-time pruning enumeration implementation in the \texttt{hstrat} library, but will not cover it here. % mention why?
+The extant record order of growth $O(\log n)$ also follows closely from the record enumeration algorithm, as detailed in Theorem \ref{thm:recency-proportional-resolution-algo-space-complexity}.
+
+% TODO figure?
+
+Why does flooring step sizes to a binary power ensure self-consistency?
+Let us begin by noting properties applicable to all layers $l$,
+\begin{enumerate}
+\item gap width provided at retained layer $l$ increases monotonically as record depth grows,
+\item the retained observation preceding or at $l$ has observation time at an even multiple of surrounding gap widths, and
+\item all observations at time points that are multiples of gap width past $l$ up to the newest observation are retained.
+\end{enumerate}
+Observe that gap width decreases monotonically with decreasing layer age (i.e., increasing layer recency).
+
+Properties 2 and 3 occur as a result of stacking monotonically-decreasing powers of two.
+Subsequent smaller powers of two tile evenly to all multiples of a larger power of 2, giving property 3.
+Conversely, preceding larger powers of 2 can be evenly divided by succeeding smaller powers of 2, ensuring that the edges of smaller powers of 2 gaps occur at even multiples of their gap width, giving property 2.
+
+Under the binary flooring procedure, when gap size increases at a layer it will double (or quadruple, octuple, etc.).
+Availability of the new gap endpoint after a gap size increase is guaranteed from the tiling properties due to that endpoint being an even multiple of original step size.
+% Theorem \ref{thm:recency-proportional-resolution-algo-self-consistency} uses inductive proof-by-contradiction to show this self-consistency.
+
+The RPR policy algorithm provides stable relative accuracy indefinitely.
+This makes it particularly attractive in phylogenetic tracking scenarios using hereditary stratigraphy where guarantees about branch length accuracy are critical.
+At comparable annotation sizes, we have found that recency-proportional distribution of gap widths outperforms even gap width distribution in phylogenetic information recovery \citep{moreno2022hereditary}.
+Preliminarily, maintaining 3\% relative precision appears sufficient to eliminate most bias from reconstruction error on phylogenetic metrics \citep{moreno2023toward}.
+%TODO add details about coalescent theory being a good idea for recency-proportional
+
+The RPR policy algorithm's indefinite stability may be particularly useful in scenarios of indefinite or indeterminate record keeping duration.
+Although annotation extant record size grows unboundedly, logarithmic memory usage growth is manageable in most practical scenarios.
+However, this policy would not suit applications with hard caps on annotation size (e.g., fixed memory footprint digital genomes).
+
+\input{alg/recency-proportional-resolution-algo-gen-drop-ranks.tex}
+% \input{alg/recency-proportional-resolution-algo-pred-keep-rank.tex}
+% \input{alg/recency-proportional-resolution-algo-enum-retained-ranks.tex}
+
+% \input{thm/recency-proportional-resolution-algo-self-consistency.tex}
+\input{thm/recency-proportional-resolution-algo-space-complexity.tex}
+% \input{thm/recency-proportional-resolution-algo-uncertainty-bound.tex}
