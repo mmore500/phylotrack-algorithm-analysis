@@ -17,12 +17,12 @@ Relatedness estimation between annotations derives from a simple principle: mism
 Assuming both annotations employed the same streaming curation policy algorithm, if they share identical record depth they will have retained strata from identical time points.
 What if one annotation has greater record depth (i.e., more generations elapsed) than the other?
 We can truncate any strata beyond the depth of the younger annotation --- we already know no common ancestry will be shared at those time points.
-Due to the self-consistency requirements of streaming curation, the younger annotation's curated time points will now superset those of the older annotation.
-(During its excess stratum accumulation, the older annotation may have discarded some time points.)
+Due to the self-consistency requirements of streaming curation, the younger annotation's curated time points will now be a superset of those of the older annotation.%
+\footnote{During its excess stratum accumulation, the older annotation may have discarded some time points.}
 So, we will search for the first mismatching stratum among the deeper annotation's early time points.
 
 The possibility of spurious collisions between differentia (i.e., identical values by chance) complicates any application of binary search to identify the earliest time point with mismatched strata.
-Consider lineage divergence as a boolean predicate: it evaluates false for all strata before some the threshold of true lineage divergence and then true for all strata after.
+Consider lineage divergence as a boolean predicate: it evaluates false for all strata before some threshold of true lineage divergence and then true for all strata after.
 Spurious collisions introduce the possibility of false negatives into search for this predicate's satisfaction threshold.
 Take $c$ as retained stratum count per annotation.
 If probabilistic confidence were acceptable, sufficient differentia could be tested at each binary search step to bound the probability of misidentifying the point of divergence.
@@ -59,8 +59,8 @@ As an anecdotal reference for computational intensity, consider recent work usin
 This work achieved reconstructions over a population of 32,768 ($2^15$) synchronous $\approx 1,200$ stratum annotations within about five minutes wall time.
 
 Two reconstruction biases should be noted.
-First, because spurious differentia collisions bias toward overestimation of relatedness, as noted above in Section \ref{sec:pairwise-relatedness}, branching events in the reconstructed tree will --- on average --- be more recent than in reality.
-The expected rate of spurious collision is easily predictable, so this bias can be readily modeled or corrected for.
+First, because spurious differentia collisions introduce bias toward overestimation of relatedness, as noted above in Section \ref{sec:pairwise-relatedness}, branching events in the reconstructed tree will --- on average --- be more recent than in reality.
+The expected rate of spurious collision is easily predictable, so this bias can be readily modeled and corrected for.
 % Another possibile approach to counteract overrelatedness bias when analyzing tree structure would be Monte Carlo sampling of tree space with sets of inner nodes ``unzipped'' as if they had arisen due to spurious collision.
 Second, trie reconstruction can overrepresent polytomies (i.e., internal multifurcations).
 Branches that may have unfolded as separate events but fall within the same uncertainty gap within annotations' historical records will all lump together into a single polytomy.
