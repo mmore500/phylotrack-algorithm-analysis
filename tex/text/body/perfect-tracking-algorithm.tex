@@ -42,7 +42,6 @@ The naive perfect tracking algorithm can be implemented in constant time (see Th
 % @ELD Could do a formal analysis with the PRAM model here
 \label{sec:perfect-tracking-distrbuted}
 
-% TODO: Matthew, double-check this
 Naive perfect tracking can be easily adapted to parallel computing environments.
 The only added challenge is the potential for race conditions where the phylogeny tracker is notified of a birth event involving a parent it does not yet know about.
 This situation can be mitigated fairly cheaply by having a pool of ``waiting'' nodes that will be added once the appropriate parent node is added.
