@@ -42,11 +42,13 @@ The naive perfect tracking algorithm can be implemented in constant time (see Th
 % @ELD Could do a formal analysis with the PRAM model here
 \label{sec:perfect-tracking-distrbuted}
 
-Naive perfect tracking can be easily adapted to parallel computing environments.
-The only added challenge is the potential for race conditions where the phylogeny tracker is notified of a birth event involving a parent it does not yet know about.
+Naive perfect tracking can be adapted to parallel computing environments using universally unique agent identifiers through either of two straightforward options.
+In the first approach, records of all agent creation and elimination events are collected to a centralized database as they occur.
+In the second, each processor maintains an independent data file of local agent creation/elimination that are stitched together in postprocessing.
+For the former, race conditions might occur where the phylogeny tracker is notified of a birth event involving a parent it does not yet know about.
 This situation can be mitigated fairly cheaply by having a pool of ``waiting'' nodes that will be added once the appropriate parent node is added.
-Bigger problems occur in distributed environments, where passing messages to a centralized data structure could become expensive \citep{moreno2022hereditary}.
-Worse, many distributed environments are noisy and involve the potential for data loss.
+For both approaches to naive perfect tracking, bigger problems occur in distributed environments, where passing messages to a centralized data structure could become expensive \citep{moreno2022hereditary} or limited storage space is available to individual processor elements.
+Worse still for either approach to naive perfect tracking is the possibility of data loss, which can become a significant likelihood at scale \citep{cappello2014toward}.
 It is unclear how a perfect tracking algorithm could recover from missing data.
 
 \subsubsection{Size order of growth}
@@ -73,17 +75,25 @@ The pruning-enabled algorithm has amortized constant time complexity (see Theore
 
 \subsubsection{Performance in parallel and distrbuted environments}
 \label{sec:perfect-tracking-pruning-distrbuted}
-% TODO: Matthew, double-check this
-Pruning-enabled perfect tracking has all of the same issues in parallel and distributed environments that naive perfect tracking has.
+
+% @MAM interesting thought: you can't prune all unifurcations when taking the second (distributed) approach to pruning-enabled perfect tracking
+% @MAM another interesting thought: hstrat annotations can be smaller than UUID labels (128 bits)
+% TODO: Matthew, double-check this @MAM this is ocmpletely reasonable
+Like naive perfect tracking, pruning-enabled perfect tracking can proceed via either a fully-centralized database or through localized record-keeping.
+
+Centralized pruning-enabled perfect tracking has all of the same issues in parallel and distributed environments that naive perfect tracking has.
 It also adds an additional cost: parallel processes must be synced up before a pruning operation can be performed.
 Otherwise, the algorithm risks incorrectly pruning a lineage that it will later learn produced a new artifact.
-This requirement translates to a substantial speed cost in practice. 
+This requirement would translate to a substantial speed cost in practice.
 
+In a localized model, when the last remnant of an immigrant lineage is eliminated an extinction notification would need to be propagated back to the processing element that lineage immigrated from.
+Records for lineages that extinct locally but had generated emigrees to other processing elements would need to be retained until extinction notifications for all emigrees are confirmed.
+Even for lineages that span few processing elements, repeat migrations between a single pair of processors could wind up long breadcrumb trails that necessitate extensive cleanup operations.
 
 \subsubsection{Size order of growth}
 \label{sec:perfect-tracking-pruning-space}
 
-As with naive (i.e. unpruned) perfect tracking, the primary memory cost of this algorithm comes from maintaining the tree of records, $T$.
+As with naive (i.e., unpruned) perfect tracking, the primary memory cost of this algorithm comes from maintaining the tree of records, $T$.
 Thus, our analysis in this section will focus on the size of $T$.
 Technically, the worst-case size order of growth of perfect tracking with pruning is the same as for naive perfect tracking (see Theorem \ref{thm:perfect-tracking-space}).
 However, whereas that order of growth is also the best case for naive perfect tracking, it is a somewhat pathological case under pruning.
