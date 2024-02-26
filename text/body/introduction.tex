@@ -24,7 +24,7 @@ We cover two approaches: (1) tracking lineages directly using a centralized data
 The former approach allows perfect accuracy, and we show that it is efficient when targetting single-processor applications (\textit{i.e.} using serial simulation).
 The latter, in contrast, was designed for decentralized many-processor parallel/distributed simulation.
 It supports user-controlled trade-offs between reconstruction precision and runtime resource overhead (e.g., memory, bandwidth).
-% We find that hereditary stratigraphy indeed performs best in paralell/distributed contexts.
+We expect that hereditary stratigraphy indeed performs best in paralell/distributed contexts.
 
 Accompanying public-facing open source Python packages provide convenient, plug-and-play access to phylogenetic tracking methodology across simulation systems \citep{moreno2022hstrat,dolson2023phylotrackpy}.
 In this manner, methods described here promise to --- and, indeed, already have --- directly enable simulation-based evolution research.
@@ -36,7 +36,7 @@ Having motivated applications and algorithmic analyses of direct and decentraliz
 
 \subsection{Direct Ancestry Tracking}
 
-Most work on ancestry trees of digital artifacts relies on centralized lineage tracking \citep{friggeri2014rumor,cohen1987computer,dolson2023phylotrackpy}.
+Most work on ancestry trees of self-replicating digital agents relies on centralized lineage tracking \citep{friggeri2014rumor,cohen1987computer,dolson2023phylotrackpy}.
 % \footnote{A notable exception, \cite{libennowell2008tracing} exploit a serendipitous mechanistic opportunity to reconstruct global dissemination of chain emails.}
 Direct approaches to tracking replicator provenance in digital systems operate on this graph structure directly, distilling it from the full set of parent-child relationships over the history of a population to produce an exact historical account.
 

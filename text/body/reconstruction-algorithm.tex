@@ -56,6 +56,9 @@ This observation suggests application of a trie data structure \citep{fredkin196
 As a preliminary simplification to be relaxed later, assume our population of $n$ annotations share consistent record depth.
 Assuming identical retention policy algorithms, annotations will then also have consistent retained stratum count $c$.
 Phylogenetic reconstruction through trie building follows as $\mathcal{O}(c n)$ \citep{mehta2018handbook}.
+Such a trie building procedure corresponds each differentia within an annotation to a trie node.
+The first annotation to be added unfolds its differentia into chronological linked list from most to least ancient.
+Subsequent annotations agglomerate onto the trie by tracing down from the most-ancient root along the path its differentia sequence matches to, and forking off at the point the next-to-add differentia value is not available in the existing trie.
 As an anecdotal reference for computational intensity, consider recent work using the Python-based \texttt{hstrat} library trie-building implementation \citep{moreno2023toward}.
 This work achieved reconstructions over a population of 32,768 ($2^15$) synchronous $\approx 1,200$ stratum annotations within about five minutes wall time.
 
@@ -70,9 +73,12 @@ This bias can be counteracted by splitting polytomies into arbitrary bifurcation
 
 Allowing for uneven record depth among annotations complicates trie-based reconstruction.
 As described in Section \ref{sec:pairwise-relatedness}, time points retained within deeper annotations effectively subset time points within younger annotations.
-Thus, arranging youngest-first insertion order for trie construction ensures that no insertion retroactively injects a trie node between existing nodes.
-In contrast, under oldest-first order, inserted annotations may encounter a trie node with a time point for which they do not have a corresponding retained stratum (i.e., having discarded it under streaming curation).
+Thus, arranging youngest-first insertion order for trie construction ensures that as progressively deeper annotations are added, no inserted annotation retroactively injects a trie node between existing nodes.
+In contrast, under deepest-first order, a younger inserted annotation may contain a time point not present among its lineage path in the trie (i.e., the older annotations having discarded it under streaming curation.
+We therefore choose youngest-first insertion order to preclude scenarios where it would be necessary to splice a split away tendril back into the trie.
 
+Under youngest-first order, an insertion may reach a trie position where the time point of the focal annotation's next-to-insert differentia skips beyond the time point of a next-to-consider child trie node.
+The inserted annotation's true differentia value at that next-considered time point, having been discarded, is unknown.
 This missing information is conceptually equivalent to a query string with a wildcard position \citep{fukuyama2016partial}.
 Such wildcard queries can require evaluation of many branch paths during insertion, instead of just one.
 An inserted taxon's lineage could proceed along any of the outgoing edges from the trie node preceding the wildcard.
