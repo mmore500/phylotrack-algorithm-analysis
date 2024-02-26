@@ -1,28 +1,26 @@
 \section{Perfect Tracking Algorithm} \label{sec:perfect-tracking-algorithm}
 
-Traditionally, the problem of recording the phylogenies of replicating digital
-artifacts has been solved using a ``perfect tracking'' approach where all replication
-events are recorded and stored in a tree (or forest, if there are multiple roots) \citep{dolson2023phylotrackpy}.
-In this section, we present results on the time and memory size complexity of perfect tracking;
+Traditionally, the problem of recording the phylogenies of replicating digital populations has been solved using a ``perfect tracking'' approach where all replication events are recorded and stored in a tree (or forest, if there are multiple roots) \citep{dolson2023phylotrackpy}.
+In this section, we present results on the time and space complexity of perfect tracking;
 these results will serve as a basis of comparison for hereditary stratigraphy's curation policy and reconstruction algorithms.
 
 Perfect tracking algorithms are designed to augment an ongoing replication process by performing supplementary record-keeping.
-As such, perfect tracking algorithms execute three separate routines: 1) initialization, 2) handling the birth of new objects, and 3) (optionally) handling the removal of existing artifact.
-The initialization step happens when the founding set of replicating artifacts is introduced.
-The birth handling routine executes any time an artifact is replicated.
-Similarly, the removal-handling sub-algorithm gets called any time an artifact is removed from the set of currently active artifacts (i.e. the population).
+As such, perfect tracking algorithms execute three separate routines: 1) initialization, 2) handling the birth of new individuals, and 3) (optionally) handling the removal of existing individuals.
+The initialization step happens when the founding set of individual population members is introduced.
+The birth handling routine executes any time an individual is replicated.
+Similarly, the removal-handling sub-algorithm gets called any time an individual is removed from the set of currently active individuals (i.e., the population).
 
-Perfect tracking can be used regardless of whether each artifact has one or multiple parents (i.e., asexual vs. sexual reproduction).
-Our analysis here will focus on the case where each artifact has only parent, but most of our results generalize to the multi-parent case.
+Perfect tracking can be used regardless of whether each individual has one or multiple parents (i.e., asexual vs. sexual reproduction).
+Our analysis here will focus on the case where each individual has only parent, but most of our results generalize to the multi-parent case.
 The primary exception is the results presented in Section \ref{sec:perfect-tracking-pruning-space}, which will underestimate memory use in the average multi-parent case.
 
 Perfect tracking can be done at an arbitrary level of abstraction \citep{dolson2020interpreting, dolson2023phylotrackpy}.
-For example, individual replicator objects could be grouped on the basis of a particular genetic or phenotypic trait.
+For example, individual population members could be grouped into more abstract taxonomic units on the basis of a particular genetic or phenotypic trait.
 As in biological phylogenetics, phylogenies can be used to show relationships between individuals, species, or any other taxonomic unit.
-Increasing the level of abstraction scales down memory use by a constant (but often large) factor.
-Here, we will assume that the entities being tracked are the underlying replicating artifacts, as this case is the most computationally expensive.
+Increasing the level of abstraction decreases memory use by a constant (but often large) factor.
+Here, we will assume that the entities being tracked are the underlying replicating individuals, as this case is the most computationally expensive (i.e., worst case).
 
-In the following subsections, we present two different algorithms for perfect phylogenetic tracking: one which naively accumulates records for every node that ever existed and another which reclaims memory as lineages go extinct.
+In the following subsections, we present two different algorithms for perfect phylogenetic tracking: one which naively accumulates records for every individual that ever existed and another which reclaims memory as lineages go extinct.
 
 \subsection{Naive perfect tracking}
 \label{sec:naive-perfect-tracking}
@@ -59,7 +57,7 @@ Naive perfect tracking has a very large size order of growth, owing to the fact 
 \subsection{Pruning-enabled perfect tracking}
 \label{sec:naive-perfect-tracking-with-pruning}
 
-For most substinative applications, the amount of memory used by naive perfect tracking is prohibitive.
+For most substantive applications, the amount of memory used by naive perfect tracking is prohibitive.
 As such, it is common to use a ``pruning''-enabled algorithm that deletes records associated with extinct lineages (see Algorithm \ref{alg:perfect-tracking-pruning}) \citep{dolson2023phylotrackpy}.
 This procedure removes all parts of the phylogeny that are no longer relevant to explaining the history of currently extant objects.
 Thus, like naive perfect tracking, it introduces no uncertainty into down-stream analyses.
@@ -87,7 +85,7 @@ This requirement translates to a substantial speed cost in practice.
 As with naive (i.e. unpruned) perfect tracking, the primary memory cost of this algorithm comes from maintaining the tree of records, $T$.
 Thus, our analysis in this section will focus on the size of $T$.
 Technically, the worst-case size order of growth of perfect tracking with pruning is the same as for naive perfect tracking (see Theorem \ref{thm:perfect-tracking-space}).
-However, whereas that order of growth is also the best case for naive perfect tracking, it is a somewhat pathological case with pruning.
+However, whereas that order of growth is also the best case for naive perfect tracking, it is a somewhat pathological case under pruning.
 When using pruning, such a case would only occur when every object is copied before being removed (i.e., no lineages go extinct).
 There are some legitimate reasons these cases might occur, but most of them are fairly esoteric (see Section \ref{sec:perfect-tracking-space-supp}).
 
