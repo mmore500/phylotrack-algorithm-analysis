@@ -34,10 +34,12 @@ It is formally desribed in Algorithm \ref{alg:perfect-tracking}.
 
 The naive perfect tracking algorithm can be implemented in constant time (see Theorem \ref{thm:perfect-tracking-time}).
 
+% @ELD Could make this theorem better
 \input{thm/perfect-tracking-time.tex}
 
 
 \subsubsection{Performance in parallel and distrbuted environments}
+% @ELD Could do a formal analysis with the PRAM model here
 \label{sec:perfect-tracking-distrbuted}
 
 % TODO: Matthew, double-check this
@@ -122,6 +124,7 @@ The farther back in $T_c$ you go, the fewer branches there are.
 As a result, the marginal impact of increasing $N$ diminishes as $N$ increases.
 
 What do these observations tell us about $E(|T_c|)$?
+% @ELD Figure here would deifnitely be a good idea
 Because $T_c$ contains unifurcations, each edge in $T'$ corresponds to a chain of unifurcating nodes in $T_c$.
 The length of this chain in $T_c$ will, on average, be proportional to the weight of the corresponding edge in $T'$.
 Thus, the expected value of $L_n$ is almost identical to $E(|T_c|)$.
