@@ -69,10 +69,10 @@ This bias can be counteracted by splitting polytomies into arbitrary bifurcation
 
 Allowing for uneven record depth among annotations complicates trie-based reconstruction.
 As described in Section \ref{sec:pairwise-relatedness}, time points retained within deeper annotations effectively subset time points within younger annotations.
-So, arranging youngest-first insertion order for trie construction ensures that no insertion retroactively injects a trie node between existing nodes.
-Instead, in oldest-first order, inserted annotations may encounter a trie node with a time point for which they do not have a corresponding retained stratum (i.e., having discarded it under streaming curation).
+Thus, arranging youngest-first insertion order for trie construction ensures that no insertion retroactively injects a trie node between existing nodes.
+In contrast, under oldest-first order, inserted annotations may encounter a trie node with a time point for which they do not have a corresponding retained stratum (i.e., having discarded it under streaming curation).
 
-This missing information is conceptually equivalent to a query string wildcard position \citep{fukuyama2016partial}.
+This missing information is conceptually equivalent to a query string with a wildcard position \citep{fukuyama2016partial}.
 Such wildcard queries can require evaluation of many branch paths during insertion, instead of just one.
 An inserted taxon's lineage could proceed along any of the outgoing edges from the trie node preceding the wildcard.
 Among possible paths, the path with the longest successive streak of strata consistent with the inserted annotation is best-evidenced.
