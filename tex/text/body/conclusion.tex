@@ -20,9 +20,9 @@ With respect to hereditary stratigrpahy, we have here focused on the postprocess
 In particular, we present a trie-based tree reconstruction algorithm that proceeds from the underlying structure of the hereditary stratigraphy annotation.
 As a point of comparison, we provide an algorithmic formalization of the established perfect-tracking algorithms currently standard in agent-based evolutionary modeling.
 We find that both perfect tracking and hereditary stratigraphy have circumstances in which they excel.
-Hereditary stratigraphy enables tracking in noisy, parallel, and distributed environments where perfect tracking would be impractical.
-It also makes stonger guarantees about memory use (although on average perfect tracking uses less memory than most hereditary stratigraphy policies).
-Lastly, it allows different tradeoffs between data resolution, accuracy, and memory use.
+%Hereditary stratigraphy enables tracking in noisy, parallel, and distributed environments where perfect tracking would be impractical.
+%It also makes stonger guarantees about memory use (although on average perfect tracking uses less memory than most hereditary stratigraphy policies).
+%Lastly, it allows different tradeoffs between data resolution, accuracy, and memory use.
 %TODO talk about the take away of comparing the two
 % ELD: Took a stab at it
 
@@ -35,6 +35,6 @@ Lastly, it allows different tradeoffs between data resolution, accuracy, and mem
 % This work would also open the door to a more precise analysis of the relationship between pairwise relatedness estimation accuracy and overall tree reconstruction quality.
 % Finally, it would be worth assessing the extent to which curation policy algorithms minimize the number of records necessary to achieve their guarantees.
 
-Ultimately, our interest in hereditary stratigraphy and streaming curation is application-driven.
+Ultimately, our interest in extraction of phylogenetic history is application-driven.
 To these ends, reference implementatons of most algorithms described are provided in the public-facing \texttt{hstrat} and \texttt{phylotackpy} Python libraries \citep{moreno2022hstrat, dolson2023phylotrackpy}.
 These libraries enable application of perfect phylogenetic tracking and hereditary stratigraphy techniques in a few lines of code.
