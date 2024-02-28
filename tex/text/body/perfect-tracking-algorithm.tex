@@ -65,7 +65,7 @@ Naive perfect tracking has a gargantuan space complexity, owing to the fact that
 \label{sec:naive-perfect-tracking-with-pruning}
 
 For most substantive applications, the amount of memory used by naive perfect tracking is prohibitive.
-As such, it is common to use a ``pruning''-enabled algorithm that deletes records associated with extinct lineages (see Algorithm \ref{alg:perfect-tracking-pruning}) \citep{dolson2023phylotrackpy}.
+As such, it is common to use a ``pruning''-enabled algorithm that deletes records associated with extinct lineages (see Algorithm \ref{alg:perfect-tracking-pruning}). % TODO CITE \citep{dolson2023phylotrackpy}
 This procedure removes all parts of the phylogeny that are no longer ancestors of currently extant objects.
 Thus, like naive perfect tracking, it introduces no uncertainty into down-stream analyses.
 
@@ -174,7 +174,7 @@ Such a regime can theoretically occur when there is selection for stable coexist
 However, such a regime also involves introducing non-random (balancing/stablizing) selection.
 Thus, in practice, while these regimes maintain multiple deep branches, there is often frequent coalesence within those branches.
 Theoretically, though, extreme pressure for diversity could cause $E(|T|)$ to scale faster than $\mathcal{O}(N)$.
-Such scenarios could potentially be created via ecological interactions.
+Such scenarios could potentially be created via ecological interactions.  % TODO cite selection schemes as ecologies?
 
 One factor that we have glossed over in this analysis is the possibility for $N$ to change over time.
 For reasons that are explored further in Section \ref{sec:perfect-tracking-space-supp}, allowing population size $N$ to fluctuate complicates mathematical analysis but does not substantially alter our conclusions.
