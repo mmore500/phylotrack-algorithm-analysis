@@ -2,21 +2,21 @@
 
 Traditionally, the problem of recording the phylogenies of replicating digital populations has been solved using a ``perfect tracking'' approach where all replication events are recorded and stored in a tree (or forest, if there are multiple roots) \citep{dolson2023phylotrackpy}.
 In this section, we present results on the time and space complexity of perfect tracking;
-these results will serve as a basis of comparison for hereditary stratigraphy's curation policy and reconstruction algorithms.
+these results will serve as a basis of comparison for hereditary stratigraphy's curation policy and reconstruction algorithms in Section \ref{sec:discussion}.
 
 Perfect tracking algorithms are designed to augment an ongoing replication process by performing supplementary record-keeping.
 As such, perfect tracking algorithms execute three separate routines: 1) initialization, 2) handling the birth of new individuals, and 3) (optionally) handling the removal of existing individuals.
-The initialization step happens when the founding set of individual population members is introduced.
+The initialization step happens once before the founding set of population members is introduced.
 The birth handling routine executes any time an individual is replicated.
-Similarly, the removal-handling sub-algorithm gets called any time an individual is removed from the set of currently active individuals (i.e., the population).
+Similarly, the removal-handling routine gets called any time an individual is removed from the set of currently active individuals (i.e., the population).
 
 Perfect tracking can be used regardless of whether each individual has one or multiple parents (i.e., asexual vs. sexual reproduction).
-Our analysis here will focus on the case where each individual has only parent, but most of our results generalize to the multi-parent case.
+Our analysis here will focus on the asexual scenario where each individual has only parent, but most of our results generalize to the multi-parent case.
 The primary exception is the results presented in Section \ref{sec:perfect-tracking-pruning-space}, which will underestimate memory use in the average multi-parent case.
 
-Perfect tracking can be done at an arbitrary level of abstraction \citep{dolson2020interpreting, dolson2023phylotrackpy}.
+Perfect tracking can be done at an arbitrary level of abstraction \citep{dolson2020interpreting}.%, dolson2023phylotrackpy}.
 For example, individual population members could be grouped into more abstract taxonomic units on the basis of a particular genetic or phenotypic trait.
-As in biological phylogenetics, phylogenies can be used to show relationships between individuals, species, or any other taxonomic unit.
+As in biological phylogenetics, ancestry trees can show relationships between individuals, species, or any other taxonomic unit.
 Increasing the level of abstraction decreases memory use by a constant (but often large) factor.
 Here, we will assume that the entities being tracked are the underlying replicating individuals, as this case is the most computationally expensive (i.e., worst case).
 
@@ -37,6 +37,9 @@ The naive perfect tracking algorithm can be implemented in constant time (see Th
 % @ELD Could make this theorem better
 \input{thm/perfect-tracking-time.tex}
 
+Note that, although the number of birth events is likely not constant with respect to the size of the population or the number of generations,
+these birth events are not part of the tracking algorithm and would have happened regardless of whether phylogeny tracking was in place.
+Thus, we need only consider time complexity per birth event.
 
 \subsubsection{Performance in parallel and distrbuted environments}
 % @ELD Could do a formal analysis with the PRAM model here
@@ -47,13 +50,14 @@ In the first approach, records of all agent creation and elimination events are 
 In the second, each processor maintains an independent data file of local agent creation/elimination that are stitched together in postprocessing.
 For the former, race conditions might occur where the phylogeny tracker is notified of a birth event involving a parent it does not yet know about.
 This situation can be mitigated fairly cheaply by having a pool of ``waiting'' nodes that will be added once the appropriate parent node is added.
+
 For both approaches to naive perfect tracking, bigger problems occur in distributed environments, where passing messages to a centralized data structure could become expensive \citep{moreno2022hereditary} or limited storage space is available to individual processor elements.
 Worse still for either approach to naive perfect tracking is the possibility of data loss, which can become a significant likelihood at scale \citep{cappello2014toward}.
 It is unclear how a perfect tracking algorithm could recover from missing data.
 
-\subsubsection{Size order of growth}
+\subsubsection{Space complexity}
 
-Naive perfect tracking has a very large size order of growth, owing to the fact that it maintains a tree containing a node for every object that ever existed (see Theorem \ref{thm:perfect-tracking-space}).
+Naive perfect tracking has a gargantuan space complexity, owing to the fact that it maintains a tree containing a node for every object that ever existed (see Theorem \ref{thm:perfect-tracking-space}).
 
 \input{thm/perfect-tracking-space.tex}
 
@@ -62,7 +66,7 @@ Naive perfect tracking has a very large size order of growth, owing to the fact 
 
 For most substantive applications, the amount of memory used by naive perfect tracking is prohibitive.
 As such, it is common to use a ``pruning''-enabled algorithm that deletes records associated with extinct lineages (see Algorithm \ref{alg:perfect-tracking-pruning}) \citep{dolson2023phylotrackpy}.
-This procedure removes all parts of the phylogeny that are no longer relevant to explaining the history of currently extant objects.
+This procedure removes all parts of the phylogeny that are no longer ancestors of currently extant objects.
 Thus, like naive perfect tracking, it introduces no uncertainty into down-stream analyses.
 
 \input{alg/perfect-tracking-pruning.tex}
@@ -90,10 +94,10 @@ In a localized model, when the last remnant of an immigrant lineage is eliminate
 Records for lineages that extinct locally but had generated emigrees to other processing elements would need to be retained until extinction notifications for all emigrees are confirmed.
 Even for lineages that span few processing elements, repeat migrations between a single pair of processors could wind up long breadcrumb trails that necessitate extensive cleanup operations.
 
-\subsubsection{Size order of growth}
+\subsubsection{Space complexity}
 \label{sec:perfect-tracking-pruning-space}
 
-As with naive (i.e., unpruned) perfect tracking, the primary memory cost of this algorithm comes from maintaining the tree of records, $T$.
+As with naive (i.e., unpruned) perfect tracking, the primary memory cost of pruned perfect tracking comes from maintaining the tree of records, $T$.
 Thus, our analysis in this section will focus on the size of $T$.
 Technically, the worst-case size order of growth of perfect tracking with pruning is the same as for naive perfect tracking (see Theorem \ref{thm:perfect-tracking-space}).
 However, whereas that order of growth is also the best case for naive perfect tracking, it is a somewhat pathological case under pruning.
@@ -111,18 +115,19 @@ An expedient assumption to make is that objects to be replicated are selected at
 This process is described by a neutral model.
 While this assumption is obviously not completely true in most cases, it will turn out that $E(|T|)$ is actually smaller for most realistic cases (e.g. any evolutionary scenario with directional selection).
 
-Conveniently, the asymptotic behavior of $E(|T|)$ as $N$ increases has been studied under a variety of random selection models \citep{berestyckiRecentProgressCoalescent2009, tellierCoalescenceMultipleBranching2014, nordborgCoalescentTheory2019}.
+Conveniently, the asymptotic behavior of $E(|T|)$ as $N$ increases has been studied extensively by evolutionary biologists under a variety of random selection models \citep{berestyckiRecentProgressCoalescent2009, tellierCoalescenceMultipleBranching2014, nordborgCoalescentTheory2019}.
 The relevant branch of mathematics is coalescence theory, which describes the way particles governed by random processes agglomerate over time.
 There are a variety of models of random selection, all of which yield different behavior.
+
 Neutral models that could plausibly describe a process of replicating digital artifacts experience ``coalesence'' events.
-In these events, the population establishes a more-recent common ancestor as a result of old lineages dying out.
+In these events, the population establishes a new, more-recent common ancestor as a result of old lineages dying out.
 This observation implies that when we run our perfect tracking with pruning algorithm for sufficiently long periods of time, on average we should expect our tree $T$ to have a long unifurcating ``stem.''
 The most recent node in this chain will be the most recent common ancestor (MRCA) of the whole extant population.
 The descendants of the MRCA will form a sub-tree, which we will call $T_c$.
 
 The expected size of $T_c$ (denoted $E(|T_c|)$ here), then, will be the dominant factor affecting $E(|T|)$.
 $E(|T_c|)$ is closely related to a value commonly studied in coalescence theory literature called the expected total branch length (usually denoted $L_n$ or $T_{tot}$; we will refer to it as $L_n$).
-$L_n$ assumes that the phylogeny is represented by a tree, $T'$, that contains the leaf nodes, MRCA, and any internal nodes from which multiple lineages diverge (i.e. no unifurcations).
+$L_n$ assumes that the phylogeny is represented by a tree, $T'$, that contains the leaf nodes, MRCA, and any internal nodes from which multiple lineages diverge (i.e., no unifurcations).
 Edges in this tree have weights that represent the amount of time between the origin of the parent and the origin of the child.
 $L_n$ is the sum of these weights.
 Although the asymptotic behavior of $L_n$ depends on specifics of the evolutionary process, it scales sub-linearly with respect to population size for all realistic models that have been investigated in the literature to our knowledge \citep{gnedinLcoalescentsSurvey2014} \footnote{A possible exception is spatial models, which have recieved less formal analysis but are known to exhibit slower coalescence \citep{berestyckiRecentProgressCoalescent2009}}.  
@@ -138,8 +143,8 @@ Because $T_c$ contains unifurcations, each edge in $T'$ corresponds to a chain o
 The length of this chain in $T_c$ will, on average, be proportional to the weight of the corresponding edge in $T'$.
 Thus, the expected value of $L_n$ is almost identical to $E(|T_c|)$.
 However, there is one important difference.
-The reason $T'$ is able to scale sub-linearly with $N$ is that as $N$ goes to infinity the lengths of the branches to the leaf nodes (i.e. the extant population) approach zero \citep{nordborgCoalescentTheory2019, delmasAsymptoticResultsLength2008, drmotaAsymptoticResultsConcerning2007}.
-In contrast, the space taken up by each of the $N$ leaf nodes in $T_c$ cannot drop below a fixed constant.
+The reason $T'$ is able to scale sub-linearly with $N$ is that as $N$ goes to infinity the lengths of the branches to the leaf nodes (i.e., the extant population) approach zero \citep{nordborgCoalescentTheory2019, delmasAsymptoticResultsLength2008, drmotaAsymptoticResultsConcerning2007}.
+In contrast, the space taken up by each of the $N$ leaf nodes in $T_c$ is a fixed constant and cannot drop to zero.
 Thus, $E(|T_c|)$ is $\mathcal{O}(L_n + N)$.
 Note that the time to coalescence depends entirely on the population size ($N$); the total number of generations elasped since the start of the process ($G$) does not affect the asymptotic growth rate of $E(|T_c|)$.
 
@@ -172,5 +177,5 @@ Theoretically, though, extreme pressure for diversity could cause $E(|T|)$ to sc
 Such scenarios could potentially be created via ecological interactions.
 
 One factor that we have glossed over in this analysis is the possibility for $N$ to change over time.
-For reasons that are explored further in Section \ref{sec:perfect-tracking-space-supp}, allowing $N$ to fluctuate complicates mathematical analysis but does not substantially alter our conclusions.
+For reasons that are explored further in Section \ref{sec:perfect-tracking-space-supp}, allowing population size $N$ to fluctuate complicates mathematical analysis but does not substantially alter our conclusions.
 
