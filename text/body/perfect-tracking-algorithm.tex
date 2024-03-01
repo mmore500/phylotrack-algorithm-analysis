@@ -107,7 +107,7 @@ There are some legitimate reasons these cases might occur, but most of them are 
 % These scenarios might legitimately occur if objects are never removed or the number of objects is allowed to continuously grow, but in these cases $N$ would also be growing continuously.
 % They could potentially also happen when tracking digital objects that are copied with very small amounts of stochasticity.
 
-With pruning, the asymptotic behavior of the average case turns out to be substantially better than that of the worst case. 
+With pruning, the asymptotic behavior of the average case turns out to be substantially better than that of the worst case.
 Luckily, in the vast majority of applications, the average case is more practically informative than the asymptotic behavior of the worst case.
 Here, we investigate the expected size of $T$ (which we will call $E(|T|)$) in the average case as the population size ($N$) and number of time points ($G$) increase.
 Of course, investigating the average case requires making some assumptions about the scenarios where this algorithm may be used.
@@ -119,7 +119,7 @@ Conveniently, the asymptotic behavior of $E(|T|)$ as $N$ increases has been stud
 The relevant branch of mathematics is coalescence theory, which describes the way particles governed by random processes agglomerate over time.
 There are a variety of models of random selection, all of which yield different behavior.
 
-Neutral models that could plausibly describe a process of replicating digital artifacts experience ``coalesence'' events.
+Neutral models that could plausibly describe a process of replicating digital artifacts experience ``coalescence'' events.
 In these events, the population establishes a new, more-recent common ancestor as a result of old lineages dying out.
 This observation implies that when we run our perfect tracking with pruning algorithm for sufficiently long periods of time, on average we should expect our tree $T$ to have a long unifurcating ``stem.''
 The most recent node in this chain will be the most recent common ancestor (MRCA) of the whole extant population.
@@ -130,7 +130,8 @@ $E(|T_c|)$ is closely related to a value commonly studied in coalescence theory 
 $L_n$ assumes that the phylogeny is represented by a tree, $T'$, that contains the leaf nodes, MRCA, and any internal nodes from which multiple lineages diverge (i.e., no unifurcations).
 Edges in this tree have weights that represent the amount of time between the origin of the parent and the origin of the child.
 $L_n$ is the sum of these weights.
-Although the asymptotic behavior of $L_n$ depends on specifics of the evolutionary process, it scales sub-linearly with respect to population size for all realistic models that have been investigated in the literature to our knowledge \citep{gnedinLcoalescentsSurvey2014} \footnote{A possible exception is spatial models, which have recieved less formal analysis but are known to exhibit slower coalescence \citep{berestyckiRecentProgressCoalescent2009}}.  
+Although the asymptotic behavior of $L_n$ depends on specifics of the evolutionary process, it scales sub-linearly with respect to population size for all realistic models that have been investigated in the literature to our knowledge \citep{gnedinLcoalescentsSurvey2014}.%
+\footnote{A possible exception is spatial models, which have received less formal analysis but are known to exhibit slower coalescence \citep{berestyckiRecentProgressCoalescent2009}}
 How is this possible?
 Under realistic neutral models, various subsets of the population will coalesce to common ancestors much faster than the whole population does \citep{nordborgCoalescentTheory2019}.
 Consequently, there are many shallow branches.
@@ -151,9 +152,9 @@ Note that the time to coalescence depends entirely on the population size ($N$);
 The precise asymptotic scaling of $L_n$ with respect to population size $N$ depends on the exact model of random replication used \citep{tellierCoalescenceMultipleBranching2014}.
 Under the best-studied model, Kingman's Coalescent, it is $\mathcal{O}(log(N))$ \citep{kingmanCoalescent1982, delmasAsymptoticResultsLength2008}.
 Under another reasonable model, the Bolthausen-Sznitman coalescent, it is $\mathcal{O}(\frac{N}{log(N)})$ \citep{drmotaAsymptoticResultsConcerning2007}.
-% Some exotic models could also produce the star-shaped coalescent, in which all $N$ offspring descend directly from the most recent common ancestor. 
+% Some exotic models could also produce the star-shaped coalescent, in which all $N$ offspring descend directly from the most recent common ancestor.
 % While this scenario actually takes less memory in total, its asymptotic growth is $\mathcal{O}(N)$.
-Because these growth rates are all less than $N$, $E(|T_c|)$ ends up being dominated by $N$ term. 
+Because these growth rates are all less than $N$, $E(|T_c|)$ ends up being dominated by $N$ term.
 Thus the overall memory usage of pruning-enable perfect tracking is $\mathcal{O}(N + G)$.
 Trivially, the ``stem'' part of $T$ can be pruned off when coalescence occurs, producing a bound of $\mathcal{O}(N)$.
 
@@ -161,9 +162,9 @@ Trivially, the ``stem'' part of $T$ can be pruned off when coalescence occurs, p
 While $L_n$ is not the primary factor determining the memory use of this algorithm, it still has a substantial practical impact on resource usage.
 Thus, it is worth briefly exploring our practical expectations of its size.
 Earlier, we mentioned that in practice $T$ will usually be smaller than predicted by neutral models.
-These models represent a scenario called ``neutral drift'' in evolutionary theory. 
+These models represent a scenario called ``neutral drift'' in evolutionary theory.
 Under drift, coalescence can be slow because it needs to happen entirely by chance.
-When some members of the population are more likely to be selected than others and that selective advantage is hereitable (assuming population size $N$ is stable), we expect to see ``selective sweeps'' in which those members of the population outcompete others.
+When some members of the population are more likely to be selected than others and that selective advantage is heritable (assuming population size $N$ is stable), we expect to see ``selective sweeps'' in which those members of the population outcompete others.
 A selective sweep will usually speed up coalescence (unless it is competing with a different simultaneous selective sweep) \citep{neherGeneticDraftSelective2013}.
 Thus, in general, in the presence of non-random selection, we expect $T_c$ to be much smaller than we would expect under drift.
 Note, however, that the Bolthausen-Sznitman coalescent mentioned above does model scenarios with selection.
@@ -171,11 +172,10 @@ Note, however, that the Bolthausen-Sznitman coalescent mentioned above does mode
 Would we ever expect $T_c$ to be larger than under drift?
 Only if lineages coexist for longer than we would expect by chance.
 Such a regime can theoretically occur when there is selection for stable coexistence or diversity maintenance.
-However, such a regime also involves introducing non-random (balancing/stablizing) selection.
-Thus, in practice, while these regimes maintain multiple deep branches, there is often frequent coalesence within those branches.
+However, such a regime also involves introducing non-random (balancing/stabilizing) selection.
+Thus, in practice, while these regimes maintain multiple deep branches, there is often frequent coalescence within those branches.
 Theoretically, though, extreme pressure for diversity could cause $E(|T|)$ to scale faster than $\mathcal{O}(N)$.
 Such scenarios could potentially be created via ecological interactions.  % TODO cite selection schemes as ecologies?
 
 One factor that we have glossed over in this analysis is the possibility for $N$ to change over time.
 For reasons that are explored further in Section \ref{sec:perfect-tracking-space-supp}, allowing population size $N$ to fluctuate complicates mathematical analysis but does not substantially alter our conclusions.
-

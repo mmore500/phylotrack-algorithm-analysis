@@ -6,7 +6,7 @@ In addition to addressing questions of natural history, access to the phylogenet
 
 Although trifling in scale by comparison, computer simulations of evolution can generate vast histories in their own right, with common agent-based models achieving on the order of 200 million replication cycles per day \citep{ofria2009avida}.
 Distillation of this onslaught of history is necessary for data management tractability \citep{dolson2020interpreting}.
-Nonetheless, existing analyses of phylgoentic structure within digital systems have already proven valuable, enabling dignosis of underlying evolutionry dynamics \citep{moreno2023toward,hernandez2022can,shahbandegan2022untangling, lewinsohnStatedependentEvolutionaryModels2023a} and even serving as mechanism to guide evolution in application-oriented domains \cite{lalejini2024methods,murphy2008simple,burke2003increased}.
+Nonetheless, existing analyses of phylogenetic structure within digital systems have already proven valuable, enabling dignosis of underlying evolutionry dynamics \citep{moreno2023toward,hernandez2022can,shahbandegan2022untangling, lewinsohnStatedependentEvolutionaryModels2023a} and even serving as mechanism to guide evolution in application-oriented domains \cite{lalejini2024phylogeny,lalejini2024runtime,murphy2008simple,burke2003increased}.
 
 Here, we formalize data structures and algorithmic procedures for space-efficient aggregation of phylogenetic history from evolutionary simulations on a rolling basis, and investigate their runtime performance characteristics.
 % We focus in particular on asexual lineages, in which each entity has exactly one parent.
@@ -30,7 +30,7 @@ Accompanying public-facing open source Python packages provide convenient, plug-
 In this manner, methods described here promise to --- and, indeed, already have --- directly enable simulation-based evolution research.
 On a purely algorithmic level, procedures and, in particular, representational considerations involved in direct phylogenetic tracking pertain also to more general issues of phylogenetic computation.
 % Likewise, data-management processes necessary to decentralized phylogenetic tracking relate directly to broader questions about on-the-fly binning within the domain of stream processing \citep{OTHERPREPRINT}. % TODO
-Likewise, data-management processes necessary to decentralized phylogenetic tracking relate directly to broader questions involving on-the-fly binning within the domain of stream processing \citep{OTHERPREPRINT}. % TODO
+Likewise, data-management processes necessary to decentralized phylogenetic tracking relate directly to broader questions involving on-the-fly binning within the domain of stream processing. % TODO  \citep{OTHERPREPRINT}
 
 Having motivated applications and algorithmic analyses of direct and decentralized tracking, we next present brief introductions to each methodology's operation.
 
@@ -69,8 +69,8 @@ This pruning, however, reduces precision of resulting phylogenies.
 The last generation of common ancestry between two lineages can be resolved no finer than retained checkpoint times.
 In the context of hereditary stratigraphy, we refer to the procedure for down sampling as a ``stratum retention algorithm'' and the resulting patterns of retained differentia as a ``stratum retention policy.''
 Stratum retention algorithms must decide how many records to discard, but also how remaining records should be distributed over past time.
-Tuning of stratum retention trade-offs is discussed in \citet{OTHERPREPRINT} as an instance of the more general ``stream curation'' problem. %TODO
-Here, we build on these results to discuss the use of hereditary stratigraphy specifically in a phylogenetic context.
+% Tuning of stratum retention trade-offs is discussed in \citet{OTHERPREPRINT} as an instance of the more general ``stream curation'' problem. %TODO
+% Here, we build on these results to discuss the use of hereditary stratigraphy specifically in a phylogenetic context.
 
 % The primary additional complication that using hereditary stratigraphy for maintaining phylogenetic information adds over other use cases is the need to reconstruct the phylogeny at the end of a simulation.
 A typical objective for phylogeny-oriented application of hereditary stratigraphy is synthesis of population-level ancestry history.
