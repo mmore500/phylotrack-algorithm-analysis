@@ -6,7 +6,7 @@ In addition to addressing questions of natural history, access to the phylogenet
 
 Although trifling in scale by comparison, computer simulations of evolution can generate vast histories in their own right, with common agent-based models achieving on the order of 200 million replication cycles per day \citep{ofria2009avida}.
 Distillation of this onslaught of history is necessary for data management tractability \citep{dolson2020interpreting}.
-Nonetheless, existing analyses of phylogenetic structure within digital systems have already proven valuable, enabling dignosis of underlying evolutionry dynamics \citep{moreno2023toward,hernandez2022can,shahbandegan2022untangling, lewinsohnStatedependentEvolutionaryModels2023a} and even serving as mechanism to guide evolution in application-oriented domains \cite{lalejini2024phylogeny,lalejini2024runtime,murphy2008simple,burke2003increased}.
+Nonetheless, existing analyses of phylogenetic structure within digital systems have already proven valuable, enabling diagnosis of underlying evolutionary dynamics \citep{moreno2023toward,hernandez2022can,shahbandegan2022untangling, lewinsohnStatedependentEvolutionaryModels2023a} and even serving as mechanism to guide evolution in application-oriented domains \cite{lalejini2024phylogeny,lalejini2024runtime,murphy2008simple,burke2003increased}.
 
 Here, we formalize data structures and algorithmic procedures for space-efficient aggregation of phylogenetic history from evolutionary simulations on a rolling basis, and investigate their runtime performance characteristics.
 % We focus in particular on asexual lineages, in which each entity has exactly one parent.
@@ -21,10 +21,10 @@ Although they have historically underpinned a substantial proportion of evolutio
 %The latter, in contrast, targets decentralized many-processor parallel/distributed simulation and involves a post hoc, reconstruction-based approach.
 
 We cover two approaches: (1) tracking lineages directly using a centralized data structure and (2) a decentralized, reconstruction-based approach called hereditary stratigraphy.
-The former approach allows perfect accuracy, and we show that it is efficient when targetting single-processor applications (\textit{i.e.} using serial simulation).
+The former approach allows perfect accuracy, and we show that it is efficient when targeting single-processor applications (\textit{i.e.} using serial simulation).
 The latter, in contrast, was designed for decentralized many-processor parallel/distributed simulation.
 It supports user-controlled trade-offs between reconstruction precision and runtime resource overhead (e.g., memory, bandwidth).
-We expect that hereditary stratigraphy indeed performs best in paralell/distributed contexts.
+We expect that hereditary stratigraphy indeed performs best in parallel/distributed contexts.
 
 Accompanying public-facing open source Python packages provide convenient, plug-and-play access to phylogenetic tracking methodology across simulation systems \citep{moreno2022hstrat,dolson2023phylotrackpy}.
 In this manner, methods described here promise to --- and, indeed, already have --- directly enable simulation-based evolution research.

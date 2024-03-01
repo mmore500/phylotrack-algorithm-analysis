@@ -29,7 +29,7 @@ Take $c$ as retained stratum count per annotation.
 If probabilistic confidence were acceptable, sufficient differentia could be tested at each binary search step to bound the probability of misidentifying the point of divergence.
 The net failure rate depends on the number of opportunities for false negative divergence detections.
 In the worst case, this number of opportunities will be $\mathcal{O}(\log c)$.
-However, absolute certainty in determining the earliest differentia discrepancy will require worst case $\mathcal{O}(c)$ comparison (i.e., all diffentia pairs when two annotations share no mismatching differentia).
+However, absolute certainty in determining the earliest differentia discrepancy will require worst case $\mathcal{O}(c)$ comparison (i.e., all differentia pairs when two annotations share no mismatching differentia).
 
 Spurious collisions introduce false relatedness, causing a second complication: systematic overestimation of relatedness.
 Expected bias can be readily calculated, as spurious collision probability stems from the number of unique differentia values.
@@ -66,7 +66,7 @@ This work achieved reconstructions over a population of 32,768 ($2^15$) synchron
 Two reconstruction biases should be noted.
 First, because spurious differentia collisions introduce bias toward overestimation of relatedness, as noted above in Section \ref{sec:pairwise-relatedness}, branching events in the reconstructed tree will --- on average --- be more recent than in reality.
 The expected rate of spurious collision is easily predictable, so this bias can be readily modeled and corrected for.
-% Another possibile approach to counteract overrelatedness bias when analyzing tree structure would be Monte Carlo sampling of tree space with sets of inner nodes ``unzipped'' as if they had arisen due to spurious collision.
+% Another possible approach to counteract overrelatedness bias when analyzing tree structure would be Monte Carlo sampling of tree space with sets of inner nodes ``unzipped'' as if they had arisen due to spurious collision.
 Second, trie reconstruction can overrepresent polytomies (i.e., internal multifurcations).
 Branches that may have unfolded as separate events but fall within the same uncertainty gap within annotations' historical records will all lump together into a single polytomy.
 This bias can be counteracted by splitting polytomies into arbitrary bifurcations with zero-length edges.
