@@ -1,90 +1,74 @@
 \section{Introduction} \label{sec:introduction}
 
-Biological phylogenetic history is staggeringly vast and deep.
-Prokaryotes alone have a contemporary population size on the order of $10^{30}$ cells \citep{whitman1998prokaryotes}, and the phylogenetic record stretches back on the order of billions of years \citep{arndt2012processes}.
-In addition to addressing questions of natural history, access to the phylogenetic record of biological life has proven informative to conservation biology, epidemiology, medicine, and biochemistry among other domains \citep{faithConservationEvaluationPhylogenetic1992, STAMATAKIS2005phylogenetics, frenchHostPhylogenyShapes2023,kim2006discovery}.
+Biological phylogenetic history stretches staggeringly vast and deep.
+A contemporary population size on the order of $10^{30}$ cells is attributed to prokaryotes alone \citep{whitman1998prokaryotes}, and the phylogenetic record stretched back on the order of billions of years \citep{arndt2012processes}.
+In addition to addressing questions of natural history, access to the phylogenetic record of biological life has proven informative to conservation biology, epidemiology, medicine, and proteomics among other domains \citep{STAMATAKIS2005phylogenetics}
 
 Although trifling in scale by comparison, computer simulations of evolution can generate vast histories in their own right, with common agent-based models achieving on the order of 200 million replication cycles per day \citep{ofria2009avida}.
-Distillation of this onslaught of history is necessary for data management tractability \citep{dolson2020interpreting}.
-Nonetheless, existing analyses of phylgoentic structure within digital systems have already proven valuable, enabling dignosis of underlying evolutionry dynamics \citep{moreno2023toward,hernandez2022can,shahbandegan2022untangling, lewinsohnStatedependentEvolutionaryModels2023a} and even serving as mechanism to guide evolution in application-oriented domains \cite{lalejini2024methods,murphy2008simple,burke2003increased}.
+Distillation of this onslaught of history is necessary for data management tractability.
+Nonetheless, existing analyses of phylgoentic structure within digital systems have already proven valuable, enabling dignosis of underlying evolutionry dynamics \cite{moreno2023toward,hernandez2022can,shahbandegan2022untangling} and even serving as mechanism to guide evolution in application-oriented domains \cite{lalejini2024methods,murphy2008simple,burke2003increased}.
 
 Here, we formalize data structures and algorithmic procedures for space-efficient aggregation of phylogenetic history from evolutionary simulations on a rolling basis, and investigate their runtime performance characteristics.
-% We focus in particular on asexual lineages, in which each entity has exactly one parent.
-% Sexual lineages, in which entities may have more than one parent, are beyond the scope of this paper.
-% They present unique challenges in phylogenetic tracking that merit methodological treatment in their own right \citep{godin2019apoget,moreno2024methods,mcphee2018detailed}.
-In this paper, we focus in particular on asexual lineages, in which each entity has exactly one parent --- as opposed to sexual lineages, in which entities may have more than one parent.
-Although they have historically underpinned a substantial proportion of evolutionary computation and simulation systems \citep{koza1994genetic,jefferson1990evolution} and continue to be of great interest within the community \citep{dang2018escaping}, they present unique challenges in phylogenetic tracking that merit methodological treatment in their own right \citep{godin2019apoget,moreno2024methods,mcphee2018detailed}.
+We focus in particular on asexual lineages, in which each entity has exactly one parent.
+Sexual lineages, in which entities may more than one parent, have historically underpinned a substantial proportion of evolutionary computation and simulation systems \citep{koza1994genetic,jefferson1990evolution} and present unique challenges in tracking that merit methodological treatment in their own right \citep{godin2019apoget,moreno2024methods,mcphee2018detailed}.
 
-
-%We cover two approaches: pruning of extinct lineages and coarsening of phylogenetic history.
-%The former applies to direct tracking approaches and targets single-processor, serial simulation.
-%The latter, in contrast, targets decentralized many-processor parallel/distributed simulation and involves a post hoc, reconstruction-based approach.
-
-We cover two approaches: (1) tracking lineages directly using a centralized data structure and (2) a decentralized, reconstruction-based approach called hereditary stratigraphy.
-The former approach allows perfect accuracy, and we show that it is efficient when targetting single-processor applications (\textit{i.e.} using serial simulation).
-The latter, in contrast, was designed for decentralized many-processor parallel/distributed simulation.
-It supports user-controlled trade-offs between reconstruction precision and runtime resource overhead (e.g., memory, bandwidth).
-We expect that hereditary stratigraphy indeed performs best in paralell/distributed contexts.
+We cover two approaches: pruning of extinct lineages and coarsening of phylogenetic history.
+The former applies to direct tracking approaches and targets single-processor, serial simulation.
+The latter, in contrast, targets decentralized many-processor parallel/distributed simulation and involves a post hoc, reconstruction-based approach.
 
 Accompanying public-facing open source Python packages provide convenient, plug-and-play access to phylogenetic tracking methodology across simulation systems \citep{moreno2022hstrat,dolson2023phylotrackpy}.
 In this manner, methods described here promise to --- and, indeed, already have --- directly enable simulation-based evolution research.
 On a purely algorithmic level, procedures and, in particular, representational considerations involved in direct phylogenetic tracking pertain also to more general issues of phylogenetic computation.
-% Likewise, data-management processes necessary to decentralized phylogenetic tracking relate directly to broader questions about on-the-fly binning within the domain of stream processing \citep{OTHERPREPRINT}. % TODO
-Likewise, data-management processes necessary to decentralized phylogenetic tracking relate directly to broader questions involving on-the-fly binning within the domain of stream processing \citep{OTHERPREPRINT}. % TODO
+Likewise, data-management processes necessary to decentralized phylogenetic tracking relate directly to broader questions related to on-the-fly binning within the domain of stream processing \citep{OTHERPREPRINT}. % TODO
 
 Having motivated applications and algorithmic analyses of direct and decentralized tracking, we next present brief introductions to each methodology's operation.
 
 \subsection{Direct Ancestry Tracking}
 
-Most work on ancestry trees of self-replicating digital agents relies on centralized lineage tracking \citep{friggeri2014rumor,cohen1987computer,dolson2023phylotrackpy}.
+Most work on ancestry trees of digital artifacts relies on centralized lineage tracking \citep{friggeri2014rumor,cohen1987computer,dolson2023phylotrackpy}.
 % \footnote{A notable exception, \cite{libennowell2008tracing} exploit a serendipitous mechanistic opportunity to reconstruct global dissemination of chain emails.}
 Direct approaches to tracking replicator provenance in digital systems operate on this graph structure directly, distilling it from the full set of parent-child relationships over the history of a population to produce an exact historical account.
 
 Without further regard, naive complete lineage tracking performs poorly for large-scale evolutionary systems.
-For long-lived simulations, practical memory limitations preclude comprehensive records of replication events, which accumulate linearly with elapsed generations and population size.
-To achieve a tractable space complexity, extinct lineages can be pruned.
+For long-lived simulation, practical limitations preclude comprehensive records of replication events, which accumulate linearly with elapsed generations \citep{dolson2023algorithms}.
+So, extinct lineages must be pruned.
 Within serial processing contexts, an efficient reference-counting based approach may be applied.
-We discuss this technique further in Section \ref{sec:perfect-tracking-algorithm}.
+We discuss further in Section \ref{sec:perfect-tracking-algorithm}.
 
 \subsection{Decentralized Ancestry Tracking}
 
 Unfortunately, computational scale --- i.e., parallel/distributed computing --- erodes the simplicity, efficiency, and effectiveness of centralized tracking.
 Detecting lineage extinctions requires either (1) collation of all replication and destruction events to a centralized data store or (2) peer-to-peer transmission of extinction notifications that unwind a lineage's (possibly many-hop) trajectory across host nodes.
-Both options introduce runtime communication overhead.
-To boot, the perfect-tracking paradigm is fragile to data loss.
-Even a single failed communication event can entirely disjoin knowledge of how large portions of phylogenetic history relate.
-As data loss is ubiquitous at scale \citep{cappello2014toward,ackley2011pursue}, this limitation is of serious concern.
+Both options oblige runtime communication overhead.
+To boot, the perfect-tracking paradigm is fragile to single missing relationships --- these can entirely disjoin knowledge of how large portions of phylogenetic history relate.
+This fragility makes direct lineage tracking highly sensitive to data loss and dynamic network topology rearrangements, which are ubiquitous at scale \citep{cappello2014toward,ackley2011pursue}.
 
 These concerns motivated development \textit{hereditary stratigraphy}, of an alternate, fully-decentralized approach to phylogenetic tracking \citep{moreno2022hereditary}.
-This methodology uses special genome annotations, termed \textit{hereditary stratigraphic columns}.
+This methodology prescribes special genome annotations, termed \textit{hereditary stratigraphic columns}.
 These annotations facilitate fast, accurate post hoc inference of phylogenetic relationships among evolved agents, akin to how genetic material enables phylogenetic inference in biology.
 
 The core mechanism of hereditary stratigraphy is accretion, and subsequent inheritance, of a new randomized data packet onto column annotations each generation.
 These stochastic fingerprints, which we call ``differentia,'' serve as a sort of checkpoint for lineage identity at a particular generation.
-At future time points, extant annotations will share identical differentia for the generations during which they experienced shared ancestry.
-Thus, the first mismatched fingerprint between two annotations bounds the recency of their most recent common ancestor (MRCA).
+At future time points, extant annotations will share identical differentia for the generations they experienced shared ancestry.
+So, the first mismatched fingerprint between two annotations bounds their common ancestry.
 
 To circumvent annotation size bloat, hereditary stratigraphy prescribes a ``pruning'' process to delete differentia on the fly as generations elapse.
-This pruning, however, reduces precision of resulting phylogenies.
+This pruning, however, comes at a cost to inference power.
 The last generation of common ancestry between two lineages can be resolved no finer than retained checkpoint times.
 In the context of hereditary stratigraphy, we refer to the procedure for down sampling as a ``stratum retention algorithm'' and the resulting patterns of retained differentia as a ``stratum retention policy.''
-Stratum retention algorithms must decide how many records to discard, but also how remaining records should be distributed over past time.
-Tuning of stratum retention trade-offs is discussed in \citet{OTHERPREPRINT} as an instance of the more general ``stream curation'' problem. %TODO
-Here, we build on these results to discuss the use of hereditary stratigraphy specifically in a phylogenetic context.
+Stratum retention algorithms must decide how many records to discard, but also how remaining records distribute over past time.
+Discussion considers tuning stratum retention trade-offs elsewhere as an instance of the more general ``stream curation'' problem --- introduced separately below in Section \ref{sec:streaming-curation} and fully presented in Section \ref{sec:annotation-algorithms}:
 
-% The primary additional complication that using hereditary stratigraphy for maintaining phylogenetic information adds over other use cases is the need to reconstruct the phylogeny at the end of a simulation.
-A typical objective for phylogeny-oriented application of hereditary stratigraphy is synthesis of population-level ancestry history.
-Although following from similar principles as pairwise MRCA estimation, procedures to reconstruct the ancestry tree of many stratigraph annotations merit some further elaboration.
-Section \ref{sec:reconstruction-algorithm} provides an agglomerative, trie-based algorithm for this task.
+Procedures for ancestry tree reconstruction from a population of stratigraph annotations follow from the same principle as pairwise annotation comparison, but merit some further elaboration.
+Section \ref{sec:reconstruction-algorithm} provides a trie-based algorithm for this task.
 
 \subsection{Outline}
 
 Remaining exposition in this paper is structured as follows:
 \begin{itemize}
 % \item Section \ref{sec:methods} covers preliminaries and glossarizes key terminology,
-\item Section \ref{sec:reconstruction-algorithm} contributes a recently-developed algorithm for full-tree reconstruction from hereditary stratigraphic annotation data and analyzes its runtime characteristics.
-\item Section \ref{sec:perfect-tracking-algorithm} formally presents an algorithm for perfect phylogenetic tracking with analysis of its time and space complexity.
-\item Section \ref{sec:discussion} discusses which situations better suit perfect tracking vs. hereditary stratigraphy.
+\item Section \ref{sec:reconstruction-algorithm} presents a recently-developed algorithm for full-tree reconstruction from hehereditary stratigraphic annotation data and analyzes its runtime characteristics.
+\item Section \ref{sec:perfect-tracking-algorithm} supplies formal presentation of the alternate perfect phylogenetic tracking algorithm and analysis of its runtime characteristics then commentates on which situations better suit perfect tracking over hereditary stratigraphy, and vice versa.
 % TODO do we need a results and discussion section???
 % \item Section \ref{sec:results-and-discussion}
 \item Section \ref{sec:conclusion} reflects on broader implications and future work.

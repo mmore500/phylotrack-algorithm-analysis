@@ -6,7 +6,6 @@ The time complexity of pruning in perfect phylogenetic tracking is $\mathcal{O}(
 \begin{proof}
 \label{prf:perfect-tracking-with-pruning-time}
 The initialization and birth-handling steps of the pruning algorithm are trivially constant-time, as explained in proof \ref{prf:perfect-tracking-time} (technically the pruning algorithm adds two constant-time operations to the birth-handling step, but this fact is inconsequential).
-
 Next, we prove that the removal-handling pruning algorithm runs in amortized constant time.
 When an arbitrary taxon $t$ is removed, there are three possibilities: 1) $t$ has living descendants, 2) $t$ has no living descendants, but $t$'s parent is either alive or has other descendants that are alive, or 3) $t$ was the last living descendant of its parent.
 In case 1, nothing can be removed from the phylogeny.
@@ -34,7 +33,7 @@ Since
 \lim_{d_t - d_a\to\infty} \frac{2(d_t - d_a) + 1}{d_t - d_a + 1} = 2
 \],
 
-the amortized time complexity of pruning is bounded by a constant, i.e., it is $\mathcal{O}(1)$.
+the amortized time complexity of pruning is bounded by a constant, i.e. it is $\mathcal{O}(1)$.
 
 
 \end{proof}
