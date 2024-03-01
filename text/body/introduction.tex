@@ -6,7 +6,7 @@ In addition to addressing questions of natural history, access to the phylogenet
 
 Although trifling in scale by comparison, computer simulations of evolution can generate vast histories in their own right, with common agent-based models achieving on the order of 200 million replication cycles per day \citep{ofria2009avida}.
 Distillation of this onslaught of history is necessary for data management tractability.
-Nonetheless, existing analyses of phylgoentic structure within digital systems have already proven valuable, enabling dignosis of underlying evolutionry dynamics \cite{moreno2023toward,hernandez2022can,shahbandegan2022untangling} and even serving as mechanism to guide evolution in application-oriented domains \cite{lalejini2024phylogeny,lalejini2024runtime,murphy2008simple,burke2003increased}.
+Nonetheless, existing analyses of phylogenetic structure within digital systems have already proven valuable, enabling diagnosis of underlying evolutionary dynamics \cite{moreno2023toward,hernandez2022can,shahbandegan2022untangling} and even serving as mechanism to guide evolution in application-oriented domains \cite{lalejini2024phylogeny,lalejini2024runtime,murphy2008simple,burke2003increased}.
 
 Here, we formalize data structures and algorithmic procedures for space-efficient aggregation of phylogenetic history from evolutionary simulations on a rolling basis, and investigate their runtime performance characteristics.
 We focus in particular on asexual lineages, in which each entity has exactly one parent.
@@ -67,7 +67,7 @@ Section \ref{sec:reconstruction-algorithm} provides a trie-based algorithm for t
 Remaining exposition in this paper is structured as follows:
 \begin{itemize}
 % \item Section \ref{sec:methods} covers preliminaries and glossarizes key terminology,
-\item Section \ref{sec:reconstruction-algorithm} presents a recently-developed algorithm for full-tree reconstruction from hehereditary stratigraphic annotation data and analyzes its runtime characteristics.
+\item Section \ref{sec:reconstruction-algorithm} presents a recently-developed algorithm for full-tree reconstruction from hereditary stratigraphic annotation data and analyzes its runtime characteristics.
 \item Section \ref{sec:perfect-tracking-algorithm} supplies formal presentation of the alternate perfect phylogenetic tracking algorithm and analysis of its runtime characteristics then commentates on which situations better suit perfect tracking over hereditary stratigraphy, and vice versa.
 % TODO do we need a results and discussion section???
 % \item Section \ref{sec:results-and-discussion}
