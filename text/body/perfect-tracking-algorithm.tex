@@ -26,7 +26,7 @@ In the following subsections, we present two different algorithms for perfect ph
 \label{sec:naive-perfect-tracking}
 
 The naive perfect tracking algorithm is fairly straightforward.
-It is formally desribed in Algorithm \ref{alg:perfect-tracking}.
+It is formally described in Algorithm \ref{alg:perfect-tracking}.
 
 \input{alg/perfect-tracking.tex}
 
@@ -41,7 +41,7 @@ Note that, although the number of birth events is likely not constant with respe
 these birth events are not part of the tracking algorithm and would have happened regardless of whether phylogeny tracking was in place.
 Thus, we need only consider time complexity per birth event.
 
-\subsubsection{Performance in parallel and distrbuted environments}
+\subsubsection{Performance in parallel and distributed environments}
 % @ELD Could do a formal analysis with the PRAM model here
 \label{sec:perfect-tracking-distrbuted}
 
@@ -82,16 +82,16 @@ The pruning-enabled algorithm has amortized constant time complexity (see Theore
 
 % @MAM interesting thought: you can't prune all unifurcations when taking the second (distributed) approach to pruning-enabled perfect tracking
 % @MAM another interesting thought: hstrat annotations can be smaller than UUID labels (128 bits)
-% TODO: Matthew, double-check this @MAM this is ocmpletely reasonable
+% TODO: Matthew, double-check this @MAM this is completely reasonable
 Like naive perfect tracking, pruning-enabled perfect tracking can proceed via either a fully-centralized database or through localized record-keeping.
 
-Centralized pruning-enabled perfect tracking has all of the same issues in parallel and distributed environments that naive perfect tracking has.
+Centralized pruning-enabled perfect tracking has all the same issues in parallel and distributed environments that naive perfect tracking has.
 It also adds an additional cost: parallel processes must be synced up before a pruning operation can be performed.
 Otherwise, the algorithm risks incorrectly pruning a lineage that it will later learn produced a new artifact.
 This requirement would translate to a substantial speed cost in practice.
 
 In a localized model, when the last remnant of an immigrant lineage is eliminated an extinction notification would need to be propagated back to the processing element that lineage immigrated from.
-Records for lineages that extinct locally but had generated emigrees to other processing elements would need to be retained until extinction notifications for all emigrees are confirmed.
+Records for lineages that extinct locally but had generated emigres to other processing elements would need to be retained until extinction notifications for all emigres are confirmed.
 Even for lineages that span few processing elements, repeat migrations between a single pair of processors could wind up long breadcrumb trails that necessitate extensive cleanup operations.
 
 \subsubsection{Space complexity}

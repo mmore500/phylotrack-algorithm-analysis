@@ -25,7 +25,7 @@ It is also due to the potential for large variation in tree size caused by the e
 Anecdotally, the memory cost of perfect tracking often poses a real-world obstacle to using it at full resolution.
 
 Like perfect tracking, hereditary stratigraphy's memory footprint grows linearly $\mathcal{O}(N)$ with population size.
-Under configurations with guarantee static MRCA resolution at arbitrarily generaitonal depth, memory footprint also scales with $G$ --- either $\mathcal{O}(G)$ or $\mathcal{O}(\log G)$ depending whether guarantees are absolute or recency-proportional \citep{OTHERPREPRINT}.  % TODO
+Under configurations with guarantee static MRCA resolution at arbitrarily generaitonal depth, memory footprint also scales with $G$ --- either $\mathcal{O}(G)$ or $\mathcal{O}(\log G)$ depending on whether guarantees are absolute or recency-proportional \citep{OTHERPREPRINT}.  % TODO
 However, hereditary stratigraphy can also be conducted $\mathcal{O}(1)$ constant with respect to $G$.
 Unlike pruning-enabled perfect tracking, hereditary stratigraphy's memory usage is a hard guarantee.
 Consequently, it can be a good choice in cases where large fluctuations in memory use are not acceptable.
