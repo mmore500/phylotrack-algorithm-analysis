@@ -1,8 +1,7 @@
 SHELL=/bin/bash
 
-# get the basename of the containing directory
-# this will be used to name othe output document
-BUILD_DIR := $(shell basename $(abspath $(dir $(lastword $(MAKEFILE_LIST)))/..))
+# this will be used to name the output document
+BUILD_DIR := phylotrack-algorithm-analysis
 
 DRAFT_SUPPLEMENT_PAGE = $(shell pdftk ${BUILD_DIR}-draft.pdf dump_data_utf8 | pcregrep -M -o1 '^BookmarkBegin\nBookmarkTitle: Supplemental Material\nBookmarkLevel: 1\nBookmarkPageNumber: ([0-9]+)$$')
 
@@ -45,7 +44,9 @@ ${BUILD_DIR}-manuscript-draft.pdf: ${BUILD_DIR}-draft.pdf
 ${BUILD_DIR}-supplement-draft.pdf: ${BUILD_DIR}-draft.pdf
 	pdftk ${BUILD_DIR}-draft.pdf cat $(DRAFT_SUPPLEMENT_PAGE)-end output ${BUILD_DIR}-supplement-draft.pdf
 
-fresh: cleaner all
+fresh: clean all
+
+fresher: cleaner all
 
 clean:
 	rm -f ${BUILD_DIR}.pdf
@@ -66,4 +67,4 @@ cleaner: clean
 	find . -type f -name ${BUILD_DIR}"*" ! -name '*.tex' ! -name '*.bib' -delete
 	rm -rf *.bbl *.blg *.aux
 
-.PHONY: draft release clean sview cleaner fresh quick
+.PHONY: draft release clean sview cleaner fresh fresher quick

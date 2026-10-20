@@ -1,0 +1,11 @@
+[submodule "hereditary-stratigraph-concept"]
+	path = hereditary-stratigraph-concept
+	url = https://github.com/mmore500/hereditary-stratigraph-concept.git
+[submodule "hstrat-evolutionary-inference"]
+	path = hstrat-evolutionary-inference
+	url = https://github.com/mmore500/hstrat-evolutionary-inference.git
+	branch = tex
+[submodule "tex"]
+	path = tex
+	url = https://github.com/mmore500/phylotrack-algorithm-analysis.git
+	branch = tex

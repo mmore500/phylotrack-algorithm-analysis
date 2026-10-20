@@ -3,6 +3,9 @@
 set -e
 shopt -s globstar
 
+# replace symlinks (e.g., bibl.bib -> tex/bibl.bib) with their targets
+find . -maxdepth 1 -type l -exec sh -c 'cp --remove-destination "$(readlink -f "$1")" "$1"' _ {} \;
+
 find hereditary-stratigraph-concept -type f ! \( -name "*.pdf" -o -name "*.tex" -o -name "*.bib" \) -exec rm -f {} +
 
 
