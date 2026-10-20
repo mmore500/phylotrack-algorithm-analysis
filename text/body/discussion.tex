@@ -31,6 +31,40 @@ Unlike pruning-enabled perfect tracking, hereditary stratigraphy's memory usage 
 Consequently, it can be a good choice in cases where large fluctuations in memory use are not acceptable.
 It can also be helpful in circumstances that inhibit coalescence and start pushing perfect tracking towards worst-case performance.
 
+\subsubsection{Case study: memory use in a distributed environment}
+
+% adapted from https://github.com/mmore500/hstrat-synthesis/blob/8d66ae9240e6c7a6ea00ce3756c8cdf404f9ba45/text/body/introduction.tex#L163-L184
+To give a concrete sense of these trade-offs in a distributed setting, consider the memory footprint of pruning-enabled perfect tracking on the Cerebras Wafer-Scale Engine (WSE), a hardware accelerator that provisions each of its many processor elements (PEs) a modest 48kB of memory \citep{cerebras2021wafer}.
+In the absence of complex point-to-point communication patterns, identifier values must be kept for each extant lineage emigrating from a memory space --- even if no descendants remain extant locally;
+this information remains necessary to ensure an intact breadcrumb trail connecting extant tips back to their founding ancestor.
+Although each breadcrumb may individually be small in size --- reasonably 64 bits each, including a generational timestamp --- in aggregate they may accumulate substantially.
+To illustrate, consider an island-model population distributed over the WSE processor grid, with 512 individuals resident per PE and neighboring PEs exchanging individuals at a 5\% migration rate.
+With a backwards-time coalescent simulator such as msprime, we can estimate the distributed memory footprint of an exact tracking approach incorporating pruning \citep{baumdicker2022efficient}.
+Such coalescent simulations sample possible spatio-temporal lineage histories for an extant population.
+Using a drift model over structured fixed-capacity subpopulations, we can tractably approximate the full WSE processor grid as 900 independent $30 \times 30$ subgrids.
+To account for stochastic variability in sampled lineage histories, we consider memory footprints across 10 independent whole-chip replicates.
+
+Figure \ref{fig:msprime-memory-estimate} compares projected memory footprints between perfect tracking with lineage pruning versus hereditary stratigraphy.
+With pruning, the upper bound memory use per PE averages 39.6kB across replicates.
+If additional coordination was employed to balance memory load for stored tracking data across PEs, use would be 25.3kB per PE.
+Another possible optimization would be periodic checkpoint synchronization with host to export accumulated data.
+Batching simulation across 100,000 generation windows in this manner would also reduce memory cost per PE to 25.3kB.
+If used together, batching and balancing would require 20.9kB per PE.
+As expected, distributed memory footprints for perfect tracking are substantially greater than the 12kB required to store timestamped unique identifiers for perfect tracking in a unified memory space.
+Recall that the WSE's 48kB per PE must be shared also among other data records, underlying simulation state (e.g., population genomes), and program data.
+Note that the above memory use estimates do not account for transient stale lineage data arising from latency in extinction notifications, do not incorporate safety margins for stochastic variability in lineage histories, and assume that no fossil lineages are archived.
+Further, memory cost could increase by orders of magnitude in simulations of sexual populations in order to track lineages of multiple independently-assorting genome sites per individual.
+
+% adapted from https://github.com/mmore500/hstrat-synthesis/blob/8d66ae9240e6c7a6ea00ce3756c8cdf404f9ba45/text/body/introduction.tex#L211-L219
+Under hereditary stratigraphy, by contrast, genome information encoding lineage history resides in a single fixed-width annotation, bundled alongside a generation counter.
+Memory overhead, therefore, is invariant to lineage history, and can be calculated trivially for a given population size.
+Reasonably, 32 bits of annotation data could be used for coarse-resolution inference, 64 bits for moderate-resolution inference, or 256 bits for fine-resolution inference.
+With 512 individuals per PE and 32-bit generation counters, total cost sums to 4kB for coarse-resolution inference, 6kB for moderate-resolution inference, and 18kB for fine-resolution inference (Figure \ref{fig:msprime-memory-estimate}).
+Compared to distributed perfect tracking with pruning, coarse-resolution hereditary stratigraphy represents a five- to almost ten-fold improvement in memory efficiency (depending on balancing/batching procedures).
+Notably, also, memory footprints for coarse- and moderate-resolution inference both weigh in below the practical floor of 12kB required for perfect tracking in a global memory space.
+
+\input{fig/msprime-memory-estimate.tex}
+
 \subsection{Accuracy}
 
 % TODO unifurcations?
