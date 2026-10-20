@@ -12,6 +12,18 @@
 
 Formal analysis of the hereditary stratigraphy algorithm.
 
+- manuscript draft: <https://mmore500.github.io/phylotrack-algorithm-analysis/>
+
+To set up locally,
+```bash
+git clone --single-branch https://github.com/mmore500/phylotrack-algorithm-analysis.git
+cd phylotrack-algorithm-analysis
+./submodules.sh
+```
+
+The manuscript build lives on the `paper` branch (included here as the `paper` submodule), which in turn includes Overleaf-compatible manuscript content from the `tex` branch (as `paper/tex`).
+To build the manuscript, run `make -C paper`.
+
 Check out the live in-browser web app at <https://mmore500.github.io/phylotrack-algorithm-analysis>.
 
 
