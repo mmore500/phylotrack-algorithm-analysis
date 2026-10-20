@@ -9,3 +9,8 @@
 	path = tex
 	url = https://github.com/mmore500/phylotrack-algorithm-analysis.git
 	branch = tex
+[submodule "binder/binder-2025-10-28-trafficsim_msprime.ipynb"]
+	path = binder/binder-2025-10-28-trafficsim_msprime.ipynb
+	url = https://github.com/mmore500/hstrat-synthesis.git
+	branch = binder-2025-10-28-trafficsim_msprime.ipynb
+	shallow = true
