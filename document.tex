@@ -1,3 +1,7 @@
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}       % 
+\usepackage[varvw]{newtxmath}       % selects Times Roman as basic font
+
 \ifdefined\nofake
 \else
 \usepackage[demo]{graphicx}
@@ -24,7 +28,7 @@
 % figure submodules live in the paper branch, which builds this document via \import{tex/}
 \graphicspath{{./}{./hereditary-stratigraph-concept/tex}{./hstrat-evolutionary-inference}}
 
-\newtheorem{theorem}{Theorem}
+% \newtheorem{theorem}{Theorem}
 
 \input{text/glossary.tex}
 
