@@ -6,11 +6,11 @@ In choosing between perfect tracking and hereditary stratigraphy, there are mult
 
 In a non-distributed, serial computing environment, perfect tracking runs in constant time.
 The time complexity of hereditary stratigraphy depends on the retention policy used, but scales at least linearly with annotation size.
-So, if annotation size growth is allowed to maintain static reconstruction resolution guarantees in long-running processes, time complexity of perfect tracking will scale more favorably than that of hereditary stratigraphy.
+So, if annotation size growth is allowed to maintain static reconstruction resolution guarantees in long-running processes, time complexity of perfect tracking will scale preferably to hereditary stratigraphy.
 A lower bound on hereditary stratigraphy's time complexity comes from copying of annotation material from parent to child when new artifacts are born.
 Consequently, the exact time complexity depends on the curation policy but can scale with number of generations $G$ elapsed, unless a policy with a constant-cap order of growth is used.
-Note that hereditary stratigraphy incurs an additional one-time complexity cost due to the fact that its output generally requires postprocessing before analysis (i.e., phylogenetic reconstruction).
-Assuming comparable generational depth across lineages, reconstruction can be achieved with time complexity linear in annotation size and linear in tree tip count (which can optionally be held below population size through subsampling).
+Note that hereditary stratigraphy incurs an additional one-time complexity cost due to the fact that its output generally requires post-processing before analysis (i.e., phylogenetic reconstruction).
+Assuming comparable generational depth across lineages, reconstruction can be achieved with time complexity linear to annotation size and linear to tree tip count (which can optionally be held below population size through subsampling).
 
 In contrast, in parallel or distributed environments, perfect tracking suffers from the problems discussed in Sections \ref{sec:perfect-tracking-distrbuted} and \ref{sec:perfect-tracking-pruning-distrbuted}.
 Thus, hereditary stratigraphy usually runs faster in these environments and is generally the better choice.
@@ -25,8 +25,8 @@ It is also due to the potential for large variation in tree size caused by the e
 Anecdotally, the memory cost of perfect tracking often poses a real-world obstacle to using it at full resolution.
 
 Like perfect tracking, hereditary stratigraphy's memory footprint grows linearly $\mathcal{O}(N)$ with population size.
-Under configurations that guarantee static MRCA resolution at arbitrary generational depth, memory footprint also scales with $G$ --- either $\mathcal{O}(G)$ or $\mathcal{O}(\log G)$ depending on whether guarantees are absolute or recency-proportional \citep{moreno2024algorithms}.
-However, hereditary stratigraphy can also be conducted with $\mathcal{O}(1)$ memory, constant with respect to $G$.
+Under configurations with guarantee static MRCA resolution at arbitrarily generational depth, memory footprint also scales with $G$ --- either $\mathcal{O}(G)$ or $\mathcal{O}(\log G)$ depending on whether guarantees are absolute or recency-proportional \citep{moreno2024algorithms}.
+However, hereditary stratigraphy can also be conducted $\mathcal{O}(1)$ constant with respect to $G$.
 Unlike pruning-enabled perfect tracking, hereditary stratigraphy's memory usage is a hard guarantee.
 Consequently, it can be a good choice in cases where large fluctuations in memory use are not acceptable.
 It can also be helpful in circumstances that inhibit coalescence and start pushing perfect tracking towards worst-case performance.
@@ -45,15 +45,15 @@ Using a drift model over structured fixed-capacity subpopulations, we can tracta
 To account for stochastic variability in sampled lineage histories, we consider memory footprints across 10 independent whole-chip replicates.
 
 Figure \ref{fig:msprime-memory-estimate} compares projected memory footprints between perfect tracking with lineage pruning versus hereditary stratigraphy.
-With pruning, the upper-bound memory use per PE averages 39.6kB across replicates.
-If additional coordination were employed to balance memory load for stored tracking data across PEs, use would be 25.3kB per PE.
-Another possible optimization would be periodic checkpoint synchronization with the host to export accumulated data.
-Batching simulation across 100,000-generation windows in this manner would also reduce memory cost per PE to 25.3kB.
+With pruning, the upper bound memory use per PE averages 39.6kB across replicates.
+If additional coordination was employed to balance memory load for stored tracking data across PEs, use would be 25.3kB per PE.
+Another possible optimization would be periodic checkpoint synchronization with host to export accumulated data.
+Batching simulation across 100,000 generation windows in this manner would also reduce memory cost per PE to 25.3kB.
 If used together, batching and balancing would require 20.9kB per PE.
 As expected, distributed memory footprints for perfect tracking are substantially greater than the 12kB required to store timestamped unique identifiers for perfect tracking in a unified memory space.
 Recall that the WSE's 48kB per PE must be shared also among other data records, underlying simulation state (e.g., population genomes), and program data.
 Note that the above memory use estimates do not account for transient stale lineage data arising from latency in extinction notifications, do not incorporate safety margins for stochastic variability in lineage histories, and assume that no fossil lineages are archived.
-Further, memory cost could increase by orders of magnitude in simulations of sexual populations in order to track lineages of multiple independently assorting genome sites per individual.
+Further, memory cost could increase by orders of magnitude in simulations of sexual populations in order to track lineages of multiple independently-assorting genome sites per individual.
 
 % adapted from https://github.com/mmore500/hstrat-synthesis/blob/8d66ae9240e6c7a6ea00ce3756c8cdf404f9ba45/text/body/introduction.tex#L211-L219
 Under hereditary stratigraphy, by contrast, genome information encoding lineage history resides in a single fixed-width annotation, bundled alongside a generation counter.
@@ -69,7 +69,7 @@ Notably, also, memory footprints for coarse- and moderate-resolution inference b
 
 % TODO unifurcations?
 As its name implies, perfect tracking returns completely accurate phylogenetic data.
-Nevertheless, memory use can be tuned by increasing the granularity of data being recorded (i.e., making the taxonomic unit represented by each node more abstract).
+Nevertheless, memory use can be tuned by increasing the granularity of data being recorded (i.e., make the taxonomic unit represented by each node more abstract).
 
 Hereditary stratigraphy introduces imprecision that can potentially lead to inaccuracy.
 At the same time, it introduces tools for precisely controlling the level of inaccuracy and its trade-off with memory and time costs.
@@ -78,9 +78,9 @@ Hereditary stratigraphy is always tracked at the level of the individual (i.e., 
 
 %TODO: Plug ALife paper if its not already in reconstruction
 
-\subsubsection{Overall takeaway}
+\subsubsection{Overall take-away}
 
-Perfect tracking and hereditary stratigraphy are complementary techniques that occupy different methodological niches.
+Perfect tracking and hereditary stratigraphy are complimentary techniques that occupy different methodological niches.
 In many simple cases, perfect tracking requires fewer resources and provides more accurate data.
 However, hereditary stratigraphy can operate in computational environments that perfect tracking cannot.
 It also enables new trade-offs to be made between data resolution, memory use, and data accuracy.

@@ -11,7 +11,7 @@ The birth handling routine executes any time an individual is replicated.
 Similarly, the removal-handling routine gets called any time an individual is removed from the set of currently active individuals (i.e., the population).
 
 Perfect tracking can be used regardless of whether each individual has one or multiple parents (i.e., asexual vs. sexual reproduction).
-Our analysis here will focus on the asexual scenario where each individual has only one parent, but most of our results generalize to the multi-parent case.
+Our analysis here will focus on the asexual scenario where each individual has only parent, but most of our results generalize to the multi-parent case.
 The primary exception is the results presented in Section \ref{sec:perfect-tracking-pruning-space}, which will underestimate memory use in the average multi-parent case.
 
 Perfect tracking can be done at an arbitrary level of abstraction \citep{dolson2020interpreting}.%, dolson2023phylotrackpy}.
@@ -47,7 +47,7 @@ Thus, we need only consider time complexity per birth event.
 
 Naive perfect tracking can be adapted to parallel computing environments using universally unique agent identifiers through either of two straightforward options.
 In the first approach, records of all agent creation and elimination events are collected to a centralized database as they occur.
-In the second, each processor maintains an independent data file of local agent creation/elimination events, and these files are stitched together in postprocessing.
+In the second, each processor maintains an independent data file of local agent creation/elimination that are stitched together in postprocessing.
 For the former, race conditions might occur where the phylogeny tracker is notified of a birth event involving a parent it does not yet know about.
 This situation can be mitigated fairly cheaply by having a pool of ``waiting'' nodes that will be added once the appropriate parent node is added.
 
@@ -67,31 +67,34 @@ Naive perfect tracking has a gargantuan space complexity, owing to the fact that
 For most substantive applications, the amount of memory used by naive perfect tracking is prohibitive.
 As such, it is common to use a ``pruning''-enabled algorithm that deletes records associated with extinct lineages (see Algorithm \ref{alg:perfect-tracking-pruning}). % TODO CITE \citep{dolson2023phylotrackpy}
 This procedure removes all parts of the phylogeny that are no longer ancestors of currently extant objects.
-Thus, like naive perfect tracking, it introduces no uncertainty into downstream analyses.
+Thus, like naive perfect tracking, it introduces no uncertainty into down-stream analyses.
 
 \input{alg/perfect-tracking-pruning.tex}
 
-\subsubsection{Time complexity}
+\input{fig/perfect-strategy.tex}
+% TODO
+
+\subsubsection{Time Complexity}
 
 The pruning-enabled algorithm has amortized constant time complexity (see Theorem \ref{thm:perfect-tracking-with-pruning-time}).
 
 \input{thm/perfect-tracking-with-pruning-time.tex}
 
-\subsubsection{Performance in parallel and distributed environments}
+\subsubsection{Performance in parallel and distrbuted environments}
 \label{sec:perfect-tracking-pruning-distrbuted}
 
 % @MAM interesting thought: you can't prune all unifurcations when taking the second (distributed) approach to pruning-enabled perfect tracking
 % @MAM another interesting thought: hstrat annotations can be smaller than UUID labels (128 bits)
 % TODO: Matthew, double-check this @MAM this is completely reasonable
-Like naive perfect tracking, pruning-enabled perfect tracking can proceed either via a fully centralized database or via localized record-keeping.
+Like naive perfect tracking, pruning-enabled perfect tracking can proceed via either a fully-centralized database or through localized record-keeping.
 
 Centralized pruning-enabled perfect tracking has all the same issues in parallel and distributed environments that naive perfect tracking has.
 It also adds an additional cost: parallel processes must be synced up before a pruning operation can be performed.
 Otherwise, the algorithm risks incorrectly pruning a lineage that it will later learn produced a new artifact.
 This requirement would translate to a substantial speed cost in practice.
 
-In a localized model, when the last remnant of an immigrant lineage is eliminated, an extinction notification would need to be propagated back to the processing element that lineage immigrated from.
-Records for lineages that went extinct locally but had generated emigres to other processing elements would need to be retained until extinction notifications for all emigres are confirmed.
+In a localized model, when the last remnant of an immigrant lineage is eliminated an extinction notification would need to be propagated back to the processing element that lineage immigrated from.
+Records for lineages that extinct locally but had generated emigres to other processing elements would need to be retained until extinction notifications for all emigres are confirmed.
 Even for lineages that span few processing elements, repeat migrations between a single pair of processors could wind up long breadcrumb trails that necessitate extensive cleanup operations.
 
 \subsubsection{Space complexity}
@@ -113,17 +116,17 @@ Here, we investigate the expected size of $T$ (which we will call $E(|T|)$) in t
 Of course, investigating the average case requires making some assumptions about the scenarios where this algorithm may be used.
 An expedient assumption to make is that objects to be replicated are selected at random from the population (i.e., drift).
 This process is described by a neutral model.
-While this assumption is obviously not completely true in most cases, it will turn out that $E(|T|)$ is actually smaller for most realistic cases (e.g., any evolutionary scenario with directional selection).
+While this assumption is obviously not completely true in most cases, it will turn out that $E(|T|)$ is actually smaller for most realistic cases (e.g. any evolutionary scenario with directional selection).
 
 Conveniently, the asymptotic behavior of $E(|T|)$ as $N$ increases has been studied extensively by evolutionary biologists under a variety of random selection models \citep{berestyckiRecentProgressCoalescent2009, tellierCoalescenceMultipleBranching2014, nordborgCoalescentTheory2019}.
 The relevant branch of mathematics is coalescence theory, which describes the way particles governed by random processes agglomerate over time.
 There are a variety of models of random selection, all of which yield different behavior.
 
 Neutral models that could plausibly describe a process of replicating digital artifacts experience ``coalescence'' events.
-In these events, the population establishes a new, more recent common ancestor as a result of old lineages dying out.
+In these events, the population establishes a new, more-recent common ancestor as a result of old lineages dying out.
 This observation implies that when we run our perfect tracking with pruning algorithm for sufficiently long periods of time, on average we should expect our tree $T$ to have a long unifurcating ``stem.''
 The most recent node in this chain will be the most recent common ancestor (MRCA) of the whole extant population.
-The descendants of the MRCA will form a subtree, which we will call $T_c$.
+The descendants of the MRCA will form a sub-tree, which we will call $T_c$.
 
 The expected size of $T_c$ (denoted $E(|T_c|)$ here), then, will be the dominant factor affecting $E(|T|)$.
 $E(|T_c|)$ is closely related to a value commonly studied in coalescence theory literature called the expected total branch length (usually denoted $L_n$ or $T_{tot}$; we will refer to it as $L_n$).
@@ -131,7 +134,7 @@ $L_n$ assumes that the phylogeny is represented by a tree, $T'$, that contains t
 Edges in this tree have weights that represent the amount of time between the origin of the parent and the origin of the child.
 $L_n$ is the sum of these weights.
 Although the asymptotic behavior of $L_n$ depends on specifics of the evolutionary process, it scales sub-linearly with respect to population size for all realistic models that have been investigated in the literature to our knowledge \citep{gnedinLcoalescentsSurvey2014}.%
-\footnote{A possible exception is spatial models, which have received less formal analysis but are known to exhibit slower coalescence \citep{berestyckiRecentProgressCoalescent2009}.}
+\footnote{A possible exception is spatial models, which have received less formal analysis but are known to exhibit slower coalescence \citep{berestyckiRecentProgressCoalescent2009}}
 How is this possible?
 Under realistic neutral models, various subsets of the population will coalesce to common ancestors much faster than the whole population does \citep{nordborgCoalescentTheory2019}.
 Consequently, there are many shallow branches.
@@ -147,15 +150,15 @@ However, there is one important difference.
 The reason $T'$ is able to scale sub-linearly with $N$ is that as $N$ goes to infinity the lengths of the branches to the leaf nodes (i.e., the extant population) approach zero \citep{nordborgCoalescentTheory2019, delmasAsymptoticResultsLength2008, drmotaAsymptoticResultsConcerning2007}.
 In contrast, the space taken up by each of the $N$ leaf nodes in $T_c$ is a fixed constant and cannot drop to zero.
 Thus, $E(|T_c|)$ is $\mathcal{O}(L_n + N)$.
-Note that the time to coalescence depends entirely on the population size ($N$); the total number of generations elapsed since the start of the process ($G$) does not affect the asymptotic growth rate of $E(|T_c|)$.
+Note that the time to coalescence depends entirely on the population size ($N$); the total number of generations elasped since the start of the process ($G$) does not affect the asymptotic growth rate of $E(|T_c|)$.
 
 The precise asymptotic scaling of $L_n$ with respect to population size $N$ depends on the exact model of random replication used \citep{tellierCoalescenceMultipleBranching2014}.
-Under the best-studied model, Kingman's coalescent, it is $\mathcal{O}(\log(N))$ \citep{kingmanCoalescent1982, delmasAsymptoticResultsLength2008}.
-Under another reasonable model, the Bolthausen--Sznitman coalescent, it is $\mathcal{O}(\frac{N}{\log(N)})$ \citep{drmotaAsymptoticResultsConcerning2007}.
+Under the best-studied model, Kingman's Coalescent, it is $\mathcal{O}(log(N))$ \citep{kingmanCoalescent1982, delmasAsymptoticResultsLength2008}.
+Under another reasonable model, the Bolthausen-Sznitman coalescent, it is $\mathcal{O}(\frac{N}{log(N)})$ \citep{drmotaAsymptoticResultsConcerning2007}.
 % Some exotic models could also produce the star-shaped coalescent, in which all $N$ offspring descend directly from the most recent common ancestor.
 % While this scenario actually takes less memory in total, its asymptotic growth is $\mathcal{O}(N)$.
-Because these growth rates are all less than $N$, $E(|T_c|)$ ends up being dominated by the $N$ term.
-Thus the overall memory usage of pruning-enabled perfect tracking is $\mathcal{O}(N + G)$.
+Because these growth rates are all less than $N$, $E(|T_c|)$ ends up being dominated by $N$ term.
+Thus the overall memory usage of pruning-enable perfect tracking is $\mathcal{O}(N + G)$.
 Trivially, the ``stem'' part of $T$ can be pruned off when coalescence occurs, producing a bound of $\mathcal{O}(N)$.
 
 %TODO: This could move to supplement if we need space
@@ -167,7 +170,7 @@ Under drift, coalescence can be slow because it needs to happen entirely by chan
 When some members of the population are more likely to be selected than others and that selective advantage is heritable (assuming population size $N$ is stable), we expect to see ``selective sweeps'' in which those members of the population outcompete others.
 A selective sweep will usually speed up coalescence (unless it is competing with a different simultaneous selective sweep) \citep{neherGeneticDraftSelective2013}.
 Thus, in general, in the presence of non-random selection, we expect $T_c$ to be much smaller than we would expect under drift.
-Note, however, that the Bolthausen--Sznitman coalescent mentioned above does model scenarios with selection.
+Note, however, that the Bolthausen-Sznitman coalescent mentioned above does model scenarios with selection.
 
 Would we ever expect $T_c$ to be larger than under drift?
 Only if lineages coexist for longer than we would expect by chance.

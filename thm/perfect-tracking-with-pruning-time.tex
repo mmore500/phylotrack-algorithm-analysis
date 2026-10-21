@@ -10,7 +10,7 @@ The initialization and birth-handling steps of the pruning algorithm are trivial
 Next, we prove that the removal-handling pruning algorithm runs in amortized constant time.
 When an arbitrary taxon $t$ is removed, there are three possibilities: 1) $t$ has living descendants, 2) $t$ has no living descendants, but $t$'s parent is either alive or has other descendants that are alive, or 3) $t$ was the last living descendant of its parent.
 In case 1, nothing can be removed from the phylogeny.
-Case 1 takes constant time, because it only requires executing a single comparison operation.
+Case 1 takes contant time, because it only requires executing a single comparison operation.
 In case 2, only $t$ can be removed from the phylogeny.
 Case 2 also takes constant time, as it only requires removing a single node from the tree and doing three comparison operations.
 
@@ -31,8 +31,8 @@ Thus, the amortized time to remove the sequence of taxa from $t$ to $a$ (includi
 Since
 
 \[
-\lim_{d_t - d_a\to\infty} \frac{2(d_t - d_a) + 1}{d_t - d_a + 1} = 2,
-\]
+\lim_{d_t - d_a\to\infty} \frac{2(d_t - d_a) + 1}{d_t - d_a + 1} = 2
+\],
 
 the amortized time complexity of pruning is bounded by a constant, i.e., it is $\mathcal{O}(1)$.
 
