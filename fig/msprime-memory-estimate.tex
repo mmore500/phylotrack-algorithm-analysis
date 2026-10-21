@@ -10,7 +10,7 @@
 \caption{%
 \textbf{Per-node memory use for phylogeny tracking techniques.}
 \footnotesize
-Memory estimates for tracking approaches are estimated according to coalescent trees sampled using msprime \citep{baumdicker2022efficient}, to simulate phylogeny migration dynamics across a processor grid.
+Memory use for tracking approaches is estimated from coalescent trees sampled using msprime \citep{baumdicker2022efficient}, to simulate phylogeny migration dynamics across a processor grid.
 We assume extinct lineages to be removed from memory through extinction tracking --- meaning that exact records need only be stored for extant lineages (pruning).
 We assume unifurcations within the scope of a single PE are collapsed.
 For batching optimization, it is assumed that the simulation is halted every 100,000 generations for a clean-up phase where data is offloaded off the chip to free on-chip memory from elapsed history.
