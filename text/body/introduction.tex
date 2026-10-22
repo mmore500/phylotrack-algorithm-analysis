@@ -6,7 +6,7 @@ In addition to addressing questions of natural history, access to the phylogenet
 
 Although trifling in scale by comparison, computer simulations of evolution can generate vast histories in their own right, with common agent-based models achieving on the order of 200 million replication cycles per day \citep{ofria2009artificial}.
 Distillation of this onslaught of history is necessary for data management tractability \citep{dolson2020interpreting, ralph_efficiently_2020}.
-Nonetheless, existing analyses of phylogenetic structure within digital systems have already proven valuable, enabling diagnosis of underlying evolutionary dynamics \citep{11007774,hernandez2022can,shahbandegan2022untangling, lewinsohnStatedependentEvolutionaryModels2023a} and even serving as mechanism to guide evolution in application-oriented domains \cite{lalejini2024phylogeny,lalejini2024runtime,murphy2008simple,burke2003increased}.
+Nonetheless, existing analyses of phylogenetic structure within digital systems have already proven valuable, enabling diagnosis of underlying evolutionary dynamics \citep{11007774,hernandez2022can,shahbandegan2022untangling, lewinsohnStatedependentEvolutionaryModels2023a} and even serving as mechanism to guide evolution in application-oriented domains \citep{lalejini2024phylogeny,lalejini2024runtime,murphy2008simple,burke2003increased}.
 
 Here, we formalize data structures and algorithmic procedures for space-efficient aggregation of phylogenetic history from evolutionary simulations on a rolling basis, and investigate their runtime performance characteristics.
 % We focus in particular on asexual lineages, in which each entity has exactly one parent.
@@ -55,7 +55,7 @@ To boot, the perfect-tracking paradigm is fragile to data loss.
 Even a single failed communication event can entirely disjoin knowledge of how large portions of phylogenetic history relate.
 As data loss is ubiquitous at scale \citep{cappello2014toward,ackley2011pursue}, this limitation is of serious concern.
 
-These concerns motivated development \textit{hereditary stratigraphy}, of an alternate, fully-decentralized approach to phylogenetic tracking \citep{moreno2022hereditary}.
+These concerns motivated development of \textit{hereditary stratigraphy}, an alternate, fully-decentralized approach to phylogenetic tracking \citep{moreno2022hereditary}.
 This methodology uses special genome annotations, termed \textit{hereditary stratigraphic columns}.
 These annotations facilitate fast, accurate post hoc inference of phylogenetic relationships among evolved agents, akin to how genetic material enables phylogenetic inference in biology.
 
