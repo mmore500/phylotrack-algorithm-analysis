@@ -1,6 +1,6 @@
 \section{Perfect Tracking Algorithm} \label{sec:perfect-tracking-algorithm}
 
-Traditionally, the problem of recording the phylogenies of replicating digital populations has been solved using a ``perfect tracking'' approach where all replication events are recorded and stored in a tree (or forest, if there are multiple roots) \citep{dolson2023phylotrackpy}.
+Traditionally, the problem of recording the phylogenies of replicating digital populations has been solved using a ``perfect tracking'' approach where all replication events are recorded and stored in a tree (or forest, if there are multiple roots) \citep{dolson2024phylotrack}.
 In this section, we present results on the time and space complexity of perfect tracking;
 these results will serve as a basis of comparison for hereditary stratigraphy's curation policy and reconstruction algorithms in Section \ref{sec:discussion}.
 
@@ -14,7 +14,7 @@ Perfect tracking can be used regardless of whether each individual has one or mu
 Our analysis here will focus on the asexual scenario where each individual has only one parent, but most of our results generalize to the multi-parent case.
 The primary exception is the results presented in Section \ref{sec:perfect-tracking-pruning-space}, which will underestimate memory use in the average multi-parent case.
 
-Perfect tracking can be done at an arbitrary level of abstraction \citep{dolson2020interpreting}.%, dolson2023phylotrackpy}.
+Perfect tracking can be done at an arbitrary level of abstraction \citep{dolson2020interpreting}.%, dolson2024phylotrack}.
 For example, individual population members could be grouped into more abstract taxonomic units on the basis of a particular genetic or phenotypic trait.
 As in biological phylogenetics, ancestry trees can show relationships between individuals, species, or any other taxonomic unit.
 Increasing the level of abstraction decreases memory use by a constant (but often large) factor.
@@ -65,7 +65,7 @@ Naive perfect tracking has a gargantuan space complexity, owing to the fact that
 \label{sec:naive-perfect-tracking-with-pruning}
 
 For most substantive applications, the amount of memory used by naive perfect tracking is prohibitive.
-As such, it is common to use a ``pruning''-enabled algorithm that deletes records associated with extinct lineages (see Algorithm \ref{alg:perfect-tracking-pruning}). % TODO CITE \citep{dolson2023phylotrackpy}
+As such, it is common to use a ``pruning''-enabled algorithm that deletes records associated with extinct lineages (see Algorithm \ref{alg:perfect-tracking-pruning}). % TODO CITE \citep{dolson2024phylotrack}
 This procedure removes all parts of the phylogeny that are no longer ancestors of currently extant objects.
 Thus, like naive perfect tracking, it introduces no uncertainty into down-stream analyses.
 
