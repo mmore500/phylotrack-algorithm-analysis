@@ -39,7 +39,7 @@ A prime example of this problem is the difficulty of recording phylogenies (i.e.
 \subsection{Phylogeny recording}
 
 Although phylogenetic analysis is a powerful tool for understanding digital evolution \citep{dolson2020interpreting}, typical approaches are particularly difficult to scale.
-Most existing analyses use direct lineage tracking, where a centralized data structure collates individual reproduction events to produce a complete, perfect phylogenetic record \citep{dolson2023phylotrackpy}.
+Most existing analyses use direct lineage tracking, where a centralized data structure collates individual reproduction events to produce a complete, perfect phylogenetic record \citep{dolson2024phylotrack}.
 However, this approach requires centralized data storage, which performs poorly in distributed computing environments (see Sections \ref{sec:perfect-tracking-distrbuted} and \ref{sec:perfect-tracking-pruning-distrbuted} for more information).
 
 The problem of recording phylogenies in a distributed context generalizes beyond digital evolution.
@@ -227,7 +227,7 @@ To explain how and why such ancestry analysis might be accomplished, we next con
 
 \subsubsection{Direct Ancestry Tracking}
 
-Most work on ancestry trees of digital artifacts relies on centralized lineage tracking \citep{friggeri2014rumor,cohen1987computer,dolson2023phylotrackpy}.%
+Most work on ancestry trees of digital artifacts relies on centralized lineage tracking \citep{friggeri2014rumor,cohen1987computer,dolson2024phylotrack}.%
 \footnote{A notable exception, \cite{libennowell2008tracing} exploit a serendipitous mechanistic opportunity to reconstruct global dissemination of chain emails --- discussed further below.}
 Direct approaches to tracking replicator provenance in digital systems operate on this graph structure directly, distilling it from the full set of parent-child relationships over the history of a population to produce an exact historical account.
 
