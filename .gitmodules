@@ -14,3 +14,8 @@
 	url = https://github.com/mmore500/hstrat-synthesis.git
 	branch = binder-2025-10-28-trafficsim_msprime.ipynb
 	shallow = true
+[submodule "binder/bindle-2026-10-23-mlsindivspectra.py"]
+	path = binder/bindle-2026-10-23-mlsindivspectra.py
+	url = https://github.com/mmore500/wse-mls.git
+	branch = bindle-2026-10-23-mlsindivspectra.py
+	shallow = true
