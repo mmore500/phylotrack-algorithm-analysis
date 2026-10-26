@@ -19,3 +19,8 @@
 	url = https://github.com/mmore500/wse-mls.git
 	branch = bindle-2026-10-23-mlsindivspectra.py
 	shallow = true
+[submodule "binder/bindle-2026-10-25-mls-spectrum-subgrid-fossils.py"]
+	path = binder/bindle-2026-10-25-mls-spectrum-subgrid-fossils.py
+	url = https://github.com/mmore500/wse-mls.git
+	branch = bindle-2026-10-25-mls-spectrum-subgrid-fossils.py
+	shallow = true
